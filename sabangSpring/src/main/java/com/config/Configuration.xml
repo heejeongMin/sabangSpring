@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.dto.MemberDTO" alias="MemberDTO" />
+		<typeAlias type="com.dto.AgentDTO" alias="AgentDTO" />
+		<typeAlias type="com.dto.WdMbrDTO" alias="WdMbrDTO" />
+		
+		<typeAlias type="com.dto.HouseInfoDTO" alias="HouseInfoDTO" />
+		<typeAlias type="com.dto.HouseOptionDTO" alias="HouseOptionDTO" />
+		<typeAlias type="com.dto.HousePriceDTO" alias="HousePriceDTO" />
+		<typeAlias type="com.dto.HouseRcnlistDTO" alias="HouseRcnlistDTO" />
+		
+		<typeAlias type="com.dto.HouseWishlistDTO" alias="HouseWishlistDTO" />
+		
+		<typeAlias type="com.dto.BoardDTO" alias="BoardDTO" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/config/HouseMapper.xml" />
+		<mapper resource="com/config/MemberMapper.xml" />
+		<mapper resource="com/config/BoardMapper.xml" />
+	</mappers>
+	
+</configuration>

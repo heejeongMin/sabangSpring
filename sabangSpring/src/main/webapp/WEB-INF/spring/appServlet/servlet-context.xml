@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<context:component-scan base-package="com.*" />
+	
+	<!-- 기본 설정 -->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+	
+	
+
+	<!-- InternalViewResolver를 mvc를 활용해서 등록 -->
+	<mvc:view-resolvers>
+		<mvc:bean-name>
+			<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+		</mvc:bean-name>
+		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp" />
+	</mvc:view-resolvers>
+	
+	<!-- 정적파일 등록 -->
+	<mvc:resources location="/WEB-INF/views/images/" mapping="/images/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/views/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/views/css/" mapping="/css/**"></mvc:resources>
+	<!-- mapping에 있는 애를 사용하면 location 속성값에 정의된데서 사용하겠다는 뜻 -->
+	
+	<!-- 다이렉트 화면 -->
+	<mvc:view-controller path="/" view-name="main" />
+
+
+</beans>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<context:annotation-config />
+
+	
+	<!-- 1. jdbc properties 등록 -->
+	<context:property-placeholder location="classpath:com/config/jdbc.properties" />
+
+	<!-- 2. DBCP : 20.3.1 SessionFactory setup in a Spring container => 기존 mybatis에 configration.xml 기능을 여기서 함 -->
+	<bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.userid}" />
+		<property name="password" value="${jdbc.passwd}" />
+	</bean>
+
+	<!-- 3. SqlSessionFactoryBean => 기존 SqlSessionFactory와 같은 애: 20.3.1 SessionFactory setup in a Spring container -->
+	<bean id="mySessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="configLocation" value="classpath:com/config/Configuration.xml" />
+	</bean>
+
+	<!-- 4. SqlSessionTemplate ==> 기존 SqlSession 기능 -->
+	<!-- 얘는 기본생성자로 생성하게 해놓은게 아니라서 그냥 bean만등록하면 에러가 난다. 인자있는 생성자 호출 필요 -->
+	<bean id="mySessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<!-- 5. transaction 설정 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+	<tx:annotation-driven />
+
+</beans>
