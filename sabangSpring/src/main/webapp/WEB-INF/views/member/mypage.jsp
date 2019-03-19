@@ -171,12 +171,12 @@
 </script>
 
 <form action="MemberUpdateServlet" method="post" >
-		<input type="hidden" value="${login.userid}" name="memberid"/>
+		<input type="hidden" value="${memberInfo.userid}" name="memberid"/>
 	
  <table border="1">
 		<tr>
 			<th>이름</th>
-			<td>${login.username}</td>
+			<td>${memberInfo.username}</td>
 		</tr>
 		<tr>
 			<th>이메일</th>

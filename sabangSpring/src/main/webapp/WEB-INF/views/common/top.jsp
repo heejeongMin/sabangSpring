@@ -66,7 +66,7 @@ $(document).ready(function(){
 					<li><a href="/sabang/mLogout" id="logout">로그아웃</a></li>
 					<a href="<c:url value='/mLogout'/>">로그아웃2</a>
 					
-					<li><a href="/mMyPage">mypage</a></li>
+					<li><a href="/sabang/myPage">mypage</a></li>
 					<li><a href ="#" id ="delMbrIdConfirm">회원탈퇴 </a> </li>
 				</ul>
 				
@@ -91,7 +91,7 @@ $(document).ready(function(){
 					</li>
 						<a href="/sabang/mDelMbrIdConfirm'/>">로그아웃</a> 
 						<a href="<c:url value='/mDelMbrIdConfirm'/>">로그아웃2</a> 
-					<li><a href="/sabang/mMyPage">mypage</a></li>
+					<li><a href="/sabang/myPage">mypage</a></li>
 					<li><a href = "#" id ="delMbr">회원탈퇴 </a> </li>
 				</ul>
              </c:when> 
