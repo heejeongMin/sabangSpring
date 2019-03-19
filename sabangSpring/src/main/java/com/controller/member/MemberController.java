@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.MemberDTO;
 import com.service.MemberService;
@@ -56,6 +57,17 @@ public class MemberController {
 		return nextPage;
 	}
 	
+	
+	// naver 로그인 기능
+	@RequestMapping("/naverSignin") 
+	public @ResponseBody MemberDTO naverSignin(Map<String, String> naverMap, HttpSession session) {
+		MemberDTO memberInfo = new MemberDTO();
+		int n = mService.naverUser(naverMap);
+		memberInfo = mService.getNaverUser(naverMap.get("uniqId"));
+		session.setAttribute("memberInfo", memberInfo);
+		
+		return memberInfo;
+	}
 	
 	
 	

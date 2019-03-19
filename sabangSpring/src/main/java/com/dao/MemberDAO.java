@@ -123,15 +123,14 @@ public class MemberDAO {
 	
 	
 	/////////////////////Naver Login//////////////////////////
-	public int naverUser( HashMap<String, String> naverMap) {
+	public int naverUser(Map<String, String> naverMap) {
 		String uniqId = naverMap.get("uniqId");
-		System.out.println(uniqId);
 		int n = session.selectOne("MemberMapper.naverUser", naverMap);
 		if (n==0) naverSignUp(naverMap);
 		return n;
 	}//end naverIdCheck
 	
-	private int naverSignUp( HashMap<String, String> naverMap) {
+	private int naverSignUp(Map<String, String> naverMap) {
 		return session.insert("MemberMapper.naverSignUp", naverMap);
 	}//end naverSignUp
 	

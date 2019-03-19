@@ -105,7 +105,7 @@ public class MemberService {
 	
 	
 	/////////////////////Naver Login//////////////////////////
-	public int naverUser(HashMap<String, String> naverMap) {
+	public int naverUser(Map<String, String> naverMap) {
 		return dao.naverUser(naverMap);
 	} //naverUser
 	
