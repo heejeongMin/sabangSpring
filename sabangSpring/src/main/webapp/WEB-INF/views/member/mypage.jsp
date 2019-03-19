@@ -83,7 +83,7 @@
 					event.preventDefault();
 				}else{
 					$.ajax({
-						url:"MemberPwdCheckServlet",
+						url:"memberPwdCheck",
 						type:"get",
 						data:{
 							userid:$("input[name=userid]").val(),
