@@ -1,5 +1,6 @@
 package com.controller.member;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -60,7 +61,7 @@ public class MemberController {
 	
 	// naver 로그인 기능
 	@RequestMapping("/naverSignin") 
-	public @ResponseBody MemberDTO naverSignin(Map<String, String> naverMap, HttpSession session) {
+	public @ResponseBody MemberDTO naverSignin(@RequestParam HashMap<String, String> naverMap, HttpSession session) {
 		MemberDTO memberInfo = new MemberDTO();
 		int n = mService.naverUser(naverMap);
 		memberInfo = mService.getNaverUser(naverMap.get("uniqId"));

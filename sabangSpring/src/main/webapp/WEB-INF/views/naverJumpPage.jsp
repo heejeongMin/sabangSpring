@@ -52,7 +52,7 @@ div#JumpImageWrap, div#JumpTextWrap{
 	var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "QN3lv2J2hB8uD9Nm2s90",
-				callbackUrl: "http://localhost:8090/sabang/main.jsp",
+				callbackUrl: "http://localhost:8090/sabang/",
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 1, height: 25} /* 로그인 버튼의 타입을 지정 */
 			}
@@ -96,7 +96,7 @@ div#JumpImageWrap, div#JumpTextWrap{
 			var result = ""; 
 			$.ajax({
 				type:'post',
-				url:'NaverSignin',
+				url:'naverSignin',
 				data:{
 					uniqId : uniqId,
 					name : name,
@@ -114,7 +114,7 @@ div#JumpImageWrap, div#JumpTextWrap{
 		$(document).ready(function(){
 			$("button#enterSabang").on("click", function(e){
 				setLoginStatus();
-				opener.location.href="main.jsp";
+				opener.location.href="/sabang/";
 				window.close();
 			});
 		});
