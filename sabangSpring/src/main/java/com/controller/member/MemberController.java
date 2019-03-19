@@ -31,14 +31,14 @@ public class MemberController {
 		return nextPage;
 	}
 
-	@RequestMapping("/mLogout")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
 	
 	
-	@RequestMapping("/mDelMbrId") // 해당 컨트롤러로 들어오기 위한 값
+	@RequestMapping("/delMbrId") // 해당 컨트롤러로 들어오기 위한 값
 	public String delMbrId(@RequestParam("passwd") String inputpw, HttpSession session, Model m) {
 		MemberDTO dto = (MemberDTO) session.getAttribute("memberInfo");
 		String userpw = dto.getPasswd();
@@ -47,14 +47,19 @@ public class MemberController {
 			String userid = dto.getUserid();
 			mService.delMbrId(userid);
 			session.invalidate(); //탈퇴와 함께 로그아웃
+			System.out.println(1);
 			m.addAttribute("mesg", "탈퇴되었습니다");
-			nextPage = "redirect:/mDelMbrId";
+			nextPage = "redirect:/"; //로그아웃시 main화면으로 이동하게 된다.
 		}else {
 			m.addAttribute("mesg", "비밀번호를 확인해주세요.");
-			nextPage = "redirect:/mDelMbrIdConfirm";
+			nextPage = "redirect:/delMbrIdConfirm";
 		}
 		return nextPage;
 	}
+	/*
+	 * @RequestMapping("")
+	 */
+	
 	
 	
 	
