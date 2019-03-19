@@ -16,7 +16,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session=request.getSession();
 		if(session.getAttribute("memberInfo")==null) {
-			response.sendRedirect("../loginUI"); 
+			response.sendRedirect("/sabang/loginUI"); 
 			return false;
 		}
 		return true;
