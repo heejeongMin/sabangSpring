@@ -68,7 +68,7 @@ div#btnBox>button {
 $(document).ready(function(){
 	$("#registerBtn").on("click", function(e){//등록버튼 클릭시
 		e.preventDefault();
-		location.href="HouseUIControleServlet?work=register";
+		location.href="houseUIController/register";
 	});
 	
 	$("#delBtn").on("click", function(e){//삭제버튼 클릭시
