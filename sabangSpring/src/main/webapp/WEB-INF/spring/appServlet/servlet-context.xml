@@ -16,14 +16,13 @@
 	<!-- interceptor를 mvc를 활용해서 등록 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/**" />
+			<mvc:mapping path="/*" />
 			<mvc:exclude-mapping path="/houseOverview"/>
 			<mvc:exclude-mapping path="/houseList"/>
 			<mvc:exclude-mapping path="/houseFilter"/>
 			<mvc:exclude-mapping path="/signCheckMbr"/>
 			<mvc:exclude-mapping path="/loginUI"/>
 			<mvc:exclude-mapping path="/login"/>
-			<mvc:exclude-mapping path="/resource/**"/>
 			<mvc:exclude-mapping path="/"/>
 			<!-- 로그인 여부 체크를 위한 interceptor 페이지이므로 선행 경로로 member의 약어인  m을 사용한다, 
 			m/뒤에 후행되는 파일명,경로 모두 적용 가능  --> 	
