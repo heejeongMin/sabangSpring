@@ -17,14 +17,13 @@
 	<!-- interceptor를 mvc를 활용해서 등록 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/**" />
+			<mvc:mapping path="/*" />
 			<mvc:exclude-mapping path="/houseOverview" />
 			<mvc:exclude-mapping path="/houseList" />
 			<mvc:exclude-mapping path="/houseFilter" />
 			<mvc:exclude-mapping path="/signCheckMbr" />
 			<mvc:exclude-mapping path="/loginUI" />
 			<mvc:exclude-mapping path="/login" />
-			<mvc:exclude-mapping path="/resource/**" />
 			<mvc:exclude-mapping path="/" />
 			<bean class="com.interceptor.LoginCheckInterceptor" />
 		</mvc:interceptor>
