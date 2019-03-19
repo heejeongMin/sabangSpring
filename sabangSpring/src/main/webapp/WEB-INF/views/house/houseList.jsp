@@ -79,11 +79,17 @@ a.unfocusedPage{
 								<a class="focusedPage">${i}</a>
 							</c:when>
 							<c:otherwise>
-								<c:if test="${filters == null }">
-									<a href="houseList?curPage=${i}&search=${search}" class="unfocusedPage">${i}</a>
+								<c:if test="${filters == null }"><!-- search 로 페이징 처리된 경우 -->
+									<a href="#" class="unfocusedPage searchPages">${i}</a>
+									<script>
+										var pagingData = "${search}";
+									</script>
 								</c:if>
-								<c:if test="${filters != null }">
-									<a href="houseList?curPage=${i}&filters=${filters}" class="unfocusedPage">${i}</a>
+								<c:if test="${filters != null }"><!-- filter로 페이징 처리된 경우 -->
+									<a href="#" class="unfocusedPage filterPages">${i}</a>
+									<script>
+										var pagingData = "${filters}";
+									</script>
 								</c:if>
 							</c:otherwise>
 						</c:choose>
@@ -93,3 +99,6 @@ a.unfocusedPage{
 		</td>
 	</tr>
 </table>
+<%-- houseList?curPage=${i}&search=${search} --%>
+<!-- houseFilter?curPage=${i}&filters=${filters} -->
+

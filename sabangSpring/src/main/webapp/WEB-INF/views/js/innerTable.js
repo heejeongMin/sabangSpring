@@ -1,5 +1,28 @@
 $(document).ready(function(){
 	$("body").find(".goDetail").on("click", function(e){
 		location.href = "HouseDetailInfoServlet?hcode="+$(e.target).attr("data-hcode");
-	})
+	});//end $("body").find(".goDetail").on("click")
+	
+	
+	//paging 버튼 ajax 처리 (search 랑 paging 두개다)
+	$("body").find("a.unfocusedPage").on("click", function(e){
+		var pagingBtn = $("body").find("a.unfocusedPage"); // 내가 누른 버튼
+		var pagingType = pagingBtn.is(function(idx, ele){ // 내가 누른 버튼이 search로 찾아진 paging 인지 filter로 찾아진 paging인지 구별
+			return $(ele).attr("class") == "unfocusedPage filterPages";
+		});//end pagingType
+		var url = (pagingType)? 'houseFilter':'houseList'; // pagingType에 따라 ajax가 가는 url이 다름
+		$.ajax({
+			type:'get',
+			url:url,
+			data:{ 
+				curPage : this.text,
+				filters : pagingData
+			},
+			success:function(data, status, xhr){
+				$("div#mainWrap").html($(data).nextAll("div#mainWrap"));
+			},
+			error: function(xhr, status, error){console.log(xhr.status, status)}
+		});//end ajax
+	});//end $("body").find("a.unfocusedPage").on("click"
+	
 });//end ready

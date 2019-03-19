@@ -26,9 +26,11 @@ public class HouseController {
 	}// end houseOverview
 
 	@RequestMapping("/houseList")// 검색어를 입력하고 검색버튼을 눌렀을 때
-	public void houseList(@RequestParam(value = "search", required = false) String search, @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
+	public String houseList(@RequestParam(value = "filters", required = false) String search, @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
+		System.out.println(search);
 		model.addAttribute("search", search);
 		model.addAttribute("pagingMap", service.searchList(search, curPage));
+		return "houseList";
 	}//end houseList
 	
 	@RequestMapping("/houseFilter")// 필터 조건들을 선택했을 때 ajax
