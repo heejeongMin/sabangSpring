@@ -32,8 +32,7 @@
 		$("select[name=htype]").on("change", function(e){ //상품 코드 값 정하기
 			$.ajax({
 				type:'get',
-				url:'HouseRegisterServlet',
-				data:{ htype:$(e.target).val()},
+				url:'houseRegister/GET/'+ $(e.target).val(),
 				dataType:'text',
 				success:function(data, status, xhr){
 					var newCode = Number.parseInt(data)+1;
@@ -81,7 +80,6 @@
 		});//end select gcategory change
 		
 		$("form").on("submit", function(e){//submit전 유효성체크
-			console.log(Number.isNaN(Number.parseInt($("input[name=whlflr]").val())));
 			if($("select[name=gcategory]").val()==""){
 				e.preventDefault();
 				alert("상품 카테고리를 선택하여주세요");
@@ -100,6 +98,11 @@
 			}
 		});//end for onSubmit
 		
+		$("form").ajaxForm({
+			
+		});
+		
+		
 		
 		$("textarea").on("keyup", function(e){//상품설명 글자수 세기
 			$("p#textLength>span").text($(e.target).val().length);
@@ -109,7 +112,7 @@
 	});//end ready
 </script>
 	<h1 id="registerH1">새로운 매물 등록하기</h1>
-	<form method="POST" enctype="multipart/form-data" action="HouseRegisterServlet" id="register">
+	<form method="POST" enctype="multipart/form-data" action="houseRegister/POST" id="register">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide">
