@@ -83,7 +83,7 @@
 					event.preventDefault();
 				}else{
 					$.ajax({
-						url:"MemberPwdCheckServlet",
+						url:"memberPwdCheck",
 						type:"get",
 						data:{
 							userid:$("input[name=userid]").val(),
@@ -91,10 +91,15 @@
 						},
 						success:function(data,status,xhr){
 							console.log(data);
-							$("#pwdResult").text(data);
-							if(data=="비밀번호 일치"){
+							if(data==1){
+								$("#pwdResult").text("비밀번호 일치");
+							}else if(data==0){
+								$("#pwdResult").text("비밀번호 불일치");
+							}
+							
+							if(data==1){
 								$(".pwdChange").attr("disabled",false);
-							}else {
+							}else if(data==0){
 								$(".pwdChange").attr("disabled",true);
 							}
 						},
@@ -113,9 +118,11 @@
 			if(passwd1.length==0){
 				$("#pwdCheckResult").text("변경될 비밀번호를 입력해주세요.");
 				$("#pwdCheck2").val("");
-			}
-			else if(passwd2.length!=0){
-				
+			}/* else if(passwd1.length < 8){
+				$("#pwdCheckResult").text("8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+			}else if(passwd1.length > 16){
+				$("#pwdCheckResult").text("16자 이상 입력할 수 없습니다");
+			} */else if(passwd2.length!=0){
 				if(passwd1==passwd2){
 					$("#pwdCheckResult").text("변경 비밀번호 일치");
 				}else{
@@ -170,7 +177,7 @@
 	})
 </script>
 
-<form action="MemberUpdateServlet" method="post" >
+<form action="memberUpdate" method="post" >
 		<input type="hidden" value="${memberInfo.userid}" name="memberid"/>
 	
  <table border="1">
@@ -187,13 +194,13 @@
 		<tr>
 			<th>전화번호</th>
 			<td>
-				<select name="phone1" disabled="disabled" class="phn">
+				<select name="phone" disabled="disabled" class="phn">
 					<option value="011" class="phn">011</option>
 					<option value="017" class="phn">017</option>
 					<option value="010" class="phn">010</option>
 				</select>-
-				<input class="phn" type="text" name="phone2" value="${phone[1]}" size="3" maxlength="4" disabled="disabled">-
-				<input class="phn" type="text" name="phone3" value="${phone[2]}" size="3" maxlength="4" disabled="disabled">
+				<input class="phn" type="tel" name="phone" value="${phone[1]}" size="3" maxlength="4" disabled="disabled">-
+				<input class="phn" type="tel" name="phone" value="${phone[2]}" size="3" maxlength="4" disabled="disabled" >
 				<input type="button" value="변경" id="phnChange"/>
 				<span id="phnConfirmResult" style="color:red"></span>
 			</td>
