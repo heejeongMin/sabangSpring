@@ -1,7 +1,6 @@
 package com.controller.mypage;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dto.MemberDTO;
 import com.service.MemberService;
@@ -66,13 +66,14 @@ public class MypageController {
 	
 	
 	@RequestMapping("/memberUpdate")
-	public String memberUpdate(HttpSession session,
+	public String memberUpdate(HttpSession session, 
+			RedirectAttributes flash, Model model,
 			@RequestParam("pwdCheck") String passwd, 
 			@RequestParam(value="phone",required=false) String[] phoneNum ) {
 		MemberDTO loginMember = (MemberDTO)session.getAttribute("memberInfo");
-		MemberDTO mDto = service.mypageMember(loginMember.getUserid());
-		
 		String userid = loginMember.getUserid();
+		MemberDTO mDto = service.mypageMember(userid);
+		
 		if(passwd.isEmpty()) {
 			passwd = mDto.getPasswd();
 		}
@@ -85,7 +86,7 @@ public class MypageController {
 		
 		MemberDTO updateMDto = new MemberDTO(userid, passwd, phone);
 		int num = service.memberUpdate(updateMDto);
-		
-		return "mypage";
+		flash.addFlashAttribute("mesg", "성공적으로 업데이트 되었습니다.");
+		return "redirect:/myPage";
 	}
 }

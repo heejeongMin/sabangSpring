@@ -19,7 +19,6 @@
 	<script>
 		alert('${mesg}');
 	</script>
-	<c:remove var="mesg" />
 </c:if>
 </head>
 <body id="wrap">
