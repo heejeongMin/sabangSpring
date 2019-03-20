@@ -2,74 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
-<style type="text/css">
-	form#register{
-    	margin-top: 40px;
-	}
-	div#registerDiv{
-		text-align: center;
-   		padding-left: 400px;
-	}
-	p#textLength{
-    float: left;
-    position: absolute;
-    color: lightgrey;
-    left: 430px;
-    top: 110px;
-    text-align: right;
-	}
-	textarea{
-		resize: none;
-	}
-	h1#registerH1{
-		text-align: left;
-		color: darkblue;
-		text-shadow: 5px 4px aliceblue;
-	}
-</style>
+<link rel="stylesheet" href="css/houseUpdateRegister.css"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		$("form").on("submit", function(e){//submit전 유효성체크
-			console.log(Number.isNaN(Number.parseInt($("input[name=whlflr]").val())));
-			if($("select[name=gcategory]").val()==""){
-				e.preventDefault();
-				alert("상품 카테고리를 선택하여주세요");
-			}  else if(Number.isNaN(Number.parseInt($("input[name=area]").val()))){
-				e.preventDefault();
-				alert("평수는 숫자로만 입력해주세요.");
-			} else if (Number.isNaN(Number.parseInt($("input[name=flr]").val()))){
-				e.preventDefault();
-				alert("매물층수는 숫자로만 입력해주세요.");
-			} else if (Number.isNaN(Number.parseInt($("input[name=whflr]").val()))){
-				e.preventDefault();
-				alert("건물층수는 숫자로만 입력해주세요.");
-			} else if ($("input[name=gimage]").val().length < 1){
-				e.preventDefault();
-				alert("사진을 등록하여주세요");
-			}
-		});//end for onSubmit
-		
-		
-		$("textarea").on("keyup", function(e){//상품설명 글자수 세기
-			$("p#textLength>span").text($(e.target).val().length);
-		});//end textarea onKeyup
-		
-		
-	});//end ready
-</script>
+<script src="js/houseUpdate.js"></script>
 	<h1 id="registerH1">매물 수정하기</h1>
 	<form method="POST" enctype="multipart/form-data" action="HouseUpdateServlet" id="register">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide">
-		      	<table width="800px" style="margin: 30px 0 0 50px;">
+		      	<table width="800px" style="margin: 20px 0 0 50px;">
 		      		<tr>
 						<td class="td_default" style="text-align:center;"><font size="5"><b>매물 기본 정보</b></font> &nbsp;</td>
 					</tr>
-					<tr> <td height="20"> </tr>
+						<tr> <td height="5"></td> </tr>
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
@@ -78,14 +24,14 @@
 							<td class="td_default update" id="updateName" colspan="2" style='padding-left: 30px;text-align: left;'>
 								<input type="text" name="htype" value="${infoDTO.htype}" readonly>
 							</td>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물코드</td>
 								<td class="td_default" colspan="2" style='padding-left: 30px' id="hcode">
 									<input type="text" name="hcode" value="${infoDTO.hcode}" readonly>
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">세타입</td>
 								<td class="td_default update" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
@@ -99,14 +45,14 @@
 									</c:if>
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물명</td>
 								<td class="td_default" id="" colspan="2" style='padding-left: 30px'>
 									<input type="text" name="hname" placeholder="50자 이내" size=40 value="${infoDTO.hname}" >
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물설명</td>
 								<td class="td_default" id="" colspan="2" style="padding-left: 30px; text-align: left; position:relative">
@@ -114,14 +60,14 @@
 									<p id="textLength">(<span>0</span>/250)</p>
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">평수</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
 									<input type="text" name="area" size ="4" style="margin-right: 10px;" value="${infoDTO.area}"> (단위: 제곱미터)
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">층수</td>
 								<td class="td_red" id="" colspan="2"  style='padding-left: 30px; text-align: left;' >
@@ -129,21 +75,21 @@
 									<input type="text" name="whflr" size="2" placeholder="건물층" value="${infoDTO.whlflr}" style="position: absolute; margin-left: 10px;">
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">방개수</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left; ' >
 									<input type="text" name="room" size="2" value="${infoDTO.room}" style="margin-right:10px;"> 개
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">욕실개수</td>
 								<td class="td_red" id="" colspan= "2" style='padding-left: 30px; text-align:left;' >
 									<input type="text" name="batr" size="2" value="${infoDTO.batr}" style="margin-right:10px;"> 개 
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr> <td class="td_title">주소</td>
 								 <td class="td_red" colspan="2" style='padding-left: 30px' >
 									<input type="text" name="post" id="sample4_postcode" value="" placeholder="우편번호">
@@ -153,24 +99,23 @@
 									<span id="guide"></span>	
 								 </td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">사진등록</td>
 								<td class="td_default" colspan="2" style='padding-left: 30px'> 
 									<input type="file" name="himage"/>
 								</td>
 							</tr>
-							<tr> <td height="30"></td> </tr>
 						</table>
 					</tr>
 		      	</table>
 		      </div>
 		      <div class="swiper-slide">
-		      	<table width="800px" style="margin: 30px 0 0 50px;">
+		      	<table width="800px" style="margin: 20px 0 0 50px;">
 		      		<tr>
 						<td class="td_default" style="text-align:center;"><font size="5"><b>매물 가격 정보</b></font> &nbsp;</td>
 					</tr>
-					<tr> <td height="20"> </tr>
+						<tr> <td height="5"></td> </tr>
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
@@ -181,28 +126,28 @@
 									<input type="text" name="deposit" size ="4" value="${priceDTO.deposit}" style="margin-right: 10px;"> (단위: 만원)
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">월세</td>
 								<td class="td_red" id="" colspan="2"  style='padding-left: 30px; text-align: left;' >
 									<input type="text" name="mrent" size="4" value="${priceDTO.mrent}" style="margin-right:10px;"> (단위: 만원)
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">전세</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left; ' >
 									<input type="text" name="yrent" size="4" value="${priceDTO.yrent}" style="margin-right:10px;"> (단위: 만원)
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">관리비</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left; ' >
 									<input type="text" name="maintc" size="4" value="${priceDTO.maintc}" style="margin-right:10px;"> (단위: 만원)
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">주차비</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left; ' >
@@ -213,16 +158,15 @@
 					</tr>
 		      	</table>
 		      </div>
-		      <div class="swiper-slide">
-		      	     	<table width="800px" style="margin: 30px 0 0 50px;">
+		      <div class="swiper-slide" id="lastPage">
+		      	     	<table width="800px" style="margin: 20px 0 0 50px;">
 		      		<tr>
 						<td class="td_default" style="text-align:center;"><font size="5"><b>매물 옵션 정보</b></font> &nbsp;</td>
 					</tr>
-					<tr> <td height="20"> </tr>
+					<tr> <td height="5"></td> </tr>
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
-							<tr> <td height="50"></td> </tr>
 							<tr>
 								<td class="td_title">옵션유무</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
@@ -270,7 +214,7 @@
 								</c:if>	
 								</td>
 							</tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">기타사항</td>
 								<td class="td_default" id="updateName" colspan="2" style="padding-left: 30px; text-align: left; position:relative">
@@ -287,8 +231,8 @@
 		    <div class="swiper-pagination"></div>
 		    
 		    <!-- Add Arrows -->
-		    <div class="swiper-button-next"></div>
-		    <div class="swiper-button-prev"></div>
+		    <div class="swiper-button-next arrows"></div>
+		    <div class="swiper-button-prev arrows"></div>
 		  </div>
 			<div id="registerDiv">
 				<input type="submit" value="수정하기">
