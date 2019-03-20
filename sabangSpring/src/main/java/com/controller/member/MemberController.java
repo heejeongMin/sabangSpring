@@ -64,7 +64,6 @@ public class MemberController {
 	public String signMbr(RedirectAttributes flash, MemberDTO dto, String cnfPasswd, String ssn1, String ssn2,
 			String addr,String phone1, String phone2, String phone3, String email1, String email2,
 			String email3) {
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!Systest: dto" + dto);
 		// 1. id 중복체크
 		int hasUserId = mService.idCheck(dto.getUserid());
 		// 2. 가입 이력 검사
