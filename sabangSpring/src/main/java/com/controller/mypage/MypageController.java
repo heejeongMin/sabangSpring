@@ -54,14 +54,38 @@ public class MypageController {
 				checkMember = service.myPageCheckMember(map);
 			}
 			
-		String mesg = "비밀번호 불일치";
+		String data = "0";
 		if(checkMember != null) {
 			if(checkMember.getPasswd().equals(passwd)) {
-				mesg = "비밀번호 일치";
+				data = "1";
 			};
 		}
 		
-		return mesg;
+		return data;
 	}
 	
+	
+	@RequestMapping("/memberUpdate")
+	public String memberUpdate(HttpSession session,
+			@RequestParam("pwdCheck") String passwd, 
+			@RequestParam(value="phone",required=false) String[] phoneNum ) {
+		MemberDTO loginMember = (MemberDTO)session.getAttribute("memberInfo");
+		MemberDTO mDto = service.mypageMember(loginMember.getUserid());
+		
+		String userid = loginMember.getUserid();
+		if(passwd.isEmpty()) {
+			passwd = mDto.getPasswd();
+		}
+		String phone = "";
+		if(phoneNum!=null) {
+			phone = phoneNum[0] + phoneNum[1] + phoneNum[2];
+		}else {
+			phone = mDto.getPhone();
+		}
+		
+		MemberDTO updateMDto = new MemberDTO(userid, passwd, phone);
+		int num = service.memberUpdate(updateMDto);
+		
+		return "mypage";
+	}
 }
