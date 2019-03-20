@@ -47,6 +47,10 @@ public class MemberDAO {
 		return session.selectOne("MemberMapper.wdMbrInfo", userid);
 	}
 	
+	public String overDay(String userid) {
+		return session.selectOne("MemberMapper.overDay", userid);
+	}
+	
 	
 	/* 로그인 */
 	

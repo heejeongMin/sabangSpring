@@ -44,6 +44,10 @@ public class MemberService {
 		return dao.wdMbrInfo(userid);
 	}// end overDayCheck
 	
+	public String overDay(String userid) {
+		return dao.overDay(userid);
+	}
+	
 	
 	/* 로그인 */
 

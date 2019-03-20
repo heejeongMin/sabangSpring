@@ -27,7 +27,7 @@
 </script>  
 <p style =  "line-height: 140%"> 안전한 탈퇴를 위해, 비밀번호를 확인해주세요.<br>
 비밀번호 확인 후 즉시 탈퇴됩니다. 탈퇴 후 아이디와 데이터는 복구 할 수 없으니 신중하게 고려한 후 선택해 주세요. </p>
-<form action="mDelMbrId" method="get">
+<form action="delMbrId" method="get">
 비밀번호:<input type="password" name="passwd" id="passwd"><br> 
 <input type="submit" value="탈퇴">
 <input type="reset" value="취소">

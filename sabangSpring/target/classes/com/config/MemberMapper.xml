@@ -43,12 +43,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where  userid = #{userid}
 	</select>  <!-- 탈퇴회원 정보출력 -->
 	
-<!-- 	<select id = "overDay" parameterType = "string" resultType = "string">
-		select TO_CHAR(SYSDATE + 24/24,'YYYYMMDD HH24') 
+ 	<select id = "overDay" parameterType = "string" resultType = "string">
+		select TO_CHAR(DROPTIME + 1,'YYYYMMDDHH24') 
 		from wdMbr
 		where userid = #{userid}
-	</select> -->
-	 
+	</select> 
 	 
 	 
 	<!-- 로그인    -->
