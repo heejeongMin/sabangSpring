@@ -47,7 +47,7 @@ div#btnBox>button {
 		<th>월세</th>
 	</tr>
 	<c:forEach var="house" items="${houseByAgent}">
-		<tr>
+		<tr data-attr="${house.HCODE}">
 			<td><input type="checkbox" name="check" value="${house.HCODE}"></td>
 			<td>${house.HCODE}</td>
 			<c:set var="addr" value="${fn:split(house.ADDR, ' ')}"/>
@@ -80,7 +80,41 @@ $(document).ready(function(){
 			e.preventDefault();
 			alert ("삭제할 매물을 선택해주세요");
 		} else {
-			$("form#panel").attr("action", "HouseDelServlet");
+			e.preventDefault();
+			var delList = [];
+			$("input[name=check]").each(function(idx, ele){//check 박스 체크된 애들을 delList에 저장
+				if (ele.checked) delList.push($(ele).val());
+			});
+			$.ajax({//delList를 들고 DB에서 삭제하기
+				type:'get',
+				url:'houseManaging/DELETE/'+ delList,
+				dataType:'text',
+				success:function(data, status, xhr){
+					console.log(data);
+					var mesg = "";
+					if(data=="1"){
+						for(var item of delList){
+							if ($("body").find("tr").attr("data-attr") = item){
+								this.remove();
+							}
+						}
+						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
+					} else {
+						mesg = "삭제 실패하였습니다. 관리자에게 문의해주세요.";
+					}
+					alert(mesg);
+				},
+				error:function(xhr, status, data){ console.log(status); }
+			});
+			
+// 			$("form#panel").ajaxForm({
+// 				type:'get',
+// 				url:'houseManaging/DELETE/'+ $(e.target).val(),
+// 				dataType:'text',
+// 				success:function(data, status, xhr){},
+// 				error:function(xhr, status, data){ console.log(status); }
+// 			})
+			
 		}
 	});
 	

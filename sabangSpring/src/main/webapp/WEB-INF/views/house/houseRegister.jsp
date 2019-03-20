@@ -32,7 +32,7 @@
 		$("select[name=htype]").on("change", function(e){ //상품 코드 값 정하기
 			$.ajax({
 				type:'get',
-				url:'houseRegister/GET/'+ $(e.target).val(),
+				url:'houseManaging/GET/'+ $(e.target).val(),
 				dataType:'text',
 				success:function(data, status, xhr){
 					var newCode = Number.parseInt(data)+1;
@@ -97,11 +97,6 @@
 				alert("사진을 등록하여주세요");
 			}
 		});//end for onSubmit
-		
-		$("form").ajaxForm({
-			
-		});
-		
 		
 		
 		$("textarea").on("keyup", function(e){//상품설명 글자수 세기

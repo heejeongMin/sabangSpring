@@ -1,5 +1,8 @@
 package com.controller.house;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +44,22 @@ public class HouseAgentController {
 		return "houseAgent";
 	}// end houseUIController
 
-	@RequestMapping("/houseRegister/GET/{htype}")
+	@RequestMapping("/houseManaging/GET/{htype}")
 	public @ResponseBody String houseRegisterGET(@PathVariable("htype") String htype) {
 		return service.getLastCode(htype).substring(1);
 	}
 
-	@RequestMapping("/houseRegister/POST")
+	@RequestMapping("/houseManaging/POST")
 	public @ResponseBody String houseRegisterPOST(@PathVariable("htype") String htype) {
 		return "";
+	}
+	
+	@RequestMapping("/houseManaging/DELETE/{delList}")
+	public @ResponseBody String houseRegisterDELETE(@PathVariable("delList") String delList) {
+		List<String> list = Arrays.asList(delList);
+		int n = service.houseDel(list);
+		String deleteMsg = (n>0)? "1":"0";
+//		response.sendRedirect("HouseManagingServlet");
+		return deleteMsg;
 	}
 }
