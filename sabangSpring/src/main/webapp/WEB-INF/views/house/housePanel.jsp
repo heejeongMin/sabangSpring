@@ -94,7 +94,7 @@ $(document).ready(function(){
 					var mesg = "";
 					if(data=="1"){
 						for(var item of delList){
-							if ($("body").find("tr").attr("data-attr") = item){
+							if ($("body").find("tr").attr("data-attr") == item){
 								this.remove();
 							}
 						}

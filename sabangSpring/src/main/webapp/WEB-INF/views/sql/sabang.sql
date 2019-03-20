@@ -1,136 +1,279 @@
-drop table house_info cascade constraints;
-drop table house_price cascade constraints; 
-drop table house_option cascade constraints;
-drop table member cascade constraints;
+--------------------------------------------------------
+--  파일이 생성됨 - 수요일-3월-20-2019   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table AGENT
+--------------------------------------------------------
 
--- **  house
+  CREATE TABLE "AGENT" 
+   (	"AGNTID" VARCHAR2(10 BYTE), 
+	"PASSWD" VARCHAR2(20 BYTE), 
+	"AGNTSSN" VARCHAR2(14 BYTE), 
+	"AGNTNAME" VARCHAR2(10 BYTE), 
+	"AGNTEMAIL" VARCHAR2(50 BYTE), 
+	"HCODE" VARCHAR2(6 BYTE), 
+	"AGNTPHONE" VARCHAR2(11 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table BOARD
+--------------------------------------------------------
 
---house info 
-create table house_info(
-hcode varchar2(6),
-htype varchar(20) check(htype in ('o','t','f','p')) not null, --부동산 유형 --원룸 o / 투쓰리룸 t / 오피스텔 f / 아파트 p
-rtype varchar(4) not null, -- rent type 
-hname varchar(100) not null, 
-addr varchar(500) not null,  
-coordX varchar(30), 
-coordY varchar(30),
-area varchar(20) not null,  -- 면적
-whlflr number(4),  -- 전체 층 
-flr number(2) not null, -- if (flr == 0) '반지하' , if (whlflr < flr) '옥탑' 
-room varchar2(2) not null, -- 방 개수
-batr varchar(2) not null, -- 욕실 개수
-cntwish number(1) default 0 check(cntwish < 6), -- 찜 회수
-himage varchar2(80), -- System.currTimeMillis()랑 같이 사용해서 좀 길어졌음..
-hetc varchar2(500),
-registerDate date default sysdate,
-agntid varchar2(10) CONSTRAINT house_info_agentid_fk REFERENCES AGENT(agntid),
-CONSTRAINT pk_hdt_cd PRIMARY KEY (hcode)
-);
+  CREATE TABLE "BOARD" 
+   (	"PCODE" VARCHAR2(4 BYTE), 
+	"HCODE" VARCHAR2(6 BYTE), 
+	"PDATE" DATE DEFAULT SYSDATE, 
+	"PPWD" VARCHAR2(4 BYTE), 
+	"USERID" VARCHAR2(10 BYTE), 
+	"TITLE" VARCHAR2(30 BYTE), 
+	"CONTENT" VARCHAR2(4000 BYTE), 
+	"FILENAME" VARCHAR2(200 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table HOUSE_INFO
+--------------------------------------------------------
 
--- house price
-create table house_price( --단위 (만)
-hcode varchar2(6),
-deposit number(6), -- 보증금
-mrent number(3), -- 월세
-yrent number(6), -- 전세
-maintc number(2) not null, -- maintenance cost, 관리비
-parkf  number(2,1) not null, --parking fee, 주차비 (2.5만원)
-CONSTRAINT fk_hpr_cd FOREIGN KEY (hcode)REFERENCES house_info (hcode) on delete cascade
-);
+  CREATE TABLE "HOUSE_INFO" 
+   (	"HCODE" VARCHAR2(6 BYTE), 
+	"HTYPE" VARCHAR2(20 BYTE), 
+	"RTYPE" VARCHAR2(4 BYTE), 
+	"HNAME" VARCHAR2(100 BYTE), 
+	"ADDR" VARCHAR2(500 BYTE), 
+	"COORDX" VARCHAR2(30 BYTE), 
+	"COORDY" VARCHAR2(30 BYTE), 
+	"AREA" VARCHAR2(20 BYTE), 
+	"WHLFLR" NUMBER(4,0), 
+	"FLR" NUMBER(2,0), 
+	"ROOM" VARCHAR2(2 BYTE), 
+	"BATR" VARCHAR2(2 BYTE), 
+	"CNTWISH" NUMBER(4,0) DEFAULT 0, 
+	"HIMAGE" VARCHAR2(80 BYTE), 
+	"HETC" VARCHAR2(500 BYTE), 
+	"REGISTERDATE" DATE DEFAULT sysdate, 
+	"AGNTID" VARCHAR2(10 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table HOUSE_OPTION
+--------------------------------------------------------
 
+  CREATE TABLE "HOUSE_OPTION" 
+   (	"HCODE" VARCHAR2(20 BYTE), 
+	"BLTIN" CHAR(1 BYTE) DEFAULT 'N', 
+	"ELEV" CHAR(1 BYTE) DEFAULT 'N', 
+	"PET" CHAR(1 BYTE) DEFAULT 'N', 
+	"VRD" CHAR(1 BYTE) DEFAULT 'N', 
+	"LOAN" CHAR(1 BYTE) DEFAULT 'N', 
+	"PARK" CHAR(1 BYTE) DEFAULT 'N', 
+	"MDATE" CHAR(1 BYTE) DEFAULT 'N', 
+	"ETC" VARCHAR2(500 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table HOUSE_PRICE
+--------------------------------------------------------
 
--- house option : Y / N 형태 + ele
-create table house_option(
-hcode varchar2(6),
-bltin char(1) default 'N' check(bltin in ('Y','N')) not null, -- 빌트인
-elev char(1) default 'N' check(elev in ('Y','N')) not null, -- 엘레베이터
-pet  char(1) default 'N' check(pet in ('Y','N')) not null , -- 애완동물
-vrd char(1)  default 'N' check(vrd in ('Y','N')) not null , -- 베란다 / 발코니
-loan char(1)  default 'N' check(loan in ('Y','N')) not null, -- 전세자금대출가능여부
-park char(1)  default 'N' check(park in ('Y','N')) not null,  -- 주차 가능 여부
-mdate char(1) default 'N' check(mdate in ('Y','N')) not null, -- 입주 가능일, 즉시 N / 협의 Y
-etc varchar2(500), -- 기타 사항
-CONSTRAINT fk_hopt_cd FOREIGN KEY (hcode)REFERENCES house_info (hcode) on delete cascade
-);
+  CREATE TABLE "HOUSE_PRICE" 
+   (	"HCODE" VARCHAR2(20 BYTE), 
+	"DEPOSIT" NUMBER(6,0), 
+	"MRENT" NUMBER(3,0), 
+	"YRENT" NUMBER(6,0), 
+	"MAINTC" NUMBER(2,0), 
+	"PARKF" NUMBER(4,1)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MEMBER
+--------------------------------------------------------
 
+  CREATE TABLE "MEMBER" 
+   (	"USERID" VARCHAR2(10 BYTE), 
+	"PASSWD" VARCHAR2(20 BYTE), 
+	"SSN" VARCHAR2(14 BYTE), 
+	"USERNAME" VARCHAR2(10 BYTE), 
+	"POST" VARCHAR2(6 BYTE), 
+	"ADDR" VARCHAR2(500 BYTE), 
+	"PHONE" VARCHAR2(11 BYTE), 
+	"EMAIL" VARCHAR2(50 BYTE), 
+	"AGENT" CHAR(1 BYTE) DEFAULT 'N'
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MYPRODUCT
+--------------------------------------------------------
 
--- ** member
+  CREATE TABLE "MYPRODUCT" 
+   (	"PRODID" VARCHAR2(10 BYTE), 
+	"PRODNAME" VARCHAR2(20 BYTE), 
+	"PRICE" NUMBER(6,0), 
+	"QUANTITY" NUMBER(2,0)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table RCNLIST
+--------------------------------------------------------
 
--- member
+  CREATE TABLE "RCNLIST" 
+   (	"NUM" NUMBER(15,0), 
+	"USERID" VARCHAR2(20 BYTE), 
+	"HCODE" VARCHAR2(20 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table TB_DEPARTMENT
+--------------------------------------------------------
 
-create table member
-(
-  userid varchar2(10),
-  passwd varchar2(20) not null,
-  ssn varchar2(14) not null unique, 
-  username varchar2(10) not null,
-  post varchar2(6) not null,
-  addr varchar2(500) not null, -- 신 주소표기, 도로명주소
-  phone varchar2(11) not null unique,
-  email varchar2(50) not null,
-  wishlist varchar2(6) default 0,  --hcode 
- -- mtype varchar2(2) default 'Y' check(mtype in ('Y','N')) not null,  -- Y : default, 일반회원 / N : 중개사 , radio 버튼로 default 일반회원, 중개인으로 가입할 경우 중개인 버튼을 클릭해야하는 형태로 구현 
-  CONSTRAINT pk_mem_id PRIMARY KEY (userid),
-   CONSTRAINT fk_mem_cd FOREIGN KEY (wishlist)REFERENCES house_info (hcode) on delete cascade
-); 
+  CREATE TABLE "TB_DEPARTMENT" 
+   (	"DEPARTMENT_NO" VARCHAR2(10 BYTE), 
+	"DEPARTMENT_NAME" VARCHAR2(40 BYTE), 
+	"CATEGORY" VARCHAR2(40 BYTE), 
+	"OPEN_YN" CHAR(1 BYTE), 
+	"CAPACITY" NUMBER
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table TEST2
+--------------------------------------------------------
 
+  CREATE TABLE "TEST2" 
+   (	"USERID" VARCHAR2(10 BYTE)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table WDMBR
+--------------------------------------------------------
 
+  CREATE TABLE "WDMBR" 
+   (	"USERID" VARCHAR2(10 BYTE), 
+	"DROPTIME" DATE DEFAULT SYSDATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table WISHLIST
+--------------------------------------------------------
 
-
--- agent
-create table agent(
-  agntid varchar2(10),
-  passwd varchar2(20) not null,
-  agntssn varchar2(14) not null unique,
-  agntname varchar2(10) not null,
-  agntphone varchar2(11) not null unique,
-  agntemail varchar2(50) not null,
-  hcode varchar2(6), -- 중개 매물 코드 
-  CONSTRAINT pk_agnt_id PRIMARY KEY (agntid),
-  CONSTRAINT fk_agt_cd FOREIGN KEY (hcode)REFERENCES house_info (hcode) on delete cascade
-);
-
--- withdraw member
-create table wdMbr
-(
-  userid varchar2(10) primary key,
-  phone varchar2(11) not null unique,
-  droptime DATE  DEFAULT SYSDATE
-);
-
-
--- ** board
-
---board -- hcode를 fk로 지정한 이유 : 각 house의 상세 페이지에 보드가 들어가므로 hcode 필요
-create table board
-( 
-pcode varchar2(4) primary key,
-hcode varchar2(6), 
-pdate DATE DEFAULT SYSDATE, -- post date 게시일
-ppwd varchar2(4) not null, --post password. 계정 비밀번호와 다름. 4byte
-userid varchar2(10) not null,
-title varchar2(30) not null,
-content varchar2(4000) not null, --max 2000자
-filename varchar2(200), -- 업로드 파일명 
-CONSTRAINT fk_brd_id FOREIGN KEY (userid)REFERENCES member (userid) on delete cascade, -- 답변 여부 맴버 확인
-CONSTRAINT fk_brd_cd FOREIGN KEY (hcode)REFERENCES house_info (hcode) on delete cascade
-);   
-
-
-create table RCNLIST
-  (  num Number(15) PRIMARY KEY,
-     userid VARCHAR2(10),
-     hcode varchar2(20) not null
-  );   
-
--- member테이블을 참조
--- userid를 fk로 지정한 이유 : 로그인한 정보가 필요
-  alter table RCNLIST
-  add CONSTRAINT RCNLIST_userid_fk FOREIGN KEY(userid)
-   REFERENCES member(userid) ON DELETE CASCADE;
-   
--- houseInfo테이블을 참조
--- hcode를 fk로 지정한 이유 : house 정보가 필요
-  alter table RCNLIST
-  add CONSTRAINT RCNLIST_hcode_fk FOREIGN KEY(hcode)
-   REFERENCES house_info(hcode) ON DELETE CASCADE;
+  CREATE TABLE "WISHLIST" 
+   (	"USERID" VARCHAR2(10 BYTE), 
+	"HCODE" VARCHAR2(6 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+REM INSERTING into AGENT
+SET DEFINE OFF;
+Insert into AGENT (AGNTID,PASSWD,AGNTSSN,AGNTNAME,AGNTEMAIL,HCODE,AGNTPHONE) values ('agent2','agent2','999999-9999999','전트2','agent2@korea.com',null,'01099999999');
+Insert into AGENT (AGNTID,PASSWD,AGNTSSN,AGNTNAME,AGNTEMAIL,HCODE,AGNTPHONE) values ('agent3','agent3','888888-8888888','에이','agent3@gmail.com',null,'01088888888');
+Insert into AGENT (AGNTID,PASSWD,AGNTSSN,AGNTNAME,AGNTEMAIL,HCODE,AGNTPHONE) values ('agtest','testing','770828-1125960','김우성','agenting@naver.com',null,'01049200152');
+Insert into AGENT (AGNTID,PASSWD,AGNTSSN,AGNTNAME,AGNTEMAIL,HCODE,AGNTPHONE) values ('frutipss','123456','987456-1236547','박박','soslwlw@hanmail.net',null,'01048365314');
+REM INSERTING into BOARD
+SET DEFINE OFF;
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H005','O005',to_date('19/02/25','RR/MM/DD'),'0000','COFFEE','월세 조정 가능한가요','혹시 월세 조정 가능한가요?',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H006','F001',to_date('19/02/25','RR/MM/DD'),'3333','agent','주차장 사진은 없나요','주차장 사진을 보고싶습니다',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H007','F002',to_date('19/02/25','RR/MM/DD'),'4822','APPLES','날짜 협의드립니다','다음주 금요일 괜찮으신지요',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H008','F002',to_date('19/02/25','RR/MM/DD'),'9999','JELLY','문의드립니다','핸드폰 번호로 연락부탁드립니다',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H013','T004',to_date('19/02/25','RR/MM/DD'),'6666','aaaas','내방 예약 문의드려여','이번주 토요일 괜찮은가여',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H001','O001',to_date('19/02/27','RR/MM/DD'),'1111','agent2','입주날짜에 관하여 문의드립니다','입주날짜가 협의로 되어있어서 문의드려요.',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H014','T005',to_date('19/02/26','RR/MM/DD'),'8888','pts','공인중개사 번호가 없는 번호','없는 번호라네요 업데이트해주세요..',null);
+Insert into BOARD (PCODE,HCODE,PDATE,PPWD,USERID,TITLE,CONTENT,FILENAME) values ('H002','O001',to_date('19/02/28','RR/MM/DD'),'1234','hollys','이미지가 안떠요','수정해주세요',null);
+REM INSERTING into HOUSE_INFO
+SET DEFINE OFF;
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('P002','p','월세','연세대 도보 바로앞 14평형 저렴한 월세 / 남향 / 즉시입주가능','서울특별시 서대문구 대신동','37.563916970608894','126.94383249723303','29.03㎡ ',15,14,'2','1',0,'pimage2','2호선 신촌역 도보 5분, 이대역 도보 3분 거리에 위치한 포스빌아파트 14평형 월세입니다',to_date('19/02/26','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('P004','p','월세','연대 앞 북향  넓은 복층 주상복합 아파트','서울특별시 서대문구 연희동','37.563767002879196','126.93272227930592','32.34㎡',15,11,'2','1',0,'pimage4','연세대 도보 5분거리에 위치한 포스빌 아파트 북향 방이나왔어요.',to_date('19/02/06','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('O001','o','월세','가성비 최고 풀 옵션 원룸','서울시 서대문구 창천동','37.55865382332561','126.93427968164825','19.83m²',4,2,'1','1',20,'oimage1','인근편의시설 확보 좋습니다. 주택가 초입에 위치하고 있어요 :)',to_date('19/02/01','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('O002','o','월세','연대 인근 깔끔한 건물','서울시 서대문구 연희동','37.564022444565694','126.93195238268775','16.53m²',3,2,'1','1',0,'oimage2','거의 신축급 깔끔한 방! 저렴한 가격의 매물을 찾는 직장인과 대학생에게 안성맞춤!',to_date('19/02/06','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('O003','o','월세','분위기있는 신축 옥탑','서울시 서대문구 연희동','37.56450906563715','126.93209681948031','33.06m²',4,3,'1','1',3,'oimage3','넓은 마당 사용으로 공간 활용도 최강, 풀옵션 가성비 갑',to_date('19/02/26','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('O004','o','월세','꿀남향 신축급 이중보안','서울시 서대문구 창천동','37.5588707736284','126.93556972620135','23.14m²',7,3,'1','1',2,'oimage4','명물거리 근처! 편의시설 모두 갖춰 생활하세요. 이중보안으로 안전해요',to_date('19/02/11','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('O005','o','월세','특급추천 채광짱 샤워부스','서울시 서대문구 대신동','37.564800437357626','126.94487315886799','19.83m²',5,2,'1','1',2,'oimage5','1층에 경비원 있습니다 무조건 안전이 최고지요. 인기 짱 매물 서두르세요 :)',to_date('19/02/03','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('T001','t','월세','신촌역 도보5분 신축급 투룸','서울시 서대문구 창천동','37.55860019936876','126.93506744837961','46.28m²',6,4,'2','1',0,'timage1','신촌역 도보5분거리 주택가초입이며 싱크대,도배새로교체하여 깔끔합니다.',to_date('19/02/03','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('T002','t','월세','넓은 투룸 연세대 5분거리 보증금 조정 가능','서울시 서대문구 창천동','37.5590685728757','126.93480446707945','49.58m²',4,1,'2','1',5,'timage2','채광 너무 좋아요~ 주택가 초입으로 밤에도 안전해요.',to_date('19/02/26','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('T003','t','월세','신촌역 연세대 도보 5분 쓰리룸','서울시 서대문구 창천동','37.55927684119469','126.93343708170717','72.72m²',5,5,'3','1',0,'timage3','직접보시면 더욱더 좋습니다.문의주세요',to_date('19/02/26','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('T004','t','월세','서강대 후문 인근 올수리 풀옵션 쓰리룸','서울시 마포구 대흥동','37.55498893879162','126.94186094076593','66.11m²',3,2,'3','1',0,'timage4','대로변으로 안전하며 풀옵션 올수리로 몸만 오시면 됩니다',to_date('19/02/26','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('T005','t','전세','위치 끝내주는 가성비 투룸','서울시 마포구 염리동','37.555675951770816','126.94663633678059','46.28m²',5,4,'1','1',0,'timage5','방범이 잘되어있어서 여성분들에게도 추천! 빌트인 옷장으로 시원시원한 내부!^^',to_date('19/02/18','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('F001','f','월세','신촌역 초인근 주변 산책로와 쇼핑단지 조성 굿','서울특별시 마포구 노고산동','37.55544536289714','126.93931192255577','13.52㎡',11,15,'1','1',0,'fimage1','방범이 잘되어있어서 여성분들에게도 추천! 빌트인 옷장으로 시원시원한 내부!^^',to_date('19/02/26','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('F002','f','월세','신촌대로 신축 오피스텔 반전세★ 폴옵션 복층 ★','서울특별시 마포구 노고산동','37.55522967243774','126.94038950455885','19.99㎡',13,4,'1','1',0,'fimage2','드라마에 나올법한 주차도 가능하고 교통도 좋은 복층 집',to_date('19/02/02','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('F003','f','월세','?바닥 교체, 풀옵션  연대,이대,서강대 가까운 오피스텔?','서울특별시 마포구 노고산동','37.55497398302118','126.93397961072301','31.41㎡',15,9,'1','1',0,'fimage3','신촌역1분거리, 위치 최고 좋은 방',to_date('19/02/02','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('F004','f','월세','신촌역 바로앞.대로변 오피스텔','서울특별시 서대문구 창천동','37.5562057974519','126.93929772492868','26.67㎡',15,10,'1','1',0,'fimage4','깔끔한 오피스텔..학생이나 젊은층 좋아하시는 물건예요.',to_date('19/02/15','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('F005','f','월세','◐신촌역 도보2분, 대로변, 오픈형 구조, 빌트인, 주차여유◑','서울특별시 마포구 노고산동','37.55605167068116','126.94096377501103','19.53㎡ ',14,10,'1','1',0,'fimage5','◇2호선(신촌역), 경의선(서강역), 신공항선(홍대역)의 트리플역세권',to_date('19/02/15','RR/MM/DD'),null);
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('P001','p','월세','싱크대수리한방/방1개 분리형/신촌유일주상복합아파트/베란다있음','서울특별시 마포구 노고산동','37.55569169876663','126.94182417920896','38.02㎡ ',19,8,'1','1',0,'pimage1','신촌 초역세권에 있는 주상복합아파트입니다.',to_date('19/02/07','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('P003','p','월세','연세대 도보 3분거리 풀 옵션 아파트. 연세대 정문 앞','서울특별시 서대문구 연희동','37.564106044648376','126.93319282998453','34.64㎡  ',19,15,'2','1',0,'pimage3','연세대 3 분 거리 풀 옵션 아파트 방2개 연세대 정문 앞 연대. 이대 홍대. 현대 백화점. 세브란스 병원 근교',to_date('19/02/07','RR/MM/DD'),'agent');
+Insert into HOUSE_INFO (HCODE,HTYPE,RTYPE,HNAME,ADDR,COORDX,COORDY,AREA,WHLFLR,FLR,ROOM,BATR,CNTWISH,HIMAGE,HETC,REGISTERDATE,AGNTID) values ('P005','p','전세','올수리 깔끔한집 홍대입구 공원길옆','서울특별시 마포구 동교동','37.55721705032405','126.93012512025646','59.85㎡ ',14,10,'3','1',0,'pimage5','초역세권, 홍대입구 도보 5분거리, 홍대 걸어서 10분거리',to_date('19/02/10','RR/MM/DD'),null);
+REM INSERTING into HOUSE_OPTION
+SET DEFINE OFF;
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('P002','N','Y','N','N','N','Y','N','에어컨, 세탁기, 책상, 가스레인지, 옷장, 전자도어락, 신발장');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('P004','N','Y','N','N','N','Y','N','에어컨, 세탁기, 냉장고, 신발장, 가스레인지, 옷장, 전자도어락');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('P003','N','Y','N','N','N','Y','N','에어컨, 세탁기, 책상, 가스레인지, 옷장, 전자도어락, 신발장');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('O001','Y','N','Y','N','Y','N','N','에어컨, 냉장고, 세탁기, 인덕션, 전자레인지, 침대, 옷장, 싱크대');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('O002','N','N','N','N','N','N','N','에어컨, 냉장고, 세탁기, 인덕션, 침대');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('O003','Y','N','N','N','N','N','N','에어컨, 냉장고, 세탁기, 인덕션');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('O004','N','Y','N','N','N','Y','Y','에어컨, 냉장고, 세탁기, 인덕션, 책상, 옷장, 신발장, 싱크대');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('O005','N','Y','N','N','N','N','N','에어컨, 냉장고, 세탁기, 인덕션, 전자레인지, 책상, 책장, 침대, 옷장, 신발장, 싱크대');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('T001','N','Y','N','N','N','N','Y','냉장고,세탁기,에어컨,가스렌지,싱크대,신발장구비');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('T002','N','Y','Y','N','Y','Y','Y',null);
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('T003','N','Y','N','N','N','N','Y',null);
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('T004','N','N','N','N','N','N','Y','냉장고, 세탁기, 가스렌지, 옷장, 신발장, 싱크대');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('T005','Y','Y','Y','N','N','Y','N','옷장');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('F001','N','Y','N','N','N','Y','N','에어컨, 냉장고, 세탁기, 인덕션, 책상, 옷장, 신발장, 싱크대, 전자도어락');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('F002','Y','Y','N','N','N','N','Y','에어컨, 냉장고, 세탁기, 옷장, 신발장, 전자도어락');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('F003','Y','Y','N','N','N','N','N','에어컨, 세탁기, 가스레인지, 책상, 옷장, 침대, 신발장, 전자도어락');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('F004','N','Y','N','N','N','N','Y','에어컨, 세탁기, 전자도어락, 신발장, 냉장고');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('F005','Y','Y','N','N','N','Y','Y','에어컨, 세탁기, 옷장, 전자도어락, 신발장, 냉장고');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('P001','N','Y','N','Y','N','Y','Y','에어컨, 가스레인지, 옷장, 전자도어락, 신발장, 냉장고');
+Insert into HOUSE_OPTION (HCODE,BLTIN,ELEV,PET,VRD,LOAN,PARK,MDATE,ETC) values ('P005','N','Y','Y','Y','Y','Y','Y','싱크대');
+REM INSERTING into HOUSE_PRICE
+SET DEFINE OFF;
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('P002',500,90,0,8,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('P004',1000,95,0,8,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('P003',1000,76,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('T005',26000,0,26000,0,5);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('O001',300,40,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('O002',500,352,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('O003',2000,47,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('O004',1000,60,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('O005',1000,55,0,6,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('T001',3000,75,0,5,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('T002',8000,50,0,0,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('T003',1000,130,0,0,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('T004',1000,110,0,0,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('F001',300,27,0,5,4);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('F002',5000,70,0,9,3);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('F003',1000,80,0,10,5);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('F004',1000,70,0,9,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('F005',1000,55,0,7,3);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('P001',1000,80,0,11,0);
+Insert into HOUSE_PRICE (HCODE,DEPOSIT,MRENT,YRENT,MAINTC,PARKF) values ('P005',41000,0,41000,0,0);
+REM INSERTING into MEMBER
+SET DEFINE OFF;
+Insert into MEMBER (USERID,PASSWD,SSN,USERNAME,POST,ADDR,PHONE,EMAIL,AGENT) values ('backer','123456','444444-5555555','배커','06027','서울 강남구 압구정로 102 (신사동)','01022008965','ss9291@naver.com','N');
+Insert into MEMBER (USERID,PASSWD,SSN,USERNAME,POST,ADDR,PHONE,EMAIL,AGENT) values ('sssss','sssss','9305202459768','임효정','21842','인천시 부평구 삼산동 92-1','01033002810','owldfl@gmail.com','N');
+Insert into MEMBER (USERID,PASSWD,SSN,USERNAME,POST,ADDR,PHONE,EMAIL,AGENT) values ('ababab','ababab','963521-4569874','김에이','06376','서울 강남구 헌릉로 569 (세곡동)','01000008796','heeeees@yahoo.co.kr','
