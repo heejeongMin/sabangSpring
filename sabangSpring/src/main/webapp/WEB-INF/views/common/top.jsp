@@ -96,7 +96,7 @@ $(document).ready(function(){
               
               <c:otherwise>
               	<a href="loginUI" id="login">로그인</a> 
-              	<a href="signCheckMbr">회원가입</a>
+              	<a href="signMbrUI">회원가입</a>
               </c:otherwise>
        </c:choose>
        	</span>

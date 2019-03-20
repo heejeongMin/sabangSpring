@@ -21,7 +21,8 @@
 			<mvc:exclude-mapping path="/houseOverview" />
 			<mvc:exclude-mapping path="/houseList" />
 			<mvc:exclude-mapping path="/houseFilter" />
-			<mvc:exclude-mapping path="/signCheckMbr" />
+			<mvc:exclude-mapping path="/signMbrUI" />
+			<mvc:exclude-mapping path="/signMbr" />
 			<mvc:exclude-mapping path="/loginUI" />
 			<mvc:exclude-mapping path="/login" />
 			<mvc:exclude-mapping path="/" />
@@ -60,6 +61,9 @@
 	<mvc:view-controller path="/delMbrIdConfirm"
 		view-name="delMbrIdConfirm" />
 
+	<!-- 회원가입  화면 -->
+	<mvc:view-controller path="/signMbrUI"
+		view-name="signMbrForm" />
 
 	<context:component-scan base-package="com.*" />
 
