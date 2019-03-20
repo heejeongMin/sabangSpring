@@ -7,5 +7,5 @@
 <a href="InterestListServlet">관심목록</a>
 
 <c:if test="${memberInfo.agent == 'Y'.charAt(0)}">
-	<a href="houseManaging">매물 관리</a>
+	<a href='houseUIController'>매물 관리</a>
 </c:if>

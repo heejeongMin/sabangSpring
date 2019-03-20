@@ -68,7 +68,7 @@ div#btnBox>button {
 $(document).ready(function(){
 	$("#registerBtn").on("click", function(e){//등록버튼 클릭시
 		e.preventDefault();
-		location.href="houseUIController/register";
+		location.href="houseUIController?work=register";
 	});
 	
 	$("#delBtn").on("click", function(e){//삭제버튼 클릭시
@@ -92,7 +92,6 @@ $(document).ready(function(){
 			if(ele.checked) {
 				count++;
 				item = $(ele).val();
-				console.log($(ele).val());
 			}
 		});
 		
@@ -101,7 +100,7 @@ $(document).ready(function(){
 		} else if ( count > 1) {
 			alert ("한번에 하나의 매물만 수정이 가능합니다. 매물 한개만 체크하고 수정버튼을 눌러주세요.");
 		} else {
-			location.href="HouseUIControleServlet?hcode="+item;
+			location.href="houseUIController?work=update&hcode="+item;
 		}
 	});
 	
