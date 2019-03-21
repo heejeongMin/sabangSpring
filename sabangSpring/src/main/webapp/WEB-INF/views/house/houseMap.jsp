@@ -34,6 +34,24 @@
 	            </li>
 	        </ul>
 	    </div>
+	    
+	    <!-- 지도 위에 표시될 하우스 카테고리  -->
+	    <div class="houseCategory">
+	    	<ul>
+	            <li id="totalListMenu" onclick="changeMarker('total')">
+	                <span class="ico_comm ico_total"></span>
+	                	전체보기
+	            </li>
+	            <li id="newListMenu" onclick="changeMarker('new')">
+	                <span class="ico_comm ico_new"></span>
+	                	신매물
+	            </li>
+	            <li id="hotListMenu" onclick="changeMarker('hot')">
+	                <span class="ico_comm ico_hot"></span>
+	                	핫매물
+	            </li>
+	        </ul>
+	    </div>
     </div>
 </div>
 
@@ -89,8 +107,7 @@
 		});
 		
 		
-		
-/* 
+	
 		// 마커 출력
 		var positions = [];
 		for(var i = 0; i< coord.length; i++){
@@ -113,9 +130,7 @@
 		        position: positions[i].latlng, // 마커를 표시할 위치
 		        image : markerImage // 마커 이미지 
 		    });
-			
-		} */
-		
+		}	
 		
 		
 		// 카페 마커가 표시될 좌표 배열입니다
