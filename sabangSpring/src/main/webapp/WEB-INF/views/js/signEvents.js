@@ -1,42 +1,6 @@
-/**
- * 
- */
-
 $(document).ready(function() {
-		
-		$('input[type=radio]').on("click", function() {
-			page = $('input[type=radio]:checked').val();
-			$.ajax({
-				url : "SignFormServlet",
-				type : "get",
-				dataType : "text",
-				data : {
-					page : page
-				},
-				success : function(data, status, xhr) {
-					$("#signForm").html(data);
-				},
-				error : function(xhr, status, e) {
-					console.log("error");
-				}
-			})
-		}) // end radio event
-		
-		$("body").on("keyup", "#cnfPasswd", function() {
-			var passwd = $("#passwd").val();
-			var mesg = null
-			if (passwd != $(this).val()) {
-				mesg = "비밀번호가 일치하지 않습니다.";
-			}
-			$("#checkPW").text(mesg);
-		}); //end equal check password
-		
-		$("body").on("change", "#email3", function(){
-			var email = $(this).val();
-			  $("#email2").val(email);
-		})// end select email
-		
-		$("body").on("submit", "#signForm", function(event){
+	console.log(00)
+		$("#signForm").on("submit", function(event){
 			/* space check */
 			$(this).find("span.live").remove();
 		//	var page = $('input[type=radio]:checked').val();
@@ -124,7 +88,7 @@ $(document).ready(function() {
 				} 
 			}
 			
-			if(passwd.length == 0 ||!pwRule.test(passwd) || passwd != cnfPw){
+			if(passwd.length == 0 ||!passRule.test(passwd) || passwd != cnfPw){
 				event.preventDefault();
 				if(passwd.length == 0) {
 					$("#passwd").after("<span class = 'live'>"+pwM+"</span>");
@@ -133,7 +97,7 @@ $(document).ready(function() {
 				}else if (passwd != cnfPw){
 				 	$("#cnfPasswd").after("<span class = 'live'>"+cpM+"</span>");
 				}
-			}		 //?
+			}		 
 			
 			if (userid.length == 0 || !idRule.test(userid)){
 				event.preventDefault();
@@ -148,8 +112,21 @@ $(document).ready(function() {
 			$(".live").css("font-size", "9pt"); 
 		}); //end check null and multipled ID and regular expression ==> submit event
 		
+		$("#cnfPasswd").on("keyup", function() {
+			var passwd = $("#passwd").val();
+			var mesg = null
+			if (passwd != $(this).val()) {
+				mesg = "비밀번호가 일치하지 않습니다.";
+			}
+			$("#checkPW").text(mesg);
+		}); //end equal check password
 		
-		$("body").on("keyup", "input[type]", function(e) {
+		$("#email3").on("#email3", function(){
+			var email = $(this).val();
+			  $("#email2").val(email);
+		})// end select email
+		
+		$("body").on("keyup", "input[type]", function() {
 				$(this).val($(this).val().replace(/(\s*)/g, ""));
 		});
 });

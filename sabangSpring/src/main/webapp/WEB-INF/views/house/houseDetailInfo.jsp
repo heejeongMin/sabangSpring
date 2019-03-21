@@ -10,7 +10,7 @@
 <script src="js/houseDetailInfo.js"></script>
 <script src="js/geoLocation.js"></script>
 
-<c:set var="mesg" value="${mesg}" scope="session" />
+<c:set var="mesg" value="${mesg}"/>
 <c:if test="${!(empty mesg)}">
 	<script>
 		alert('${mesg}');

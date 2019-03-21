@@ -14,13 +14,12 @@
 <meta http-equiv="pragma" content="no-cache"> 
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/sabangTest.css">
-<c:set var="mesg" value="${mesg}"/>
+<c:set var="mesg" value="${mesg}" scope="session" />
 <c:if test="${!(empty mesg)}">
 	<script>
 		alert('${mesg}');
 	</script>
-	<c:remove var="mesg" />
-</c:if>
+	</c:if>
 </head>
 <body id="wrap">
 	<div id="wrap">
