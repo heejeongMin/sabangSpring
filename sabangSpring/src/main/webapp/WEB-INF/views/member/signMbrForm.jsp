@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src = 'js/signEvents.js'></script><br>    
+<script src="js/signEvents.js"></script><br>    
 
 <h4>회원 가입 </h4>
 Member <input type = "radio" id = "selectMbr" name = "agent" value = 'N' >
 Agent <input type = "radio" id = "selectAgnt" name = "agent" value = 'Y'> 
 
-<form action = "signMbr" method = "get">
+<form action = "signMbr" id = "signForm" method = "get">
  <input type="text" name="userid" id="userid" placeholder = "아이디">
 <br> 
 <input type="password" name="passwd" id="passwd" placeholder="비밀번호" ><br>
