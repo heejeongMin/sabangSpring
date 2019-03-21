@@ -17,13 +17,13 @@
 		$("#delete").on("click", function(e){
 			var ppwd = prompt("비밀번호 입력","게시물 비밀번호를 입력해주세요");
 			var pcode = $("h3").attr("data-pcode")
-			location.href = "../DeleteBoard?pcode="+pcode+"&ppwd="+ppwd; 
+			location.href = "deleteBoard?pcode="+pcode+"&ppwd="+ppwd; 
 		})
 		
 	 	$("#edit").on("click", function(e){
 			var pcode = $("h3").attr("data-pcode")
 			var ppwd = $("h3").attr("data-ppwd")
-			location.href = "../PostBoard?pcode="+pcode+"&ppwd="+ppwd; 
+			location.href = "postBoard?pcode="+pcode+"&ppwd="+ppwd; 
 		})
 	})
 </script>

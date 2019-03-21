@@ -138,6 +138,7 @@ public class HouseController {
 		session.setAttribute("info", info);
 		session.setAttribute("agentInfo", agentInfo);
 		session.setAttribute("board", board);
+		
 		if (option.getBltin() == 'Y') {
 			list.add("bltin");
 		}
