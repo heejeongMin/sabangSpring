@@ -1,6 +1,8 @@
 package com.controller.mypage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dto.HouseRcnlistDTO;
+import com.dto.HouseWishlistDTO;
 import com.dto.MemberDTO;
+import com.service.HouseService;
 import com.service.MemberService;
 
 @Controller
@@ -20,6 +25,10 @@ public class MypageController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	HouseService hService;
+	
 	
 	@RequestMapping("/myPage")
 	public String myPage(HttpSession session, Model model) {
@@ -88,5 +97,41 @@ public class MypageController {
 		int num = service.memberUpdate(updateMDto);
 		flash.addFlashAttribute("mesg", "성공적으로 업데이트 되었습니다.");
 		return "redirect:/myPage";
+	}
+	
+	
+	@RequestMapping("/interestList")
+	public String interestList(HttpSession session, Model model,
+			@RequestParam(value="iCategory",required=false) String iCategory) {
+		MemberDTO loginMember = (MemberDTO)session.getAttribute("memberInfo");
+		String userid = loginMember.getUserid();
+		
+		if(iCategory==null) {
+			iCategory = "rcnlist";
+		}
+		
+		List<String> hCodeList = new ArrayList<>();
+		// 최근 본 방
+		if(iCategory.equals("rcnlist")) {
+			List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
+			for(HouseRcnlistDTO rcnDto : rcnList) {
+				if(rcnDto.getUserid().equals(userid)) {
+					hCodeList.add(rcnDto.getHcode());
+				}
+			}
+			List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
+			model.addAttribute("houseInfoRcnList", houseInfoList);
+					
+		// 찜리스트
+		}else if(iCategory.equals("wishlist")) {
+			List<HouseWishlistDTO> wishList = hService.selectWishlist(userid);
+			for(HouseWishlistDTO wishDto : wishList) {
+				hCodeList.add(wishDto.getHcode());
+			}
+						
+			List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
+			model.addAttribute("houseInfoWishList", houseInfoList);
+		}
+		return "interestList";
 	}
 }
