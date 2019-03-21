@@ -17,19 +17,19 @@ import com.service.HouseService;
 public class HouseController {
 
 	@Autowired
-	HouseService service;
+	HouseService hService;
 	
 	@RequestMapping("/houseOverview")// 메인.jsp에서 신촌으로 바로 들어올 때
 	public void houseOverview(Model model) {
-		model.addAttribute("newList", service.retrieveNewItems());
-		model.addAttribute("hotList", service.retrieveHotItems());
+		model.addAttribute("newList", hService.retrieveNewItems());
+		model.addAttribute("hotList", hService.retrieveHotItems());
 	}// end houseOverview
 
 	@RequestMapping("/houseList")// 검색어를 입력하고 검색버튼을 눌렀을 때
 	public String houseList(@RequestParam(value = "filters", required = false) String search, @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
 		System.out.println(search);
 		model.addAttribute("search", search);
-		model.addAttribute("pagingMap", service.searchList(search, curPage));
+		model.addAttribute("pagingMap", hService.searchList(search, curPage));
 		return "houseList";
 	}//end houseList
 	
@@ -102,7 +102,7 @@ public class HouseController {
 		queryMap.put("mrent", mrent);
 		queryMap.put("yrent", yrent);
 		
-		pagingMap = service.listByFilter(queryMap, curPage);
+		pagingMap = hService.listByFilter(queryMap, curPage);
 		model.addAttribute("filters", filters);
 		model.addAttribute("pagingMap", pagingMap);
 		

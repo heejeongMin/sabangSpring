@@ -1,7 +1,25 @@
 $(document).ready(function(){
+	
+//	$("form").on("submit", function(e){
+//		e.preventDefault();
+//		console.log(e);
+//	})
+	
+	
+//	$("form").ajaxForm({
+//		type:'post',
+//		url:'houseManaging/PUT',
+//		dataType:'text',
+//		success:function(data, status, xhr){
+//			console.log("data: " + data);
+//		},
+//		error:function(xhr, status, error){console.log(xhr.status, error)}
+//	});
+	
 		
 		$("form").on("submit", function(e){//submit전 유효성체크
-			console.log(Number.isNaN(Number.parseInt($("input[name=whlflr]").val())));
+//			console.log($("input[name=himage]"));
+//			console.log(Number.isNaN(Number.parseInt($("input[name=whlflr]").val())));
 			if($("select[name=gcategory]").val()==""){
 				e.preventDefault();
 				alert("상품 카테고리를 선택하여주세요");
@@ -14,10 +32,10 @@ $(document).ready(function(){
 			} else if (Number.isNaN(Number.parseInt($("input[name=whflr]").val()))){
 				e.preventDefault();
 				alert("건물층수는 숫자로만 입력해주세요.");
-			} else if ($("input[name=gimage]").val().length < 1){
+			} else if ($("input[name=himage]").val().length < 1){
 				e.preventDefault();
 				alert("사진을 등록하여주세요");
-			}
+			} 
 		});//end for onSubmit
 		
 		
@@ -31,8 +49,8 @@ $(document).ready(function(){
 			} else {
 				$("div#registerDiv").css("visibility", "hidden");
 			}
-			
 		});
+		
 		
 		
 	});//end ready

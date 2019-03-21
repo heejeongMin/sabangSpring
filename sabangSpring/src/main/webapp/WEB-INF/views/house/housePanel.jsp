@@ -85,6 +85,9 @@ $(document).ready(function(){
 			$("input[name=check]").each(function(idx, ele){//check 박스 체크된 애들을 delList에 저장
 				if (ele.checked) delList.push($(ele).val());
 			});
+			
+			console.log (delList);
+			
 			$.ajax({//delList를 들고 DB에서 삭제하기
 				type:'get',
 				url:'houseManaging/DELETE/'+ delList,
@@ -93,9 +96,9 @@ $(document).ready(function(){
 					console.log(data);
 					var mesg = "";
 					if(data=="1"){
-						for(var item of delList){
+						for(var i=0; i<delList.length; i++){
 							if ($("body").find("tr").attr("data-attr") == item){
-								this.remove();
+								$(this).remove();
 							}
 						}
 						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
@@ -106,15 +109,6 @@ $(document).ready(function(){
 				},
 				error:function(xhr, status, data){ console.log(status); }
 			});
-			
-// 			$("form#panel").ajaxForm({
-// 				type:'get',
-// 				url:'houseManaging/DELETE/'+ $(e.target).val(),
-// 				dataType:'text',
-// 				success:function(data, status, xhr){},
-// 				error:function(xhr, status, data){ console.log(status); }
-// 			})
-			
 		}
 	});
 	

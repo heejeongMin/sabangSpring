@@ -5,9 +5,11 @@
 <link rel="stylesheet" href="css/houseUpdateRegister.css"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/jquery.form.min.js"></script>
 <script src="js/houseUpdate.js"></script>
+
 	<h1 id="registerH1">매물 수정하기</h1>
-	<form method="POST" enctype="multipart/form-data" action="HouseUpdateServlet" id="register">
+	<form method="post" encType="multipart/form-data" id="houseUpdate" action="houseManaging/PUT">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide">
@@ -239,6 +241,12 @@
 				<input type="reset"	value="다시작성">
 			</div>
 </form>
+<script>
+$("form#houseUpdate").on("submit", function(e){
+e.preventDefault();
+
+});
+</script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -293,6 +301,17 @@
     }
 </script>
   <script>
+//   $("form#houseUpdate").ajaxForm({
+// 		type:'post',
+// 		url:'houseManaging/PUT',
+// 		dataType:'text',
+// 		success:function(data, status, xhr){
+// 			console.log("data: " + data);
+// 		},
+// 		error: function(xhr, status, error){console.log(xhr.status, error)}
+// 	});
+  
+  
     var swiper = new Swiper('.swiper-container', {
       pagination: {
         el: '.swiper-pagination',

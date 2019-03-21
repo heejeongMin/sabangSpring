@@ -3,9 +3,17 @@
 <link rel="stylesheet" href="css/houseUpdateRegister.css"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/jquery.form.min.js"></script>
 <script src="js/houseRegister.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(e){
+		
+		
+	});//end document
+	
+</script>
 	<h1 id="registerH1">새로운 매물 등록하기</h1>
-	<form method="POST" enctype="multipart/form-data" action="houseRegister/POST" id="register">
+	<form method="post" enctype="multipart/form-data" action="#" id="register">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide">
