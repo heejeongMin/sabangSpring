@@ -70,7 +70,7 @@
 							<tr>
 								<td class="td_title">평수</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
-									<input type="text" name="area" size ="4" style="margin-right: 10px;"> (단위: 제곱미터)
+									<input type="text" name="area" size ="4" style="margin-right: 10px;" required> (단위: 제곱미터)
 								</td>
 							</tr>
 								<tr> <td height="5"></td> </tr>
@@ -78,29 +78,29 @@
 								<td class="td_title">층수</td>
 								<td class="td_red" id="" colspan="2"  style='padding-left: 30px; text-align: left;' >
 									<input type="text" name="flr" size="2" placeholder="매물층" style="margin-right:10px;">/
-									<input type="text" name="whflr" size="2" placeholder="건물층" style="position: absolute; margin-left: 10px;">
+									<input type="text" name="whflr" size="2" placeholder="건물층" style="position: absolute; margin-left: 10px;" required>
 								</td>
 							</tr>
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">방개수</td>
-								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left; ' >
-									<input type="text" name="room" size="2" style="margin-right:10px;"> 개
+								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align:left;' >
+									<input type="text" name="room" size="2" style="margin-right:10px;" required> 개
 								</td>
 							</tr>
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">욕실개수</td>
 								<td class="td_red" id="" colspan= "2" style='padding-left: 30px; text-align:left;' >
-									<input type="text" name="batr" size="2" style="margin-right:10px;"> 개 
+									<input type="text" name="batr" size="2" style="margin-right:10px;" required> 개 
 								</td>
 							</tr>
 							<tr> <td height="10"></td> </tr>
 							<tr> <td class="td_title">주소</td>
 								 <td class="td_red" colspan="2" style='padding-left: 30px' >
-									<input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
+									<input type="text" name="post" id="sample4_postcode" placeholder="우편번호" required>
 									<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" style="margin: 0 10px;">
-									<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소">
+									<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소" required>
 									<input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;">
 									<span id="guide"></span>	
 								 </td>

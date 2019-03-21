@@ -96,11 +96,15 @@ $(document).ready(function(){
 					console.log(data);
 					var mesg = "";
 					if(data=="1"){
-						for(var i=0; i<delList.length; i++){
-							if ($("body").find("tr").attr("data-attr") == item){
-								$(this).remove();
+						$("tr").each(function(idx, ele){
+							for(var i=0; i<delList.length; i++){
+								if($(ele).attr("data-attr") == delList[i]){
+									console.log(1);
+									$(ele).remove();
+								};
 							}
-						}
+						});
+					
 						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
 					} else {
 						mesg = "삭제 실패하였습니다. 관리자에게 문의해주세요.";

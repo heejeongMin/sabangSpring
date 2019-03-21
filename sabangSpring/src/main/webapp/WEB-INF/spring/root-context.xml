@@ -35,10 +35,4 @@
 		<constructor-arg name="sqlSessionFactory" ref="mySessionFactory" />
 	</bean>
 
-	<!-- 5. transaction 설정 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="myDataSource" />
-	</bean>
-	<tx:annotation-driven />
-
 </beans>

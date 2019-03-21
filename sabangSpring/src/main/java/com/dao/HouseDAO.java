@@ -128,6 +128,7 @@ public class HouseDAO {
 	
 	//매물 삭제
 	public int houseDel(List<String> list){
+		System.out.println(list);
 		int n = session.delete("HouseMapper.houseDel_info", list);
 //		n = session.delete("HouseMapper.houseDel_price", list);
 //		n = session.delete("HouseMapper.houseDel_option", list);
