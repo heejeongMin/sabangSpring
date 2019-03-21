@@ -22,8 +22,8 @@ a.unfocusedPage{
 <c:set var="HInfoWish" value="${houseInfoWishList}"/>
 <c:set var="HInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
 <c:set var="HInfoWishLength" value="${fn:length(houseInfoWishList)}"/>
-<a href="InterestListServlet?iCategory=rcnlist">최근 본 방</a>
-<a href="InterestListServlet?iCategory=wishlist">찜한 방</a>
+<a href="interestList?iCategory=rcnlist">최근 본 방</a>
+<a href="interestList?iCategory=wishlist">찜한 방</a>
 	<c:if test="${!empty HInfoRcn}">
 	<h1>최근 본 방<span id="noOfHouse">${fn:length(houseInfoRcnList)}</span>건</h1>
 		<table id="wholeTable">

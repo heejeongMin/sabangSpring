@@ -30,6 +30,8 @@ public class HouseController {
 		System.out.println(search);
 		model.addAttribute("search", search);
 		model.addAttribute("pagingMap", hService.searchList(search, curPage));
+		model.addAttribute("newList", hService.retrieveNewItems());
+		model.addAttribute("hotList", hService.retrieveHotItems());
 		return "houseList";
 	}//end houseList
 	
