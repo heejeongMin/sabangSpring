@@ -61,20 +61,36 @@
 <!-- 신매물 테이블 좌표저장 -->
 <c:if test="${!(empty newList)}">
 	<script>
-		var coord = [];
+		var newListCoord = [];
 	</script>
 	<c:forEach var="item" items="${newList}">
 		<c:set var="x" value="${item.COORDX}"/>
 		<c:set var="y" value="${item.COORDY}"/>
 		<script>
-		var array = [];
-			array.push("${x}");
-			array.push("${y}");
-			coord.push(array);
+		var newListArray = [];
+			newListArray.push("${x}");
+			newListArray.push("${y}");
+		newListCoord.push(newListArray);
 		</script>
 	</c:forEach>
 </c:if>
 
+<!-- 핫매물 테이블 좌표저장 -->
+<c:if test="${!(empty hotList)}">
+	<script>
+		var hotListCoord = [];
+	</script>
+	<c:forEach var="item" items="${hotList}">
+		<c:set var="x" value="${item.COORDX}"/>
+		<c:set var="y" value="${item.COORDY}"/>
+		<script>
+		var hotListArray = [];
+			hotListArray.push("${x}");
+			hotListArray.push("${y}");
+		hotListCoord.push(hotListArray);
+		</script>
+	</c:forEach>
+</c:if>
 
 <script type="text/javascript">
 		// 함수 호출
@@ -106,31 +122,6 @@
 			}
 		});
 		
-		
-	
-		// 마커 출력
-		var positions = [];
-		for(var i = 0; i< coord.length; i++){
-			var json = {};
-			json.latlng = new daum.maps.LatLng(coord[i][0], coord[i][1]);
-			positions.push(json);
-		}
-		 
-		
-		// 마커 이미지 저장
-		var imageSrc = "images/marker/markerBlue.png"; 
-		for (var i = 1; i < (positions.length); i ++) {
-		    // 마커 이미지의 이미지 크기 입니다
-		    var imageSize = new daum.maps.Size(24, 35); 
-		    // 마커 이미지를 생성합니다    
-		    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
-		    // 마커를 생성합니다
-		    var marker = new daum.maps.Marker({
-		        map: map, // 마커를 표시할 지도
-		        position: positions[i].latlng, // 마커를 표시할 위치
-		        image : markerImage // 마커 이미지 
-		    });
-		}	
 		
 		
 		// 카페 마커가 표시될 좌표 배열입니다
@@ -179,6 +170,72 @@
 		    new daum.maps.LatLng(37.56437248231042, 126.93273984469688)
 		];
 		
+		
+		
+		// 신매물 좌표 저장
+        var newListPositions = [];
+        for(var i = 0; i< newListCoord.length; i++){
+        	console.log("신매물"+newListCoord);
+			newListPositions.push(new daum.maps.LatLng(newListCoord[i][0], newListCoord[i][1]));
+		}
+    	// 핫매물 좌표 저장
+        var hotListPositions = [];
+        for(var i = 0; i< hotListCoord.length; i++){
+        	console.log("핫매물"+hotListCoord);
+			hotListPositions.push(new daum.maps.LatLng(hotListCoord[i][0], hotListCoord[i][1]));
+		}
+        
+     	
+		newListMarkers = [];	// 신매물 마커 객체를 가지고 있을 배열입니다
+		hotListMarkers = [];	// 핫매물 마커 객체를 가지고 있을 배열입니다
+		function createNewListMarkers() {
+			for (var i = 0; i < (newListPositions.length); i ++) { 
+				// 마커 이미지의 이미지 크기 입니다
+				var imageSrc = "images/marker/markerBlue.png"
+			    var imageSize = new daum.maps.Size(24, 35); 
+			    // 마커 이미지를 생성합니다    
+			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
+		           
+		        // 마커이미지와 마커를 생성합니다
+		        var marker = createMarker(newListPositions[i], markerImage);  
+		        // 생성된 마커를 신매물 마커 배열에 추가합니다
+		        newListMarkers.push(marker);
+		    }  
+		}
+		function createHotListMarkers() {
+			for (var i = 0; i < (hotListPositions.length); i ++) { 
+				// 마커 이미지의 이미지 크기 입니다
+				var imageSrc = "images/marker/markerRed.png"
+			    var imageSize = new daum.maps.Size(24, 35); 
+			    // 마커 이미지를 생성합니다    
+			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
+		           
+		        // 마커이미지와 마커를 생성합니다
+		        var marker = createMarker(hotListPositions[i], markerImage);  
+		        // 생성된 마커를 신매물 마커 배열에 추가합니다
+		        hotListMarkers.push(marker);
+		    }  
+		}
+		
+		createNewListMarkers();
+		createHotListMarkers();
+		
+		
+		// 신매물 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setNewListMarkers(map) {
+			console.log(newListMarkers)
+		    for (var i = 0; i < newListMarkers.length; i++) {  
+		    	newListMarkers[i].setMap(map);
+		    }        
+		}
+		
+		// 핫매물 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setHotListMarkers(map) {
+			console.log(hotListMarkers)
+		    for (var i = 0; i < hotListMarkers.length; i++) {  
+		    	hotListMarkers[i].setMap(map);
+		    }        
+		}
 		
 		var markerImageSrc = 'images/marker/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 	    coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
@@ -293,7 +350,10 @@
 		    var coffeeMenu = document.getElementById('coffeeMenu');
 		    var storeMenu = document.getElementById('storeMenu');
 		    var carparkMenu = document.getElementById('carparkMenu');
-		    	
+		    var totalListMenu = document.getElementById('totalListMenu');
+		    var newListMenu = document.getElementById('newListMenu');
+		    var hotListMenu = document.getElementById('hotListMenu');
+		    
 		    
 		    // 커피숍 카테고리가 클릭됐을 때
 		    if (type === 'coffee') {
@@ -304,12 +364,17 @@
 		        // 편의점과 주차장 카테고리는 선택되지 않은 스타일로 바꿉니다
 		        storeMenu.className = '';
 		        carparkMenu.className = '';
+		        totalListMenu.className = '';
+		        newListMenu.className = '';
+		        hotListMenu.className = '';
 		        
 		        
 		        // 커피숍 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(map);
 		        setStoreMarkers(null);
 		        setCarparkMarkers(null);
+		        setNewListMarkers(null);
+				setHotListMarkers(null);
 		        
 		    } else if (type === 'store') { // 편의점 카테고리가 클릭됐을 때
 		    
@@ -317,11 +382,16 @@
 		        coffeeMenu.className = '';
 		        storeMenu.className = 'menu_selected';
 		        carparkMenu.className = '';
+		        totalListMenu.className = '';
+		        newListMenu.className = '';
+		        hotListMenu.className = '';
 		        
 		        // 편의점 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(map);
 		        setCarparkMarkers(null);
+		        setNewListMarkers(null);
+				setHotListMarkers(null);
 		        
 		    } else if (type === 'carpark') { // 주차장 카테고리가 클릭됐을 때
 		     
@@ -329,11 +399,59 @@
 		        coffeeMenu.className = '';
 		        storeMenu.className = '';
 		        carparkMenu.className = 'menu_selected';
+		        totalListMenu.className = '';
+		        newListMenu.className = '';
+		        hotListMenu.className = '';
 		        
 		        // 주차장 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
-		        setCarparkMarkers(map);  
+		        setCarparkMarkers(map);
+		        setNewListMarkers(null);
+				setHotListMarkers(null);
+		        
+		    // 신매물 / 핫매물
+		    }else if (type === 'new'){
+		    	coffeeMenu.className = '';
+		        storeMenu.className = '';
+		        carparkMenu.className = '';
+		        totalListMenu.className = '';
+		        newListMenu.className = 'menu_selected';
+		        hotListMenu.className = '';
+		        
+		        setCoffeeMarkers(null);
+		        setStoreMarkers(null);
+		        setCarparkMarkers(null);
+				setNewListMarkers(map);
+				setHotListMarkers(null);
+		    	
+		    }else if(type === 'hot'){
+			    coffeeMenu.className = '';
+				storeMenu.className = '';
+				carparkMenu.className = '';
+				totalListMenu.className = '';
+				newListMenu.className = '';
+				hotListMenu.className = 'menu_selected';
+				        
+				setCoffeeMarkers(null);
+				setStoreMarkers(null);
+				setCarparkMarkers(null);
+				setNewListMarkers(null);
+				setHotListMarkers(map);
+				
+		    } else if (type === 'total'){
+		    	coffeeMenu.className = '';
+		        storeMenu.className = '';
+		        carparkMenu.className = '';
+		        totalListMenu.className = 'menu_selected';
+		        newListMenu.className = '';
+		        hotListMenu.className = '';
+		        
+		        setCoffeeMarkers(null);
+				setStoreMarkers(null);
+				setCarparkMarkers(null);
+				setNewListMarkers(null);
+				setHotListMarkers(null);
 		    }
 		} 
 			
