@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.dto.BoardDTO;
 import com.dto.HouseInfoDTO;
 import com.dto.HouseOptionDTO;
 import com.dto.HousePriceDTO;
+import com.dto.HouseWishlistDTO;
 import com.dto.MemberDTO;
 import com.service.BoardService;
 import com.service.HouseService;
@@ -126,7 +128,8 @@ public class HouseController {
 
 	
 	@RequestMapping("/houseDetailInfo")
-	public void houseDetailInfo(@RequestParam (value = "hcode", required = false) String hcode, @ModelAttribute("list") ArrayList<String> list,  HttpSession session) {
+	public void houseDetailInfo(@RequestParam (value = "hcode", required = false) String hcode, 
+								@ModelAttribute("list") ArrayList<String> list, HttpSession session) {
 		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
 		HouseInfoDTO info = hService.houseRetrieve(hcode);
 		HousePriceDTO price = hService.housePrice(hcode);
@@ -160,6 +163,12 @@ public class HouseController {
 		}
 		session.setAttribute("etc", option.getEtc());
 		session.setAttribute("list", list);	
+	}
+	
+	@RequestMapping("/houseLike")
+	public @ResponseBody int houseLike(@RequestParam("hcode") String hcode, HttpSession session) {
+		MemberDTO member = (MemberDTO)session.getAttribute("memberInfo");
+		return hService.updateCntWish(new HouseWishlistDTO(member.getUserid(), hcode));
 	}
 	
 	

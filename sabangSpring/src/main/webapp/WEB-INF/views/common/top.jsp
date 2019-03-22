@@ -38,7 +38,7 @@ $(document).ready(function(){
 	});
 	
 	$("img#logoImg").on("click", function(e){
-		location.href="main.jsp";
+		location.href="/sabang/";
 	});
 	
 	

@@ -7,8 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/jquery.form.min.js"></script>
 <script src="js/houseUpdate.js"></script>
-
-	<h1 id="registerH1">매물 수정하기</h1>
+	<h1 id="registerH1" style="margin-bottom:20px">매물 수정하기</h1>
 	<form method="post" encType="multipart/form-data" id="update" action="houseManaging/PUT">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
@@ -21,7 +20,7 @@
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
-							<tr> <td height="10"></td> </tr>
+							<tr> <td height="5"></td> </tr>
 							<td class="td_title">매물타입</td>
 							<td class="td_default update" id="updateName" colspan="2" style='padding-left: 30px;text-align: left;'>
 								<input type="text" name="htype" value="${infoDTO.htype}" readonly>
@@ -121,7 +120,7 @@
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
-							<tr> <td height="50"></td> </tr>
+							<tr> <td height="30"></td> </tr>
 							<tr>
 								<td class="td_title">보증금</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
@@ -169,6 +168,7 @@
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
+							<tr> <td height="30"></td> </tr>
 							<tr>
 								<td class="td_title">옵션유무</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
@@ -241,12 +241,6 @@
 				<input type="reset"	value="다시작성">
 			</div>
 </form>
-<script>
-$("form#houseUpdate").on("submit", function(e){
-e.preventDefault();
-
-});
-</script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -301,17 +295,6 @@ e.preventDefault();
     }
 </script>
   <script>
-//   $("form#houseUpdate").ajaxForm({
-// 		type:'post',
-// 		url:'houseManaging/PUT',
-// 		dataType:'text',
-// 		success:function(data, status, xhr){
-// 			console.log("data: " + data);
-// 		},
-// 		error: function(xhr, status, error){console.log(xhr.status, error)}
-// 	});
-  
-  
     var swiper = new Swiper('.swiper-container', {
       pagination: {
         el: '.swiper-pagination',
@@ -322,4 +305,11 @@ e.preventDefault();
         prevEl: '.swiper-button-prev',
       },
     });
+    swiper.on("slideChangeTransitionStart", function(e){
+    	if($("div#lastPage").attr("class") == "swiper-slide swiper-slide-active"){
+			$("div#registerDiv").css("visibility", "visible");
+		} else {
+			$("div#registerDiv").css("visibility", "hidden");
+		}
+	});
   </script>

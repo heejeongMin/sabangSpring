@@ -36,18 +36,12 @@ $(document).ready(function(){
 	 		error: function(xhr, status, error){console.log(xhr.status, status)}
 		});
 		
-		
 		$("textarea").on("keyup", function(e){//상품설명 글자수 세기
 			$("p#textLength>span").text($(e.target).val().length);
 		});//end textarea onKeyup
 		
-		$(".arrows").on("click", function(e){
-			if($("div#lastPage").attr("class") == "swiper-slide swiper-slide-active"){
-				$("div#registerDiv").css("visibility", "visible");
-			} else {
-				$("div#registerDiv").css("visibility", "hidden");
-			}
-		});
+		//swiper에서 tab 으로 ui 망가지는거 방지하게위해 form에서 tab 버튼 못누르게 함
+		$("input, textarea").attr("tabindex", "-1");
 		
 		
 		

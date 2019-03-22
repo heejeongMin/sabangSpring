@@ -200,7 +200,7 @@ $(document).ready(function(){
 	$("div#like").on("click", function(e){//찜하기 누르면 house_info의 cntwish 값 증가와 wishlist 추가
 		$.ajax({
 			type:'get',
-			url:'HouseLikeServlet',
+			url:'houseLike',
 			data: {hcode:$(e.target).attr("data-code")},
 			dataType: 'text',
 			success:function(data, status, xhr){

@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
 <link rel="stylesheet" href="css/houseUpdateRegister.css"></link>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/jquery.form.min.js"></script>
 <script src="js/houseRegister.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(e){
-		
-		
-	});//end document
-	
-</script>
 	<h1 id="registerH1">새로운 매물 등록하기</h1>
 	<form method="post" enctype="multipart/form-data" action="#" id="register">
 	 	<div class="swiper-container">
@@ -121,11 +116,11 @@
 		      		<tr>
 						<td class="td_default" style="text-align:center;"><font size="5"><b>매물 가격 정보</b></font> &nbsp;</td>
 					</tr>
-						<tr> <td height="5"> </tr>
+						<tr> <td height="5"></td> </tr>
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
-							<tr> <td height="50"></td> </tr>
+							<tr> <td height="30"></td> </tr>
 							<tr>
 								<td class="td_title">보증금</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
@@ -169,11 +164,11 @@
 		      		<tr>
 						<td class="td_default" style="text-align:center;"><font size="5"><b>매물 옵션 정보</b></font> &nbsp;</td>
 					</tr>
-					<tr> <td height="5"> </tr>
+					<tr> <td height="5"></td> </tr>
 					<tr>
 						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
-							<tr> <td height="50"></td> </tr>
+							<tr> <td height="30"></td> </tr>
 							<tr>
 								<td class="td_title">옵션유무</td>
 								<td class="td_red" id="" colspan="2" style='padding-left: 30px; text-align: left;' >
@@ -275,4 +270,12 @@
         prevEl: '.swiper-button-prev',
       },
     });
+    
+    swiper.on("slideChangeTransitionStart", function(e){
+    	if($("div#lastPage").attr("class") == "swiper-slide swiper-slide-active"){
+			$("div#registerDiv").css("visibility", "visible");
+		} else {
+			$("div#registerDiv").css("visibility", "hidden");
+		}
+	});
   </script>

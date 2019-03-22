@@ -6,6 +6,10 @@ div#registerDiv {
 	text-align: center;
 	padding-left: 400px;
 	visibility: hidden;
+	position: absolute;
+    top: 10px;
+    left: 290px;
+	
 }
 div#registerDiv>input{
 	margin: 10px 4px 10px 4px;
@@ -38,4 +42,3 @@ h1#registerH1 {
 	text-shadow: 5px 4px aliceblue;
 	margin: 0;
 }
-
