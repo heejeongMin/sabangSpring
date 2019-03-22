@@ -16,7 +16,10 @@
 				<table id="innerTable">
 					<tr>
 						<td class="img">
-						<img class="goDetail" data-hcode="${newHouse.HCODE}" src="#" alt="${newHouse.HCODE}" width="300" height="250"/></td>
+							<div class="imgFrame" style="width:235px;">
+								<img class="goDetail" data-hcode="${newHouse.HCODE}" src="images/house/${newHouse.HIMAGE}.jgp" alt="${newHouse.HCODE}" style="width:100%"/>
+							</div>
+						</td>
 					</tr>
 					<tr> 
 						<td class="greyText">
@@ -64,7 +67,10 @@
 				<table id="innerTable">
 					<tr>
 						<td class="img">
-						<img class="goDetail" data-hcode="${hotHouse.HCODE}" src="#" alt="${hotHouse.HCODE}" width="300" height="250"/></td>
+							<div class="imgFrame" style="width:235px;">
+								<img class="goDetail" data-hcode="${hotHouse.HCODE}" src="images/house/${hotHouse.HIMAGE}.jpg" alt="${hotHouse.HCODE}" style="width:100%;"/>
+							</div>
+						</td>
 					</tr>
 					<tr> 
 						<td class="greyText">

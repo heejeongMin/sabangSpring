@@ -170,25 +170,25 @@
 
 <!-- 전체 매물 정보 가져오기 -->
 <select id="retrieveAllItems" resultType="hashmap">
-	select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, deposit, mrent, yrent, maintc
+	select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage,deposit, mrent, yrent, maintc
 	from house_info join house_price using(hcode)
 </select>
 
 <!-- houseOverview.jsp에서 신매물 가장 최근에 올린 애부터 7일 사이  -->
 	<select id="retrieveNewItems" parameterType="string" resultType="hashmap">
-		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, deposit, mrent, yrent, maintc
+		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
 		where registerdate > #{maxSeven}
 	</select>
 	
 <!-- 신매물 기준이 되는 최신 매물에서 7일전꺼 -->
-    <select id="test" resultType="string">
+    <select id="newItemCount" resultType="string">
     	select to_char(max(registerdate)-7, 'yyyymmdd') from house_info
     </select>
     
 <!-- houseOverview.jsp에서 핫매물 cntwish 기준   w/o paging -->
 	<select id="retrieveHotItems" resultType="hashmap">
-		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, deposit, mrent, yrent, maintc
+		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
 		where cntwish >= (select AVG(cntwish) from house_info)
 		order by cntwish desc
@@ -196,7 +196,7 @@
 
 <!-- houseOverview.jsp&houseList.jsp 에서 필터 버튼으로 리스트 불러올때 w paging  -->
 	<select id="listByFilter" parameterType="hashmap" resultType="hashmap">
-		select hcode, htype, rtype, hname, area, flr, hetc, deposit, mrent, yrent, maintc
+		select hcode, htype, rtype, hname, area, flr, hetc, himage, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
 		<choose>
 			<when test="!(htype.isEmpty())">

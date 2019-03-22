@@ -56,7 +56,7 @@ public class HouseDAO {
 	
 	//신매물 리스트
 	public List<HashMap<String, Object>> retrieveNewItems(){
-		String maxSeven = session.selectOne("HouseMapper.test");
+		String maxSeven = session.selectOne("HouseMapper.newItemCount");
 		return session.selectList("HouseMapper.retrieveNewItems", maxSeven);
 	}//end retrieveNewItems
 	
