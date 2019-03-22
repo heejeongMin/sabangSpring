@@ -5,10 +5,8 @@ function myPosition (nx, ny, errorCode){
 	
 	$.ajax({
 		type:'get',
-		url:'WeatherServlet',
-		data: { nx : nx,
-				ny : ny
-			},
+		url:'weather',
+		data: {nx:nx, ny:ny},
 		dataType:'text',
 		success:function(data, status, xhr){
 			var result = $.parseJSON(data);
@@ -28,7 +26,6 @@ function myPosition (nx, ny, errorCode){
 	});//end ajax
 	
 //	location.href="WeatherServlet?x="+nx+"&y="+ny;
-	console.log($("#x").val());
 }//end myPosition
 
 function getLocation(){

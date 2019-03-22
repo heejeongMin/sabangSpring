@@ -198,6 +198,13 @@
 			<version>2.8.8</version>
 		</dependency>		    
 		
+		<!-- 기상청 날씨 사용하는데 필요함 -->
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
 		
 		
 		

@@ -1,11 +1,21 @@
 package com.controller.house;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +30,8 @@ import com.dto.HouseOptionDTO;
 import com.dto.HousePriceDTO;
 import com.dto.HouseWishlistDTO;
 import com.dto.MemberDTO;
+import com.localWeather.Coord;
+import com.localWeather.CoordFetcher;
 import com.service.BoardService;
 import com.service.HouseService;
 import com.service.MemberService;
@@ -171,6 +183,127 @@ public class HouseController {
 		return hService.updateCntWish(new HouseWishlistDTO(member.getUserid(), hcode));
 	}
 	
+	@RequestMapping("/weather")
+	public @ResponseBody String weather(@RequestParam HashMap<String, String> coordMap) {
+		//요청 일자, 시간 만들기
+		Calendar c = Calendar.getInstance();
+		int month = c.get(Calendar.MONTH)+1;
+		int date = c.get(Calendar.DATE);
+		int hour = c.get(Calendar.HOUR_OF_DAY) ;
+		String m = (month<10)? "0" + month :String.valueOf(month);
+		
+		if (hour < 11) { // 날씨 요청시간이 11 시 전일때, 
+			if (date == 1) {//만약에 월의 1일이고, 
+				//월 정하기
+				m = ((month - 1) < 10 )? "0"+ (month - 1) : String.valueOf(month - 1); //이전 달로 갔을 때 0~9 가 나오면 앞에 0을 붙여서 두 자리 만듬.
+				//일정하기
+				if ((month -1) % 2  != 0) {//홀수 달이면, 날짜는 31일로 세팅 
+					date = 31;
+				} else {//짝수 달들 
+					if ((month -1)==2) {// 짝수달이면서 만약에 2월이면
+						GregorianCalendar cal = new GregorianCalendar();
+						date = (cal.isLeapYear(c.getWeekYear()))? 29: 28;//true : 윤달, false: 평달
+					} else {//짝수달이지만 2월이 아닌경우
+						date =30;
+					}//end if~else 윤달 확인
+				}//end if~else 홀수 짝수 달
+				
+			} else {//1일이 아니면 그냥 달 사용
+				m = (month<10)? "0" + month :String.valueOf(month);
+				date -= 1;
+			}//end if~else 일이 1일인지 아닌지 확인		
+		}
+		
+		String base_date = String.valueOf(c.getWeekYear())+m+date;
+		System.out.println(base_date);
+		//요청 동네의 좌표 만들기
+		String[] asLocation = new String[]{"서울특별시", "서초구", "반포1동"};  
+		String x = null;
+		String y = null;
+		// geolocation에서 좌표를 못가져올때, 서초구 반포1동으로 자동 잡음
+		if(coordMap.get("nx").equals("0") || coordMap.get("ny").equals("0")) {
+			CoordFetcher cf = new CoordFetcher();
+			Coord coord = cf.fetchCoord(asLocation);
+			x = coord.getSx();
+			y = coord.getSy();
+		}
+
+		//요청 URL 만들기
+		String reqURL ;
+		reqURL = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?";
+		reqURL += "ServiceKey=VD5ItN1ersyBmcioWetkmK%2B4gwxiWRfmz4XKtGg%2FntXHP4CtGSLuAkL4VDjr8rPJEy1S6eYO0BdsVK8C%2FeqL0A%3D%3D";
+		reqURL += "&base_date="+base_date;
+		reqURL += "&base_time=1100"; //11시여야 items에 예보정보가 나옴 .... 
+		if (coordMap.get("nx").equals("0") || coordMap.get("ny").equals("0")) {
+			reqURL += "&nx="+x+"&ny="+y;
+		} else {
+			reqURL += "&nx="+coordMap.get("nx")+"&ny="+coordMap.get("ny");
+		}
+		reqURL += "&_type=json";
+		
+		//내가 만든 String을 url로 만들기
+		URL url;
+		BufferedReader bf; 
+		String line = "";
+		String result = "";
+		//날씨 정보 받아오기
+		try {
+			url = new URL(reqURL);
+			bf = new BufferedReader(new InputStreamReader(url.openStream()));
+			while ((line=bf.readLine())!=null) {
+				result=result.concat(line);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		//읽어온 문자열 데이터를 객체화
+		JSONParser parser = new JSONParser();
+		HashMap<String, String> map = new HashMap<>();
+		String weatherResult = "";
+		try {
+			JSONObject obj = (JSONObject) parser.parse(result);
+			// response부분 가져오기
+			JSONObject parse_response = (JSONObject) obj.get("response");
+			// body 가져오기
+			JSONObject parse_body = (JSONObject) parse_response.get("body");
+			// items 가져오기
+			JSONObject parse_items = (JSONObject) parse_body.get("items");
+			// item 가져오기
+			JSONArray parse_item = (JSONArray) parse_items.get("item");
+			for(int i = 0; i<parse_item.size(); i++) {
+				JSONObject weather = (JSONObject) parse_item.get(i);
+				String category = (String) weather.get("category");
+				switch (category) {
+				case "POP" : 
+					weatherResult = "{\"POP\":"+ weather.get("fcstValue") + ",";
+					map.put("POP", String.valueOf(weather.get("fcstValue")));
+					break;
+				case "TMX" :
+					weatherResult += "\"TMX\":"+(int)((double)weather.get("fcstValue"))+"}";
+					//							map.put("TMX", String.valueOf());
+				}
+			}//end for
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}//end try~catch
+
+		// 응답데이터 :  전체 데이터를 json object로 받고, 이 object 아래 body라는 object 아래 items 라는 object 아래 item이라는 array 아래 object들에 접근
+		// baseDate : 발표시각의 날짜
+		// baseTime : 발표시각의 시분
+		// category : 데이터 종류
+		// fcstDate : 예보시각의 날짜
+		// fcstTime : 예보시각의 시분
+		// fcstValue : 예보 값
+		// nx, ny : 기상청 지역코드	
+		// 항목값	항목명			단위	Missing
+		// POP		강수확률		%		-1 % ----- 20%
+		// T3H 		3시간 기온 		℃ 		-50 ℃  ----
+		// TMN 		아침 최저기온 	℃ 		-50 ℃  ----
+		// TMX 		낮 최고기온		℃ 		-50 ℃   ---- 5 도
+		
+		return weatherResult;
+	}//end weather
 	
 
 }//end HouseController
