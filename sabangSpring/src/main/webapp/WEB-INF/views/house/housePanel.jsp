@@ -6,35 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-form#panel{
-    float: left;
-    width: 330px;
-    height: 80%;
-    box-shadow: 5px 2px 0px 4px lightblue;
-    padding: 10px 5px 5px 10px;
-    height: 600px;
-    position: absolute;
-}
-form#panel table{    box-shadow: -2px 6px 1px 7px aliceblue; padding: 3px;}
-form#panel th {color : darkblue; font-weight: bold; height: 30px;}
-form#panel tr:nth-child(odd) {background-color: aliceblue;}
-form#panel tr>td {text-align: center;}
-div#btnBox{text-align: center;     float: left;
-    position: absolute;
-    bottom: 0;}
-div#btnBox>button {
-    margin: 10px 4px 10px 4px;
-    border: 0;
-    border-radius: 10px;
-    padding: 8px 20px 8px 20px;
-    background-color: darkblue;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow:1px 2px 5px 1px cadetblue;
-}
-</style>
+<link href="css/housePanel.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/housePanel.js"></script>
 </head>
 <body>
 <form action="#" method="get" id="panel">
@@ -63,81 +37,6 @@ div#btnBox>button {
 	<button id="updateBtn">매물 수정</button>
 </div>
 </form>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#registerBtn").on("click", function(e){//등록버튼 클릭시
-		e.preventDefault();
-		location.href="houseUIController?work=register";
-	});
-	
-	$("#delBtn").on("click", function(e){//삭제버튼 클릭시
-		var count = 0;
-		$("input[name=check]").each(function(idx, ele){//아무것도 체크하지 않으면 alert
-			if(ele.checked) count++;
-		});
-		if (count == 0 ){
-			e.preventDefault();
-			alert ("삭제할 매물을 선택해주세요");
-		} else {
-			e.preventDefault();
-			var delList = [];
-			$("input[name=check]").each(function(idx, ele){//check 박스 체크된 애들을 delList에 저장
-				if (ele.checked) delList.push($(ele).val());
-			});
-			
-			console.log (delList);
-			
-			$.ajax({//delList를 들고 DB에서 삭제하기
-				type:'get',
-				url:'houseManaging/DELETE/'+ delList,
-				dataType:'text',
-				success:function(data, status, xhr){
-					console.log(data);
-					var mesg = "";
-					if(data=="1"){
-						$("tr").each(function(idx, ele){
-							for(var i=0; i<delList.length; i++){
-								if($(ele).attr("data-attr") == delList[i]){
-									console.log(1);
-									$(ele).remove();
-								};
-							}
-						});
-					
-						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
-					} else {
-						mesg = "삭제 실패하였습니다. 관리자에게 문의해주세요.";
-					}
-					alert(mesg);
-				},
-				error:function(xhr, status, data){ console.log(status); }
-			});
-		}
-	});
-	
-	$("#updateBtn").on("click", function(e){//수정 버튼 클릭시
-		e.preventDefault();
-		var count = 0;
-		var item = "";
-		$("input[name=check]").each(function(idx, ele){//아무것도 체크하지 않으면 alert
-			if(ele.checked) {
-				count++;
-				item = $(ele).val();
-			}
-		});
-		
-		if (count == 0 ){
-			alert ("수정할 매물을 선택해주세요");
-		} else if ( count > 1) {
-			alert ("한번에 하나의 매물만 수정이 가능합니다. 매물 한개만 체크하고 수정버튼을 눌러주세요.");
-		} else {
-			location.href="houseUIController?work=update&hcode="+item;
-		}
-	});
-	
-});//end ready
-</script>
 </body>
 </html>
 
