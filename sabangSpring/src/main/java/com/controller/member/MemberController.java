@@ -1,9 +1,12 @@
 package com.controller.member;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dto.HouseRcnlistDTO;
 import com.dto.MemberDTO;
+import com.service.HouseService;
 import com.service.MemberService;
 @Controller
 public class MemberController {
 	
 	@Autowired
 	MemberService mService;
+	
+	@Autowired
+	HouseService hService;
 	
 	@RequestMapping("/login")
 	public String login(@RequestParam Map<String, String>map, HttpSession session) { // Map<"jsp tag name", html 사용자 값>
@@ -37,6 +45,23 @@ public class MemberController {
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
+		MemberDTO dto = (MemberDTO) session.getAttribute("memberInfo");
+		HashMap<Long, String> history = (HashMap<Long, String>)session.getAttribute("history");
+		if(history!=null) {
+			Set<Long> keys = history.keySet();		// time
+			List<HouseRcnlistDTO> rList = new ArrayList<>();
+			for(long key: keys) {
+				HouseRcnlistDTO rDto = new HouseRcnlistDTO();
+				rDto.setNum(key);
+				rDto.setHcode(history.get(key));
+				rDto.setUserid(dto.getUserid());
+				rList.add(rDto);
+			}
+			
+			int n = hService.rcnListAllDone(rList);
+		}
+		
+		
 		session.invalidate();
 		return "redirect:/";
 	}

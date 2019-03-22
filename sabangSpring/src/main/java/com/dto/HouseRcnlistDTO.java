@@ -20,12 +20,12 @@ public class HouseRcnlistDTO {
 	}
 
 
-	public Long getnum() {
+	public Long getNum() {
 		return num;
 	}
 
 
-	public void setnum(Long num) {
+	public void setNum(Long num) {
 		this.num = num;
 	}
 
