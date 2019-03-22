@@ -121,7 +121,7 @@ $(document).ready(function() {
 			$("#checkPW").text(mesg);
 		}); //end equal check password
 		
-		$("#email3").on("#email3", function(){
+		$("#email3").on("click", function(){
 			var email = $(this).val();
 			  $("#email2").val(email);
 		})// end select email
