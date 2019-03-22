@@ -42,7 +42,7 @@ font-size: 17px; font-weight: bold
 
 </style>
 
-<form method = "post" action = "EditBoardServlet">
+<form action = "updateBoard">
 <input type = "text" name = "title" id = "title" placeholder = "글 제목"> 
 <hr> 
 <textarea name ="content" id ="content" cols="40" rows="8" placeholder="최대 2000자"></textarea><br>

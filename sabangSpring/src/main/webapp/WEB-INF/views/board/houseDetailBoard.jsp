@@ -23,7 +23,7 @@
 	 	$("#edit").on("click", function(e){
 			var pcode = $("h3").attr("data-pcode")
 			var ppwd = $("h3").attr("data-ppwd")
-			location.href = "postBoard?pcode="+pcode+"&ppwd="+ppwd; 
+			location.href = "postBoard?pcode="+pcode; 
 		})
 	})
 </script>
