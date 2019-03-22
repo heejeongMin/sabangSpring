@@ -120,6 +120,8 @@ public class MypageController {
 				}
 				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
 				model.addAttribute("houseInfoRcnList", houseInfoList);
+			}else {
+				model.addAttribute("listInfo", "rcn");
 			}
 			
 			
@@ -132,6 +134,8 @@ public class MypageController {
 				}
 				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
 				model.addAttribute("houseInfoWishList", houseInfoList);
+			}else {
+				model.addAttribute("listInfo", "wish");
 			}
 		}
 		return "interestList";

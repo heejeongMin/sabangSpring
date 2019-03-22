@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<script src="js/innerTable.js"></script>
 <link rel="stylesheet" href="css/houseList.css">
 <style>
 a.focusedPage{
@@ -22,11 +21,12 @@ a.unfocusedPage{
 <c:set var="hInfoWish" value="${houseInfoWishList}"/>
 <c:set var="hInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
 <c:set var="hInfoWishLength" value="${fn:length(houseInfoWishList)}"/>
+<h1>관심목록</h1>
 <a href="interestList?iCategory=rcnlist">최근 본 방</a>
 <a href="interestList?iCategory=wishlist">찜한 방</a>
-	
-	<c:if test="${!empty hInfoRcn}">
-		<h1>최근 본 방<span id="noOfHouse">${fn:length(houseInfoRcnList)}</span>건</h1>
+<c:choose>
+	<c:when test="${!empty hInfoRcn}">
+		<h1>최근 본 방<span id="noOfHouse">${hInfoRcnLength}</span>건</h1>
 			<table id="wholeTable">
 				<tr>
 					<td>
@@ -91,10 +91,9 @@ a.unfocusedPage{
 				<td height="10">
 			</tr>
 		</table>
-	</c:if>
-	
-	<c:if test="${!empty hInfoWish}">
-		<h1>찜한 방<span id="noOfHouse">${fn:length(houseInfoWishList)}</span>건</h1>
+	</c:when>
+	<c:when test="${!empty hInfoWish}">
+		<h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1>
 	   	 	<table id="BackTable">
 				<tr>
 					<td>
@@ -160,5 +159,12 @@ a.unfocusedPage{
 				<td height="10">
 			</tr>
 		</table>
-	</c:if>
+	</c:when>
+	<c:when test="${listInfo=='rcn'}">
+		<h1>최근 본 방이 없습니다.</h1>
+	</c:when>
+	<c:when test="${listInfo=='wish'}">
+		<h1>찜한 방이 없습니다.</h1>
+	</c:when>
+</c:choose>
 </div>

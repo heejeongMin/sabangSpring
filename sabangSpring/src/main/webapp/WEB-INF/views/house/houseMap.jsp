@@ -56,6 +56,23 @@
 </div>
 
 
+<!-- 전체매물 테이블 좌표저장 -->
+<c:if test="${!(empty allList)}">
+	<script>
+		var allListCoord = [];
+	</script>
+	<c:forEach var="item" items="${allList}">
+		<c:set var="x" value="${item.COORDX}"/>
+		<c:set var="y" value="${item.COORDY}"/>
+		<script>
+		var allListArray = [];
+			allListArray.push("${x}");
+			allListArray.push("${y}");
+		allListCoord.push(allListArray);
+		</script>
+	</c:forEach>
+</c:if>
+
 
 
 <!-- 신매물 테이블 좌표저장 -->
@@ -171,59 +188,78 @@
 		];
 		
 		
-		
+		// 전체매물 좌표 저장
+        var	allListPositions = [];
+        for(var i = 0; i< allListCoord.length; i++){
+			allListPositions.push(new daum.maps.LatLng(allListCoord[i][0], allListCoord[i][1]));
+		}
 		// 신매물 좌표 저장
         var newListPositions = [];
         for(var i = 0; i< newListCoord.length; i++){
-        	console.log("신매물"+newListCoord);
 			newListPositions.push(new daum.maps.LatLng(newListCoord[i][0], newListCoord[i][1]));
 		}
     	// 핫매물 좌표 저장
         var hotListPositions = [];
         for(var i = 0; i< hotListCoord.length; i++){
-        	console.log("핫매물"+hotListCoord);
 			hotListPositions.push(new daum.maps.LatLng(hotListCoord[i][0], hotListCoord[i][1]));
 		}
         
-     	
+        allListMarkers = [];	// 전체매물 마커 객체를 가지고 있을 배열입니다
 		newListMarkers = [];	// 신매물 마커 객체를 가지고 있을 배열입니다
 		hotListMarkers = [];	// 핫매물 마커 객체를 가지고 있을 배열입니다
-		function createNewListMarkers() {
-			for (var i = 0; i < (newListPositions.length); i ++) { 
+		
+		function createAllListMarkers() {
+			for (var i = 0; i < (allListPositions.length); i ++) { 
 				// 마커 이미지의 이미지 크기 입니다
-				var imageSrc = "images/marker/markerBlue.png"
+				var imageSrc = "images/marker/markerYellow.png"
 			    var imageSize = new daum.maps.Size(24, 35); 
 			    // 마커 이미지를 생성합니다    
 			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
 		           
 		        // 마커이미지와 마커를 생성합니다
-		        var marker = createMarker(newListPositions[i], markerImage);  
+		        var marker = createMarker(allListPositions[i], markerImage);  
 		        // 생성된 마커를 신매물 마커 배열에 추가합니다
+		        allListMarkers.push(marker);
+		    }  
+		}
+		
+		function createNewListMarkers() {
+			for (var i = 0; i < (newListPositions.length); i ++) { 
+				var imageSrc = "images/marker/markerBlue.png"
+			    var imageSize = new daum.maps.Size(24, 35); 
+			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
+		           
+		        var marker = createMarker(newListPositions[i], markerImage);  
 		        newListMarkers.push(marker);
 		    }  
 		}
 		function createHotListMarkers() {
 			for (var i = 0; i < (hotListPositions.length); i ++) { 
-				// 마커 이미지의 이미지 크기 입니다
 				var imageSrc = "images/marker/markerRed.png"
 			    var imageSize = new daum.maps.Size(24, 35); 
-			    // 마커 이미지를 생성합니다    
 			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
 		           
-		        // 마커이미지와 마커를 생성합니다
 		        var marker = createMarker(hotListPositions[i], markerImage);  
-		        // 생성된 마커를 신매물 마커 배열에 추가합니다
 		        hotListMarkers.push(marker);
 		    }  
 		}
 		
+		
+		// 마커 객체 저장하기
+		createAllListMarkers();
 		createNewListMarkers();
 		createHotListMarkers();
 		
 		
+		// 전체매물 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setAllListMarkers(map) {
+		    for (var i = 0; i < allListMarkers.length; i++) {  
+		    	allListMarkers[i].setMap(map);
+		    }        
+		}
+		
 		// 신매물 마커들의 지도 표시 여부를 설정하는 함수입니다
 		function setNewListMarkers(map) {
-			console.log(newListMarkers)
 		    for (var i = 0; i < newListMarkers.length; i++) {  
 		    	newListMarkers[i].setMap(map);
 		    }        
@@ -231,11 +267,13 @@
 		
 		// 핫매물 마커들의 지도 표시 여부를 설정하는 함수입니다
 		function setHotListMarkers(map) {
-			console.log(hotListMarkers)
 		    for (var i = 0; i < hotListMarkers.length; i++) {  
 		    	hotListMarkers[i].setMap(map);
 		    }        
 		}
+		
+		
+		
 		
 		var markerImageSrc = 'images/marker/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 	    coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
@@ -373,6 +411,7 @@
 		        setCoffeeMarkers(map);
 		        setStoreMarkers(null);
 		        setCarparkMarkers(null);
+		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
 		        
@@ -390,6 +429,7 @@
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(map);
 		        setCarparkMarkers(null);
+		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
 		        
@@ -407,6 +447,7 @@
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
 		        setCarparkMarkers(map);
+		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
 		        
@@ -422,6 +463,7 @@
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
 		        setCarparkMarkers(null);
+		        setAllListMarkers(null);
 				setNewListMarkers(map);
 				setHotListMarkers(null);
 		    	
@@ -436,6 +478,7 @@
 				setCoffeeMarkers(null);
 				setStoreMarkers(null);
 				setCarparkMarkers(null);
+				setAllListMarkers(null);
 				setNewListMarkers(null);
 				setHotListMarkers(map);
 				
@@ -450,11 +493,11 @@
 		        setCoffeeMarkers(null);
 				setStoreMarkers(null);
 				setCarparkMarkers(null);
+				setAllListMarkers(map);
 				setNewListMarkers(null);
 				setHotListMarkers(null);
 		    }
-		} 
-			
+		}
 </script>
 </body>
 </html>
