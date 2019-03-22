@@ -96,9 +96,8 @@
 					<if test="park == 'Y'"> #{park}, </if>
 			mdate = <if test="mdate != 'Y' "> 'N', </if>
 					<if test="mdate == 'Y'"> #{mdate}, </if>
-			<if test="etc != null">
-				etc = #{etc},
-			</if>
+			etc = <if test="etc != null"> #{etc} </if>
+				  <if test="etc == null"> '' </if>
 		where hcode = #{hcode}
 	</update>
 

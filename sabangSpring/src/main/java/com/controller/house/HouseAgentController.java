@@ -57,9 +57,10 @@ public class HouseAgentController {
 		return service.getLastCode(htype).substring(1);
 	}
 
-	@RequestMapping("/houseManaging/POST")
+	@RequestMapping("/houseManaging/{workType}")
 	@ResponseBody
-	public int houseRegisterPOST(@RequestParam(value="himage", required=false) CommonsMultipartFile himage, 
+	public int houseRegisterPOST(@PathVariable("workType") String workType,
+								 @RequestParam(value="himage", required=false) CommonsMultipartFile himage, 
 								 @RequestParam HashMap<String, Object> house, HttpSession session ) {
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		HouseInfoDTO infoDTO = new HouseInfoDTO();
@@ -111,16 +112,12 @@ public class HouseAgentController {
 		}
 		
     	infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
-    	
-    	System.out.println(infoDTO);
-		System.out.println(priceDTO);
-		System.out.println(optionDTO);
-    	
     	registerMap.put("info", infoDTO);
     	registerMap.put("price", priceDTO);
     	registerMap.put("option", optionDTO);
     	
-    	int n = service.houseRegister(registerMap);//DB로 보냄
+    	//POST면 매물등록, 아니면 PUT으로 매물 수정으로 감 
+    	int n = (workType.equals("POST"))? service.houseRegister(registerMap):service.houseUpdate(registerMap);
     	if (n==1 && himage!=null) {//성공하면 FILE업로드 진행 및 성공 메세지 담기
     		File f = new File("c:\\upload", fileName);
     		try {
@@ -133,16 +130,85 @@ public class HouseAgentController {
 		return n;
 	}
 	
-	@RequestMapping("/houseManaging/PUT")
-	@ResponseBody
-	public String houseRegisterPUT(@RequestParam HashMap<String, String> houseUpdate) {
-		
-		System.out.println("test");
-		System.out.println(houseUpdate);
-		
-		return "test";
-	}
-	
+//	@RequestMapping("/houseManaging/{workType}")
+//	@ResponseBody
+//	public int houseRegisterPUT(@PathVariable("workType") String workType,
+//									@RequestParam(value="himage", required=false) CommonsMultipartFile himage, 
+//								   @RequestParam HashMap<String, Object> house, HttpSession session ) {
+//		System.out.println(workType);
+//		
+//		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+//		HouseInfoDTO infoDTO = new HouseInfoDTO();
+//		HousePriceDTO priceDTO = new HousePriceDTO();
+//		HouseOptionDTO optionDTO = new HouseOptionDTO();
+//		HashMap<String, Object> registerMap = new HashMap<>(); //DB로 가는 최종 MAP
+//		Set<String> keys = house.keySet();
+//		for(String key : keys) {//클라이언트에서 가져온 값을 돌면서 키를 체크, 형변환해서 각각 DTO에 넣는다. 			
+//			if(!(house.get(key).equals(""))) {
+//				switch (key) {
+//		    	case "htype" : infoDTO.setHtype((String)house.get(key)); break;
+//		    	case "hcode": infoDTO.setHcode((String)house.get(key)); 
+//		    				  priceDTO.setHcode((String)house.get(key));
+//		    				  optionDTO.setHcode((String)house.get(key)); break;
+//		    	case "rtype" : infoDTO.setRtype((String)house.get(key)); break;
+//		    	case "hname" : infoDTO.setHname((String)house.get(key)); break;
+//		    	case "hetc" : infoDTO.setHetc((String)house.get(key)); break;
+//		    	case "area" : infoDTO.setArea((String)house.get(key)); break;
+//		    	case "flr" : infoDTO.setFlr(Integer.parseInt((String)house.get(key))); break;
+//		    	case "whflr" : infoDTO.setWhlflr(Integer.parseInt((String)house.get(key))); break;
+//		    	case "room" : infoDTO.setRoom(Integer.parseInt((String)house.get(key))); break;
+//		    	case "batr" : infoDTO.setBatr((String)house.get(key)); break;
+//		    	case "addr" : infoDTO.setAddr((String)house.get(key)); break;
+//		    	case "deposit" : priceDTO.setDeposit(Integer.parseInt((String)house.get(key))); break;
+//		    	case "mrent" : priceDTO.setMrent(Integer.parseInt((String)house.get(key))); break;
+//		    	case "yrent" : priceDTO.setYrent(Integer.parseInt((String)house.get(key))); break;
+//		    	case "maintc" : priceDTO.setMaintc(Integer.parseInt((String)house.get(key))); break;
+//		    	case "parkf" : priceDTO.setParkf(Double.parseDouble((String)house.get(key))); break;
+//		    	case "etc" : optionDTO.setEtc((String)house.get(key)); break;
+//		    	case "options" :
+//		    		switch ((String)house.get(key)) {
+//		    		case "BLTIN" : optionDTO.setBltin('Y'); break;
+//		    		case "ELEV" : optionDTO.setElev('Y'); break;
+//		    		case "PET" : optionDTO.setPet('Y'); break;
+//		    		case "VRD" : optionDTO.setVrd('Y'); break;
+//		    		case "LOAN" : optionDTO.setLoan('Y'); break;
+//		    		case "PARK" : optionDTO.setPark('Y'); break;
+//		    		case "MDATE" : optionDTO.setMdate('Y'); break;
+//		    		}
+//		    	}
+//			}
+//		}
+//		
+//		String fileName = null;
+//		if(himage!=null) {
+//			String[] fileNames = himage.getOriginalFilename().split("\\.");
+//			fileName = fileNames[0] + "_" + System.currentTimeMillis() + "." + fileNames[1];
+//			infoDTO.setHimage(fileName);
+//		}
+//		
+//    	infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
+//    	
+//    	System.out.println(infoDTO);
+//		System.out.println(priceDTO);
+//		System.out.println(optionDTO);
+//    	
+//    	registerMap.put("info", infoDTO);
+//    	registerMap.put("price", priceDTO);
+//    	registerMap.put("option", optionDTO);
+//    	
+//    	int n = service.houseUpdate(registerMap);//DB로 보냄
+//    	if (n==1 && himage!=null) {//성공하면 FILE업로드 진행 및 성공 메세지 담기
+//    		File f = new File("c:\\upload", fileName);
+//    		try {
+//    			himage.transferTo(f);
+//    		} catch (IllegalStateException | IOException e) {
+//    			e.printStackTrace();
+//    		}
+//    	} 
+//		
+//		return n;
+//	}
+//	
 	@RequestMapping("/houseManaging/DELETE/{delList}")
 	public @ResponseBody String houseRegisterDELETE(@PathVariable("delList") String[] delList) {
 		List<String> list = Arrays.asList(delList);

@@ -1,25 +1,6 @@
 $(document).ready(function(){
 	
-//	$("form").on("submit", function(e){
-//		e.preventDefault();
-//		console.log(e);
-//	})
-	
-	
-//	$("form").ajaxForm({
-//		type:'post',
-//		url:'houseManaging/PUT',
-//		dataType:'text',
-//		success:function(data, status, xhr){
-//			console.log("data: " + data);
-//		},
-//		error:function(xhr, status, error){console.log(xhr.status, error)}
-//	});
-	
-		
-		$("form").on("submit", function(e){//submit전 유효성체크
-//			console.log($("input[name=himage]"));
-//			console.log(Number.isNaN(Number.parseInt($("input[name=whlflr]").val())));
+		$("input[type=submit]").on("click", function(e){//submit전 유효성체크
 			if($("select[name=gcategory]").val()==""){
 				e.preventDefault();
 				alert("상품 카테고리를 선택하여주세요");
@@ -36,7 +17,24 @@ $(document).ready(function(){
 				e.preventDefault();
 				alert("사진을 등록하여주세요");
 			} 
-		});//end for onSubmit
+		});//end for onClick
+		
+		$("form#update").ajaxForm({
+			type:'post',
+			url: 'houseManaging/PUT',
+			dataType: 'text',
+			success:function(data, status, xhr){
+				var mesg = (data==1)? "매물수정에 성공하였습니다. Sabang Continue~":"매물수정에 실패하였습니다. 관리자에게 문의해주세요.";
+				alert(mesg);
+				$("input").each(function(idx,ele){
+					$(ele).prop("readonly", true);
+				});
+				$("textarea").each(function(idx,ele){
+					$(ele).prop("readonly", true);
+				});
+	 		},
+	 		error: function(xhr, status, error){console.log(xhr.status, status)}
+		});
 		
 		
 		$("textarea").on("keyup", function(e){//상품설명 글자수 세기

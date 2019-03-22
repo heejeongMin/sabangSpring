@@ -9,7 +9,7 @@
 <script src="js/houseUpdate.js"></script>
 
 	<h1 id="registerH1">매물 수정하기</h1>
-	<form method="post" encType="multipart/form-data" id="houseUpdate" action="houseManaging/PUT">
+	<form method="post" encType="multipart/form-data" id="update" action="houseManaging/PUT">
 	 	<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		      <div class="swiper-slide">

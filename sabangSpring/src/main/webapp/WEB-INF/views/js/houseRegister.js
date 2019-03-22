@@ -63,7 +63,7 @@ $(document).ready(function(){
 				e.preventDefault();
 				alert("건물층수는 숫자로만 입력해주세요.");
 			} 
-		});//end for onSubmit
+		});//end for onClick
 		
 			$("form#register").ajaxForm({
 				type:'post',
