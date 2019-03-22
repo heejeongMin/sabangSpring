@@ -13,7 +13,7 @@
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
 <meta http-equiv="pragma" content="no-cache"> 
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/sabangTest.css">
+<link rel="stylesheet" href="css/main.css">
 <c:set var="mesg" value="${mesg}"/>
 <c:if test="${!(empty mesg)}">
 	<script>
@@ -21,11 +21,16 @@
 	</script>
 </c:if>
 </head>
-<body id="wrap">
-	<div id="wrap">
-		<div id="header">
-			<jsp:include page="common/top.jsp" flush="true" /><br> <a
-				href="houseOverview">houseOverview</a> <br>
+<body>
+	<div id="wrap"></div>
+	<div id="header">
+		<div id="inner_header">
+			<jsp:include page="common/top.jsp" flush="true" />
+		</div>
+	</div>
+	<div id="section_wrap">
+		<div id="article_main">
+			<a href="houseOverview">houseOverview</a>
 		</div>
 	</div>
 </body>

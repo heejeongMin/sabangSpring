@@ -1,0 +1,12 @@
+/* loginForm.css */
+
+/* Section */
+#section_wrap {
+	position:absolute; top:60px; width:100%;
+}
+
+/* Section - login */
+#article_loginForm {
+	width:1200px; margin:auto; text-align:center;
+}
+
