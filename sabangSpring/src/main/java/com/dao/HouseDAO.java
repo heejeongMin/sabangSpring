@@ -49,6 +49,11 @@ public class HouseDAO {
 		return session.selectOne("HouseMapper.totalListBySearch", search);
 	}//totalListbySearch
 	
+	//전체매물 리스트
+	public List<HashMap<String, Object>> retrieveAllItems(){
+		return session.selectList("HouseMapper.retrieveAllItems");
+	}//end retrieveAllItems
+	
 	//신매물 리스트
 	public List<HashMap<String, Object>> retrieveNewItems(){
 		String maxSeven = session.selectOne("HouseMapper.test");

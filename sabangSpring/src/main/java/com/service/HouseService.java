@@ -23,7 +23,11 @@ public class HouseService {
 	public HashMap<String, Object> searchList(String search, int curPage) {// 검색에 의한 결과 리스트 페이징 처리
 		return dao.searchList(search, curPage);
 	}// searchList
-
+	
+	public List<HashMap<String, Object>> retrieveAllItems() {// 전체매물 리스트
+		return dao.retrieveAllItems();
+	}// retrieveAllItems
+	
 	public List<HashMap<String, Object>> retrieveNewItems() {// 신매물 리스트
 		return dao.retrieveNewItems();
 	}// retrieveNewItems

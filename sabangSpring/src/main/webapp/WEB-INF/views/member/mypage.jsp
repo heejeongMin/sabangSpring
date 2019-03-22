@@ -28,7 +28,7 @@
 		
 		
 		
-		// 호출 시 전화번호 선택 방법1
+		// 호출 시 전화번호 선택
 		$("option[value='${phone[0]}']").prop("selected",true);
 		
 		
@@ -78,8 +78,7 @@
 		
 		// 비밀번호 유효성검사
 		$("#passwd").on("keyup",function(event){
-				console.log($("#passwd").val());
-				if(event.keyCode === 8 && $("#pwdResult").text() == "비밀번호 불일치"){
+				if(event.keyCode == 8 && $("#pwdResult").text() == "비밀번호 불일치"){
 					event.preventDefault();
 				}else{
 					$.ajax({
@@ -135,7 +134,7 @@
 		
 		
 		
-		// 공백 및 한글 입력 방지
+		// 비밀번호에 공백 및 한글 입력 방지
 		$("input[type=password]").on("keyup",function(event){
 			if (!(event.keyCode >=37 && event.keyCode<=40)) {
 		    	var inputVal = $(this).val();
@@ -145,7 +144,7 @@
 		
 		
 	   
-	   // input 엔터(Submit) 방지
+	   // input태그 엔터(Submit) 방지
 	   $('input').on("keydown",function(event) {
    			 if (event.keyCode === 13) {
        			 event.preventDefault();
@@ -153,11 +152,18 @@
 	   });
 	   
 	   
+		// 전화번호에 숫자만 입력하도록 하기
+		$("#phn1").on("keyup", function() {
+    		$(this).val($(this).val().replace(/[^0-9]/g,""));
+		});
+		
+		$("#phn2").on("keyup", function() {
+    		$(this).val($(this).val().replace(/[^0-9]/g,""));
+		});
 	   
 	   	// 업데이트
 	   	$("#updateSubmit").on("click",function(event){
 	   		var pwdCR= $("#pwdCheckResult").text();
-	   		
 	   		if($("#passwd").val().length==0){ 			
 	   			event.preventDefault();
 	   			alert("비밀번호를 입력하세요.");
@@ -170,7 +176,15 @@
 	   			event.preventDefault();
 	   			alert("변경할 비밀번호가 일치하지않습니다.");
 	   			$("#pwdCheck2").focus();
-	   		}else{
+	   		}else if($("#phn1").val().length<4){  
+	   			event.preventDefault();
+	   			alert("전화번호를 입력하세요.");
+	   			$("#phn1").focus();
+	   		}else if($("#phn2").val().length<4){
+	   			event.preventDefault();
+	   			alert("전화번호를 입력하세요.");
+	   			$("#phn2").focus();
+	   		}else{	
 	   			$("form").submit();
 	   		}
 	   	})
@@ -199,8 +213,8 @@
 					<option value="017" class="phn">017</option>
 					<option value="010" class="phn">010</option>
 				</select>-
-				<input class="phn" type="tel" name="phone" value="${phone[1]}" size="3" maxlength="4" disabled="disabled">-
-				<input class="phn" type="tel" name="phone" value="${phone[2]}" size="3" maxlength="4" disabled="disabled" >
+				<input class="phn" id="phn1" type="tel" name="phone" value="${phone[1]}" size="3" maxlength="4" disabled="disabled">-
+				<input class="phn" id="phn2" type="tel" name="phone" value="${phone[2]}" size="3" maxlength="4" disabled="disabled" >
 				<input type="button" value="변경" id="phnChange"/>
 				<span id="phnConfirmResult" style="color:red"></span>
 			</td>

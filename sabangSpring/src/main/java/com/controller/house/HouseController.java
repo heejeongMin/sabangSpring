@@ -48,6 +48,7 @@ public class HouseController {
 	
 	@RequestMapping("/houseOverview")// 메인.jsp에서 신촌으로 바로 들어올 때
 	public void houseOverview(Model model) {
+		model.addAttribute("allList", hService.retrieveAllItems());
 		model.addAttribute("newList", hService.retrieveNewItems());
 		model.addAttribute("hotList", hService.retrieveHotItems());
 	}// end houseOverview
@@ -57,6 +58,7 @@ public class HouseController {
 		System.out.println(search);
 		model.addAttribute("search", search);
 		model.addAttribute("pagingMap", hService.searchList(search, curPage));
+		model.addAttribute("allList", hService.retrieveAllItems());
 		model.addAttribute("newList", hService.retrieveNewItems());
 		model.addAttribute("hotList", hService.retrieveHotItems());
 		return "houseList";

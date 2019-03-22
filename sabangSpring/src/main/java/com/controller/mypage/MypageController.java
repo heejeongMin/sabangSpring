@@ -114,23 +114,29 @@ public class MypageController {
 		// 최근 본 방
 		if(iCategory.equals("rcnlist")) {
 			List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
-			for(HouseRcnlistDTO rcnDto : rcnList) {
-				if(rcnDto.getUserid().equals(userid)) {
+			if(rcnList.size() != 0) {
+				for(HouseRcnlistDTO rcnDto : rcnList) {
 					hCodeList.add(rcnDto.getHcode());
 				}
+				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
+				model.addAttribute("houseInfoRcnList", houseInfoList);
+			}else {
+				model.addAttribute("listInfo", "rcn");
 			}
-			List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
-			model.addAttribute("houseInfoRcnList", houseInfoList);
-					
+			
+			
 		// 찜리스트
 		}else if(iCategory.equals("wishlist")) {
 			List<HouseWishlistDTO> wishList = hService.selectWishlist(userid);
-			for(HouseWishlistDTO wishDto : wishList) {
-				hCodeList.add(wishDto.getHcode());
+			if(wishList.size() != 0) {
+				for(HouseWishlistDTO wishDto : wishList) {
+					hCodeList.add(wishDto.getHcode());
+				}
+				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
+				model.addAttribute("houseInfoWishList", houseInfoList);
+			}else {
+				model.addAttribute("listInfo", "wish");
 			}
-						
-			List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
-			model.addAttribute("houseInfoWishList", houseInfoList);
 		}
 		return "interestList";
 	}
