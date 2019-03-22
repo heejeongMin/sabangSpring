@@ -191,7 +191,7 @@ public class HouseController {
 		List<Long> userRcnList = new ArrayList<>();
 		String userid = memberInfo.getUserid();
 		List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
-		if(list.size() != 0) {
+		if(rcnList.size() != 0) {
 			for(HouseRcnlistDTO rcn : rcnList) {
 				history.put(rcn.getNum(), rcn.getHcode());
 				userRcnList.add(rcn.getNum());
