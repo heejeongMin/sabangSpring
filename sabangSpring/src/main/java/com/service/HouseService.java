@@ -40,9 +40,17 @@ public class HouseService {
 		return dao.listByFilter(queryMap, curPage);
 	}// retrieveHotItems
 
-	public List<HashMap<String, Object>> houseByAgent(String agntid) {// listByFilter에서만 사용해서 private 처리
+	public List<HashMap<String, Object>> houseByAgent(String agntid) {// 거래중인 매물
 		return dao.houseByAgent(agntid);
 	}// houseByAgent
+	
+	public List<HashMap<String, Object>> houseSoldByAgent(String agntid) {// 거래완료 매물
+		return dao.houseSoldByAgent(agntid);
+	}// houseSoldByAgent
+	
+	public List<HashMap<String, Object>> houseLikeByAgent(String agntid) {// 에이전트가 등록한 매물 좋아요받은 순
+		return dao.houseLikeByAgent(agntid);
+	}// houseLikeByAgent
 
 	public String getLastCode(String htype) {// 마지막으로 등록된 코드 가져오기
 		return dao.getLastCode(htype);
@@ -74,6 +82,7 @@ public class HouseService {
 //			n = dao.updateCntWish(session, dto.getHcode());
 		return n;
 	}// end updateCntWish
+	
 
 	///////////////////////////////////////////////////////////
 	// Basic : House 자세히보기

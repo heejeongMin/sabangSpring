@@ -150,7 +150,21 @@
 		from house_info join house_price using(hcode)
 		where agntid = #{agntid}
 	</select>
-
+	
+<!-- housePanel.jsp에서 agent별 매물 리스트 (거래완료) -->
+	<select id="houseSoldByAgent" parameterType="string" resultType="hashmap">
+		select hcode, rtype, addr, deposit, mrent, registerdate, himage, TO_CHAR(closedDate, 'YY/MM/DD') closedDate
+		from house_info join house_price using(hcode)
+		where agntid = #{agntid} and house_info.closed ='Y'
+	</select>
+	
+<!-- housePanel.jsp에서 agent별 좋아요 많은 순  -->
+	<select id="houseLikeByAgent" parameterType="string" resultType="hashmap">
+		select hcode, rtype, addr, deposit, mrent, registerdate, himage, cntwish 
+		from house_info join house_price using(hcode)   
+		where agntid = 'agent' and cntwish>0 
+		order by cntwish desc
+	</select>
 
 <!-- houseList.jsp 검색해서 나오는 매물 w paging  -->
 	<select id="searchList" parameterType="string" resultType="hashmap">

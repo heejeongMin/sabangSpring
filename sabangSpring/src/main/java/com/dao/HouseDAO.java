@@ -18,233 +18,239 @@ import com.dto.HouseWishlistDTO;
 
 @Repository
 public class HouseDAO {
-	
+
 	@Autowired
 	SqlSessionTemplate session;
-	
-	/* 
-	 * 페이징 처리
-	 * 1. curPage : 현재 페이지 
-	 * 2. perPage : 한번에 보여줄 페이지 개수 
-	 * 3. totalPage : 전체 목록 개수
-	 * 4. list : db에서 가져온 애들
-	 * */
-	
-	//검색에 의한 결과 리스트 페이징 처리
-	public HashMap<String, Object> searchList(String search, int curPage){
+
+	/*
+	 * 페이징 처리 1. curPage : 현재 페이지 2. perPage : 한번에 보여줄 페이지 개수 3. totalPage : 전체 목록
+	 * 개수 4. list : db에서 가져온 애들
+	 */
+
+	// 검색에 의한 결과 리스트 페이징 처리
+	public HashMap<String, Object> searchList(String search, int curPage) {
 		HashMap<String, Object> pagingMap = new HashMap<>();
 		pagingMap.put("curPage", curPage);
 		pagingMap.put("perPage", 3);
 		pagingMap.put("totalPage", totalListBySearch(search));
-		
-		int offset = (curPage-1) * (int)pagingMap.get("perPage");
-		List<HashMap<String, Object>> list = session.selectList("HouseMapper.searchList", search, new RowBounds(offset, (int)pagingMap.get("perPage")));
+
+		int offset = (curPage - 1) * (int) pagingMap.get("perPage");
+		List<HashMap<String, Object>> list = session.selectList("HouseMapper.searchList", search,
+				new RowBounds(offset, (int) pagingMap.get("perPage")));
 		pagingMap.put("list", list);
-		
-		return pagingMap; 
-	}//searchList
-	
-	//searchList에서만 사용해서 private처리
+
+		return pagingMap;
+	}// searchList
+
+	// searchList에서만 사용해서 private처리
 	private int totalListBySearch(String search) {
 		return session.selectOne("HouseMapper.totalListBySearch", search);
-	}//totalListbySearch
-	
-	//전체매물 리스트
-	public List<HashMap<String, Object>> retrieveAllItems(){
+	}// totalListbySearch
+
+	// 전체매물 리스트
+	public List<HashMap<String, Object>> retrieveAllItems() {
 		return session.selectList("HouseMapper.retrieveAllItems");
-	}//end retrieveAllItems
-	
-	//신매물 리스트
-	public List<HashMap<String, Object>> retrieveNewItems(){
+	}// end retrieveAllItems
+
+	// 신매물 리스트
+	public List<HashMap<String, Object>> retrieveNewItems() {
 		String maxSeven = session.selectOne("HouseMapper.newItemCount");
 		return session.selectList("HouseMapper.retrieveNewItems", maxSeven);
-	}//end retrieveNewItems
-	
-	//핫매물 리스트
-	public List<HashMap<String, Object>> retrieveHotItems(){
+	}// end retrieveNewItems
+
+	// 핫매물 리스트
+	public List<HashMap<String, Object>> retrieveHotItems() {
 		return session.selectList("HouseMapper.retrieveHotItems");
-	}//end retrieveHotItems
-		
-	//필터에 의한 리스트
-	public HashMap<String, Object> listByFilter(HashMap<String, List<String>> queryMap, int curPage){
+	}// end retrieveHotItems
+
+	// 필터에 의한 리스트
+	public HashMap<String, Object> listByFilter(HashMap<String, List<String>> queryMap, int curPage) {
 		HashMap<String, Object> pagingMap = new HashMap<>();
 		pagingMap.put("curPage", curPage);
 		pagingMap.put("perPage", 3);
 		pagingMap.put("totalPage", totalListByFilter(queryMap));
-		
-		int offset = (curPage-1) * (int)pagingMap.get("perPage");
-		List<HashMap<String, Object>> list = session.selectList("HouseMapper.listByFilter", queryMap, new RowBounds(offset, (int)pagingMap.get("perPage")));
+
+		int offset = (curPage - 1) * (int) pagingMap.get("perPage");
+		List<HashMap<String, Object>> list = session.selectList("HouseMapper.listByFilter", queryMap,
+				new RowBounds(offset, (int) pagingMap.get("perPage")));
 		pagingMap.put("list", list);
-		
-		return pagingMap; 
-	}//listByFilter
-	
-	//listByFilter에서만 사용해서 private 처리
+
+		return pagingMap;
+	}// listByFilter
+
+	// listByFilter에서만 사용해서 private 처리
 	private int totalListByFilter(HashMap<String, List<String>> queryMap) {
 		return session.selectOne("HouseMapper.totalListByFilter", queryMap);
-	}//totalListByFilter
-	
-	//panel에 매물리스트
-	public List<HashMap<String, Object>> houseByAgent(String agntid){
+	}// totalListByFilter
+
+	// panel에 매물리스트
+	public List<HashMap<String, Object>> houseByAgent(String agntid) {
 		return session.selectList("HouseMapper.houseByAgent", agntid);
-	}//houseByAgent
-	
-	//가장 최근에 등록된 매물코드가져오기
-	public String getLastCode(String htype){
+	}// houseByAgent
+
+	// panel에 매물리스트 (거래완료)
+	public List<HashMap<String, Object>> houseSoldByAgent(String agntid) {
+		return session.selectList("HouseMapper.houseSoldByAgent", agntid);
+	}// houseByAgent
+
+	// 에이전트별 매물 좋아요 많은 순
+	public List<HashMap<String, Object>> houseLikeByAgent(String agntid) {
+		return session.selectList("HouseMapper.houseLikeByAgent", agntid);
+	}// houseLikeByAgent
+
+	// 가장 최근에 등록된 매물코드가져오기
+	public String getLastCode(String htype) {
 		return session.selectOne("HouseMapper.getLastCode", htype);
-	}//end getLastCode
-	
-	//매물 올리기- info - info&price&option 트랜잭션 처리
+	}// end getLastCode
+
+	// 매물 올리기- info - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseRegister_info(HouseInfoDTO infoDTO){
+	public int houseRegister_info(HouseInfoDTO infoDTO) {
 		return session.insert("HouseMapper.houseRegister_info", infoDTO);
-	}//end houseRegister_info
-	
-	//매물 올리기- price - info&price&option 트랜잭션 처리
+	}// end houseRegister_info
+
+	// 매물 올리기- price - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseRegister_price(HousePriceDTO priceDTO){
+	public int houseRegister_price(HousePriceDTO priceDTO) {
 		return session.insert("HouseMapper.houseRegister_price", priceDTO);
-	}//end houseRegister_price
-	
-	//매물 올리기- option - info&price&option 트랜잭션 처리
+	}// end houseRegister_price
+
+	// 매물 올리기- option - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseRegister_option(HouseOptionDTO optionDTO){
+	public int houseRegister_option(HouseOptionDTO optionDTO) {
 		return session.insert("HouseMapper.houseRegister_option", optionDTO);
-	}//end houseRegister_option
-	
-	
-	//매물 수정- info - info&price&option 트랜잭션 처리
+	}// end houseRegister_option
+
+	// 매물 수정- info - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseUpdate_info(HouseInfoDTO infoDTO){
+	public int houseUpdate_info(HouseInfoDTO infoDTO) {
 		return session.update("HouseMapper.houseUpdate_info", infoDTO);
-	}//end houseRegister_info
+	}// end houseRegister_info
 
-	//매물 수정- price - info&price&option 트랜잭션 처리
+	// 매물 수정- price - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseUpdate_price(HousePriceDTO priceDTO){
+	public int houseUpdate_price(HousePriceDTO priceDTO) {
 		return session.update("HouseMapper.houseUpdate_price", priceDTO);
-	}//end houseRegister_price
+	}// end houseRegister_price
 
-	//매물 수정- option - info&price&option 트랜잭션 처리
+	// 매물 수정- option - info&price&option 트랜잭션 처리
 	@Transactional
-	public int houseUpdate_option(HouseOptionDTO optionDTO){
+	public int houseUpdate_option(HouseOptionDTO optionDTO) {
 		return session.update("HouseMapper.houseUpdate_option", optionDTO);
-	}//end houseUpdate_option
-	
-	//매물 삭제
-	public int houseDel(List<String> list){
+	}// end houseUpdate_option
+
+	// 매물 삭제
+	public int houseDel(List<String> list) {
 		System.out.println(list);
 		int n = session.delete("HouseMapper.houseDel_info", list);
 //		n = session.delete("HouseMapper.houseDel_price", list);
 //		n = session.delete("HouseMapper.houseDel_option", list);
 		return n;
-	}//end houseDel
-	
-	//매물 cntwish 값 업데이트
+	}// end houseDel
+
+	// 매물 cntwish 값 업데이트
 	@Transactional
 	public int updateCntWish(String hcode) {
 		int n = getCntWish(hcode);
-		
+
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("hcode", hcode);
 		map.put("cntwish", n);
-		
+
 		n = session.update("HouseMapper.updateCntWish", map);
 		return n;
-	}//updateCntWish
-	
-	
-	//매물 cntwish 값 가져오기 
+	}// updateCntWish
+
+	// 매물 cntwish 값 가져오기
 	private int getCntWish(String hcode) {
 		return session.selectOne("HouseMapper.getCntWish", hcode);
-	}//getCntWish
-		
+	}// getCntWish
+
 	// 유저가 찜한 매물 저장하기
 	@Transactional
 	public int addWish(HouseWishlistDTO dto) {
-		int n = getNoOfWishes(dto); //유저의 찜 개수 가지고 오기
+		int n = getNoOfWishes(dto); // 유저의 찜 개수 가지고 오기
 		int result = 0;
 		int dupleCheck = 0;
-		
-		 // result 0: 찜 개수 다 찼음
+
+		// result 0: 찜 개수 다 찼음
 		// result 1: 찜 성공
 		// result 2 : 찜 대상 매물 중복
-		
-		if (n >=6) {// 이미 찜한개수가 6개가 다 찼을때 result 는 0
+
+		if (n >= 6) {// 이미 찜한개수가 6개가 다 찼을때 result 는 0
 			result = 0;
 		} else {// 찜은 할 수 있는 블럭
-			if (n==0) {//찜을 단 한번도 하지 않은 상태니까 그냥 insert 해주고,
+			if (n == 0) {// 찜을 단 한번도 하지 않은 상태니까 그냥 insert 해주고,
 				result = session.insert("HouseMapper.addWish", dto);
 				result = updateCntWish(dto.getHcode());
-			} else {//찜을 한번이라도 한 이력이 있으니까, 중복매물인지 확인
+			} else {// 찜을 한번이라도 한 이력이 있으니까, 중복매물인지 확인
 				dupleCheck = duplicateHouseCheck(dto);
-				if (dupleCheck == 0) {//중복매물이 아니면 insert진행 
+				if (dupleCheck == 0) {// 중복매물이 아니면 insert진행
 					result = session.insert("HouseMapper.addWish", dto);
 					result = updateCntWish(dto.getHcode());
-				} else {//중복매물이면 2 리턴
+				} else {// 중복매물이면 2 리턴
 					result = 2;
 				}
-			}//if~else
+			} // if~else
 		}
 		return result;
-	}//updateCntWish
-	
-	//한 유저당 찜 한 개수 가지고 오기
+	}// updateCntWish
+
+	// 한 유저당 찜 한 개수 가지고 오기
 	private int getNoOfWishes(HouseWishlistDTO dto) {
 		return session.selectOne("HouseMapper.getNoOfWishes", dto.getUserid());
-	}//getCntWish
-	
+	}// getCntWish
+
 	private int duplicateHouseCheck(HouseWishlistDTO dto) {
 		return session.selectOne("HouseMapper.duplicateHouseCheck", dto);
 	};
-	
-	
+
 	///////////////////////////////////////////////////////////
 	// Basic: House 자세히보기
-	public HouseInfoDTO houseRetrieve(String hcode){
-	HouseInfoDTO dto = session.selectOne("HouseMapper.houseRetrieve",hcode);
-	return dto;
+	public HouseInfoDTO houseRetrieve(String hcode) {
+		HouseInfoDTO dto = session.selectOne("HouseMapper.houseRetrieve", hcode);
+		return dto;
 	}
-	
+
 	// Basic: House 가격
-	public HousePriceDTO housePrice(String hcode){
-	HousePriceDTO dto = session.selectOne("HouseMapper.housePrice",hcode);
-	return dto;
+	public HousePriceDTO housePrice(String hcode) {
+		HousePriceDTO dto = session.selectOne("HouseMapper.housePrice", hcode);
+		return dto;
 	}
+
 	// Basic: House 옵션
-	public HouseOptionDTO houseOption(String hcode){
-	HouseOptionDTO dto = session.selectOne("HouseMapper.houseOption",hcode);
-	return dto;
+	public HouseOptionDTO houseOption(String hcode) {
+		HouseOptionDTO dto = session.selectOne("HouseMapper.houseOption", hcode);
+		return dto;
 	}
-	
-	
+
 	///////////////////////////////////////////////////////////
 	// 최근 본 House 테이블 보기
-	public List<HouseRcnlistDTO> selectRcnlist(String userid){
+	public List<HouseRcnlistDTO> selectRcnlist(String userid) {
 		List<HouseRcnlistDTO> list = session.selectList("HouseMapper.rcnList", userid);
 		return list;
 	}
-	
+
 	// 최근 본 House DB 데이터 저장
 	public int rcnListAllDone(List<HouseRcnlistDTO> rList) {
 		int n = session.insert("HouseMapper.rcnInsertAll", rList);
 		return n;
 	}
-	
+
 	// 최근 본 House DB 데이터 삭제
 	public int deleteRcnlist(List<Long> userRcnList) {
-		int n = session.delete("HouseMapper.rcnDelete",userRcnList);
+		int n = session.delete("HouseMapper.rcnDelete", userRcnList);
 		return n;
 	}
-	
+
 	// 최근 본 / 찜한 House 리스트 보기
-	public List<HashMap<String, Object>> rcnHouseInfo(List<String> hCodeList){
+	public List<HashMap<String, Object>> rcnHouseInfo(List<String> hCodeList) {
 		List<HashMap<String, Object>> list = session.selectList("HouseMapper.rcnHouseList", hCodeList);
 		return list;
 	}
-	
+
 	// 찜한 House 테이블 보기
-	public List<HouseWishlistDTO> selectWishlist(String userid){
+	public List<HouseWishlistDTO> selectWishlist(String userid) {
 		List<HouseWishlistDTO> list = session.selectList("HouseMapper.wishList", userid);
 		return list;
 	}

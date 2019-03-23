@@ -35,7 +35,6 @@ $(document).ready(function() {
 									console.log(1);
 									$(ele).remove();
 								}
-								;
 							}
 						});
 						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
@@ -59,6 +58,10 @@ $(document).ready(function() {
 		$("textarea").each(function(idx,ele){
 			$(ele).prop("readonly", true);
 		});
-	})
+	}); // 매물 수정 완료 시 readonly 효과
+	
+	$("#accordian h3").on("click", function(e){
+		$(e.target).next().slideToggle("slow");
+	});// panel 메뉴 아코디언 효과
 
 });// end ready

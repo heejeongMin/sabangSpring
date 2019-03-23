@@ -37,6 +37,8 @@ public class HouseAgentController {
 		// 로그인한 에이전트의 이름으로 등록된 매물 리스트를 housePanel.jsp에 보여주기
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));
+		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));
+		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));
 
 		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때
 		if (work != null) {
