@@ -67,15 +67,17 @@ $(document).ready(function() {
 	
 	$("h5#records").on("click", function(e){
 		$(".modal-dialog-Line").toggle();
+		if($(".modal-dialog-Pie").clientWidth != 0) $(".modal-dialog-Pie").hide();
 	});
-	$(".btn").on("click", function(e){
+	$(".modal-dialog-Line .btn").on("click", function(e){
 		$(".modal-dialog-Line").hide();
 	})
 	
 	$("h5#popularity").on("click", function(e){
 		$(".modal-dialog-Pie").toggle();
+		if($(".modal-dialog-Line").clientWidth != 0) $(".modal-dialog-Line").hide();
 	});
-	$(".btn").on("click", function(e){
+	$(".modal-dialog-Pie .btn").on("click", function(e){
 		$(".modal-dialog-Pie").hide();
 	})
 

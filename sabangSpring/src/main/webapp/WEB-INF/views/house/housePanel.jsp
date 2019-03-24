@@ -12,6 +12,9 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!--Load the AJAX API-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><!-- for modal -->
 <script src="js/housePanel.js"></script>
+<style>
+	div#drawChartRecords div[dir="ltr"]{width:600px; height:500px;}
+</style>
 </head>
 <body>
 <div id="accordian">
@@ -116,7 +119,7 @@
 											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 										</div>
 										<div class="modal-body">
-											 <div id="curve_chart" style="width: 800px; height: 500px;"></div>
+											 <div id="drawChartRecords" style="width:800px; height:450px;"></div>
 										</div>
 									</div>
 								</div>
@@ -151,7 +154,7 @@ var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseL
 "</c:forEach>"
 
   // Load the Visualization API and the corechart package.
-  google.charts.load('current', {'packages':['corechart', 'bar']});
+  google.charts.load('current', {'packages':['corechart', 'line']});
 
   // Set a callback to run when the Google Visualization API is loaded.
   google.charts.setOnLoadCallback(drawChartRecords); //실적 눌르면 나오는애
@@ -161,31 +164,34 @@ var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseL
   // instantiates the pie chart, passes in the data and
   // draws it.
   function drawChartRecords(){//실적 눌르면 나오는애
-	  var data = google.visualization.arrayToDataTable([
-          ['Month', 'Sales', 'Expenses'],
-          ['01',  1000,      400],
-          ['02',  1170,      460],
-          ['03',  660,       1120],
-          ['04',  1030,      540]
-//           ['05',  1030,      540]
-//           ['06',  1030,      540]
-//           ['07',  1030,      540]
-//           ['08',  1030,      540]
-//           ['09',  1030,      540]
-//           ['10',  1030,      540]
-//           ['11',  1030,      540]
-//           ['12',  1030,      540]
-        ]);
+	  var data = new google.visualization.DataTable();
+      data.addColumn('number', '월');
+      data.addColumn('number', '중개중인매물');
+      data.addColumn('number', '중개완료매물');
+
+      data.addRows([
+        [1,  37.8, 80.8 ],
+        [2,  30.9, 69.5 ],
+        [3,  25.4,   57 ],
+        [4,  11.7, 18.8 ],
+        [5,  11.9, 17.6 ],
+        [6,   8.8, 13.6],
+        [7,   7.6, 12.3],
+        [8,  12.3, 29.2],
+        [9,  16.9, 42.9],
+        [10, 12.8, 30.9],
+        [11,  5.3,  7.9],
+        [12,  6.6,  8.4],
+      ]);
 
         var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
+          title: '월별 중개 중인 매물 vs 중개 완료 매물',
+       	 	width: 750,
+       	 	height: 350,
         };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
+        var chart = new google.visualization.LineChart(document.getElementById('drawChartRecords'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
   }
   
   function drawChartPopularHouse() {// 인기매물 파이 차트
