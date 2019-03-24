@@ -162,7 +162,7 @@
 	<select id="houseLikeByAgent" parameterType="string" resultType="hashmap">
 		select hcode, rtype, addr, deposit, mrent, registerdate, himage, cntwish 
 		from house_info join house_price using(hcode)   
-		where agntid = 'agent' and cntwish>0 
+		where agntid = 'agent' and cntwish>0
 		order by cntwish desc
 	</select>
 

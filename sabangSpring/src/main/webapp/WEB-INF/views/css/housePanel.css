@@ -72,6 +72,7 @@ span.tooltiptext::after {
     padding: 0;
     width: 100%;
     box-shadow: inset 1px 1px 57px lightskyblue;
+    text-align:center;
 }
 #accordian ul li{
     width: 100%;
@@ -98,4 +99,34 @@ span.tooltiptext::after {
 
 #accordian .accordianBox{
 	display:none;
+}
+
+	div[dir="ltr"] {
+	left: 60px;
+	top: 40px;
+}
+
+.btn {
+	background: none;
+	padding: 10px;
+	z-index: 1;
+	position: absolute;
+	right: 10%;
+	top: 5%;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#accordian ul li.chartMenu {
+	display: inline-block;
+	width: 30%;
+	margin-top: 30px 0;
+}
+
+#accordian ul li.chartMenu>h5 {
+	padding: 10px 0;
+	box-shadow: 2px 2px 4px 0px orange;
+	margin: 20px 10px;
+	background: beige;
+	border-radius: 6px;
 }

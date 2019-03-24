@@ -63,5 +63,21 @@ $(document).ready(function() {
 	$("#accordian h3").on("click", function(e){
 		$(e.target).next().slideToggle("slow");
 	});// panel 메뉴 아코디언 효과
+	
+	
+	$("h5#records").on("click", function(e){
+		$(".modal-dialog-Line").toggle();
+	});
+	$(".btn").on("click", function(e){
+		$(".modal-dialog-Line").hide();
+	})
+	
+	$("h5#popularity").on("click", function(e){
+		$(".modal-dialog-Pie").toggle();
+	});
+	$(".btn").on("click", function(e){
+		$(".modal-dialog-Pie").hide();
+	})
+
 
 });// end ready
