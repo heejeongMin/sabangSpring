@@ -15,15 +15,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#delete").on("click", function(e){
-			var ppwd = prompt("비밀번호 입력","게시물 비밀번호를 입력해주세요");
+			var ppwd = prompt("삭제하시겠습니까?","게시물 비밀번호를 입력해주세요");
 			var pcode = $("h3").attr("data-pcode")
 			location.href = "deleteBoard?pcode="+pcode+"&ppwd="+ppwd; 
 		})
 		
 	 	$("#edit").on("click", function(e){
+	 		var ppwd = prompt("수정하시겠습니까?","게시물 비밀번호를 입력해주세요");
 			var pcode = $("h3").attr("data-pcode")
-			var ppwd = $("h3").attr("data-ppwd")
-			location.href = "postBoard?pcode="+pcode; 
+			location.href = "postBoard?pcode="+pcode+"&ppwd="+ppwd;  
 		})
 	})
 </script>
@@ -39,7 +39,7 @@ th {
 	<table>
 		<c:forEach var="board" items="${board}" varStatus="status">
 			<c:if test="${board.pcode eq param.pcode }">
-				<h3 data-pcode="${board.pcode}" data-ppwd ="${board.ppwd}"> ${board.title}</h3>
+				<h3 data-pcode="${board.pcode}"> ${board.title}</h3>
 				<hr>
 				<tr>
 					<th>작성자</th>
@@ -58,9 +58,10 @@ th {
 		</c:forEach>
 	</table>
 	<br>
+	<c:if test = "${board.userid eq memberInfo.userid}">
 	 <input type="button" id="edit" class = "alter" value="수정"> 
 	 <input type="button" id="delete" class = "alter"value="삭제">
-		
+	</c:if>	
 <c:set var="func" value="${func}" scope="session" />
 <c:if test="${!(empty func)}">
 	<script>

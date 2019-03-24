@@ -4,20 +4,23 @@
 <script src="js/signEvents.js"></script><br>    
 
 <h4>회원 가입 </h4>
-Member <input type = "radio" id = "selectMbr" name = "agent" value = 'N' >
-Agent <input type = "radio" id = "selectAgnt" name = "agent" value = 'Y'> 
+
 
 <form action = "signMbr" id = "signForm" method = "get">
- <input type="text" name="userid" id="userid" placeholder = "아이디">
+
+<input type = "radio" id = "selectMbr" name = "agent" value = 'N' checked = "checked" > 일반 회원
+<input type = "radio" id = "selectAgnt" name = "agent" value = 'Y'> 공인중개사 <span class = "live" id ="type"></span>
+<br>
+ <input type="text" name="userid" id="userid" placeholder = "아이디"><span class = "live" id = "id"></span>
 <br> 
-<input type="password" name="passwd" id="passwd" placeholder="비밀번호" ><br>
-<input type="password" name="cnfPasswd" id="cnfPasswd" placeholder="비밀번호 확인" >
+<input type="password" name="passwd" id="passwd" placeholder="비밀번호" ><span class = "live" id ="pw"></span><br>
+<input type="password" name="cnfPasswd" id="cnfPasswd" placeholder="비밀번호 확인" ><span class = "live" id ="cfpw"></span>
 <br> 
-<input type="text" name="username" id ="username" placeholder = "이름"><br> 
-<input type = "text" name = "ssn1" id = "ssn1" placeholder = "주민등록번호 앞자리"> - <input type = "password" id = "ssn2" name = "ssn2" placeholder = "주민등록번호 뒷자리"> <br> 
-<input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
+<input type="text" name="username" id ="username" placeholder = "이름"><span class = "live" id = "name"></span><br> 
+<input type = "text" name = "ssn1" id = "ssn1" placeholder = "주민등록번호 앞자리"> - <input type = "password" id = "ssn2" name = "ssn2" placeholder = "주민등록번호 뒷자리"><span class = "live" id = "ssn"></span> <br> 
+<input type="text" name="post" id="sample4_postcode" placeholder="우편번호"><span class = "live" id ="post"></span>
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소">
+<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소"><span class = "live" id ="addr"></span>
 <input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;">
 <span id="guide"></span>
 <br>
@@ -25,11 +28,11 @@ Agent <input type = "radio" id = "selectAgnt" name = "agent" value = 'Y'>
   <option value="010">010</option>
   <option value="011">011</option>
 </select>-
-<input type="text" name="phone2" id = "phone2">-<input type="text" name="phone3" id = "phone3">
+<input type="text" name="phone2" id = "phone2">-<input type="text" name="phone3" id = "phone3"><span class = "live" id = "phone"></span>
 <br>
 <input type="text" name="email1" id="email1" placeholder = "이메일">@
 <input type="text" name = "email2" id="email2" placeholder = "직접 입력">
-	<select id="email3">
+	<select id="email3"><span class = "live" id ="email"></span>
 		<option value="">직접 입력</option>
 		<option value="naver.com">naver.com</option>
 		<option value="hanmail.net">hanmail.net</option>

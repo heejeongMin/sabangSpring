@@ -34,6 +34,16 @@ public class MemberDAO {
 		return count;
 	}
 	
+	public int ssnCheck( String ssn) {
+		int count = session.selectOne("MemberMapper.ssnCheck", ssn);
+		return count;
+	}
+	
+	public int phoneCheck( String phone) {
+		int count = session.selectOne("MemberMapper.phoneCheck", phone);
+		return count;
+	}
+	
 	public int agntIdCheck( String userid) {
 		int count = session.selectOne("MemberMapper.agntIdCheck", userid);
 		return count;

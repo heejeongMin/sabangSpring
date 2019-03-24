@@ -1,9 +1,136 @@
 $(document).ready(function() {
-	console.log(00)
+	
+	$(".live").css("font-size", "9pt"); 
+		
+	$("#userid").on("keyup", function(){
+		$.ajax({
+			type:"post",
+			url : "idCheck",
+			data : {
+				id : $("#userid").val().trim()
+			},
+			dataType : "text",
+			headers: {	"Content-Type":"application/json"
+			},
+	        success:function(mesg){
+	        	if (mesg == "N"){
+	        		mesg = "이미 사용 중인 아이디입니다."
+	        	}else if ($("#userid").val().length == 0){
+	        		mesg = "아이디를 입력해주세요."
+	        	}
+	        	else{
+	        		mesg = "사용 가능한 아이디입니다."
+	        	}
+	        	$("#id").text(mesg);	
+	        },
+			 error : function(xhr, status, e) {  
+				   console.log(e);
+			 }
+		})			
+	})
+	
+	
+	$("#ssn2").on("keyup", function(){
+		var ssn = $("#ssn1").val()+'-'+$("#ssn2").val();
+		$.ajax({
+			type:"post",
+			url : "ssnCheck",
+			data : {
+				ssn : $("#ssn1").val().trim()+'-'+$("#ssn2").val().trim()
+			},
+			dataType : "text",
+			headers: {	"Content-Type":"application/json"
+			},
+			success:function(mesg){
+	        	if (mesg == "N"){
+	        		mesg = "이미 가입된 주민등록번호입니다."
+	        			console.log("N")
+	        	}else{
+	        		mesg = ""
+	        			console.log("Y")
+	        	}
+	        	$("#ssn").text(mesg);	
+	        	console.log("out")
+	        },
+			 error : function(xhr, status, e) {  
+				   console.log(e);
+			 }
+		})			
+	})
+	
+	$("#phone3").on("keyup", function(){
+		$.ajax({
+			type:"post",
+			url : "phoneCheck",
+			data : {
+				phone :  $("#phone1").val().trim()+$("#phone2").val().trim()+$("#phone3").val().trim() 
+			},
+			dataType : "text",
+			headers: {	"Content-Type":"application/json"
+			},
+	        success:function(mesg){
+	        	if (mesg == "N"){
+	        		mesg = "이미 등록된 핸드폰 번호입니다."
+	        	}else{
+	        		mesg = ""
+	        	}
+	        	$("#phone").text(mesg);	
+	        },
+			 error : function(xhr, status, e) {  
+				   console.log(e);
+			 }
+		})			
+	})
+	
+		$("#cnfPasswd").on("keyup", function() {
+			var passwd = $("#passwd").val();
+			var mesg = null
+			if (passwd != $(this).val()) {
+				mesg = "비밀번호가 일치하지 않습니다.";
+			}
+			$("#cfpw").text(mesg);
+		}); //end equal check password
+	
+
+	/*
+	 * 
+	 * 
+	$("#passwd").on("keyup", function(){
+		
+		
+		var passRule = /[^0-9]/g ;
+		
+		$(this).val($(this).val().replace(passRule,''));
+		
+
+		console.log($("#passwd").val())
+		$.ajax({
+			type:"get",
+			url : "signMbrForm",
+			data : {
+				data : $("#passwd").val()
+			},
+			dataType : "text",
+	        success:function(data){
+	        	var mesg = "";
+	        	if (passRule.test(data)){
+	        		mesg = "비밀번호는 4자리 ~ 20자리 숫자만을 허용합니다."	
+	        	}else{
+	        		mesg = "사용 가능한 비밀번호입니다."
+	        	}
+	        
+	        	$("#pw").text(mesg);
+	        },
+			 error : function(xhr, status, e) {  
+				   console.log(e);
+			 }
+		})			
+	})
+	*/
+		
+		
 		$("#signForm").on("submit", function(event){
 			/* space check */
-			$(this).find("span.live").remove();
-		//	var page = $('input[type=radio]:checked').val();
 			var userid = $("#userid").val();
 			var passwd = $("#passwd").val();
 			var cnfPw = $("#cnfPasswd").val();
@@ -16,9 +143,8 @@ $(document).ready(function() {
 			var addr = $("#sample4_roadAddress").val();
 			var email1 =  $("#email1").val();			
 			var email2 =  $("#email2").val();			
-			var email3 =  $("#email3").val();			
+			var email3 =  $("#email3").val();	
 			var mesg = null;
-			var liveDiv = "<span class = 'live'></span>";
 			/* Regular Expression */
 			var idRule = /^[^ㄱ-힣!@#$^&*()<>+?/{}.-]{4,10}$/gi;
 			var passRule = /^[a-z0-9_]{4,20}$/;
@@ -32,7 +158,6 @@ $(document).ready(function() {
 			var unM = "이름을 입력해주세요.";
 			var phM = "핸드폰 번호를 입력해주세요.";
 			var emM = "이메일을 입력해주세요.";
-			var cpM = "비밀번호가 일치하지 않습니다.";
 			var snM = "주민등록번호를 입력해주세요.";
 			var adM = "주소를 입력해주세요.";
 			var unRM = "이름은 2자 이상 4자 이하의 한글만을 허용합니다.";
@@ -43,83 +168,65 @@ $(document).ready(function() {
 			var pnRM = "핸드폰번호는 3자리수 이상 자리수 이하 숫자만을 허용합니다"
 			var emRM = "이메일은 4자 이상 15자 이하 한글을 제외한 문자만을 허용합니다.";
 			
+			
+			
 			if (email2.length == 0 || (!emailRule.test(email1) ||!emailRule.test(email2)) ){
 				event.preventDefault();
 				if (email2.length == 0){
-					$("#email3").after("<span class = 'live'>"+emM+"</span>");
+					$("#email").text(emM);
 				}else if(!emailRule.test(email1) ||!emailRule.test(email2)  ) { 
-					$("#email3").after("<span class = 'live'>"+emRM+"</span>");
+					$("#email").text(emRM);
 				}
 			};
 			
 			if ( (phone2.length == 0 || phone3.length == 0)|| (!pnumRule.test(phone2) ||!pnumRule.test(phone3)) ){
 				event.preventDefault();
 				if (phone2.length == 0 || phone3.length == 0){
-					$("#phone3").after("<span class = 'live'>"+phM+"</span>");
+					$("#phone").text(phM);
 				}else if(!pnumRule.test(phone2) ||!pnumRule.test(phone3)) { 
-					$("#phone3").after("<span class = 'live'>"+pwRM+"</span>");
+					$("#phone").text(pwRM);
 				}
 			} 
-			
-/*			if(page != 'N'){
-				if(addr == 0 ){
-					event.preventDefault();
-					$("#sample4_roadAddress").after("<span class = 'live'>"+adM+"</span>");
-				} 
-			}// end if not agent
-*/			
 			if( ssn1.length == 0 || ssn2.length == 0 || !ssn1Rule.test(ssn1) || !ssn2Rule.test(ssn2) ){
 				event.preventDefault();
 				if(ssn1.length == 0 || ssn2.length == 0){
-					$("#ssn2").after("<span class = 'live'>"+snM+"</span>");
+					$("#ssn").text(snM);
 				}else if(!ssn1Rule.test(ssn1)) { 
-					$("#ssn2").after("<span class = 'live'>"+snRM+"</span>");
+					$("#ssn").text(snRM);
 				}else if(!ssn2Rule.test(ssn2)) { 
-					$("#ssn2").after("<span class = 'live'>"+snRM2+"</span>");
+					$("#ssn").text(snRM2);
 				} 
 			}
 
 			if (username.length == 0 || !nameRule.test(username)){
 				event.preventDefault();
 				if (username.length == 0){
-					$("#username").after("<span class = 'live'>"+unM+"</span>");
+					$("#name").text(unM);
 				}else if(!nameRule.test(username)) {
-					$("#username").after("<span class = 'live'>"+unRM+"</span>");
+					$("#name").text(unRM);
 				} 
 			}
 			
-			if(passwd.length == 0 ||!passRule.test(passwd) || passwd != cnfPw){
+			if(passwd.length == 0 ||!passRule.test(passwd) ){
 				event.preventDefault();
 				if(passwd.length == 0) {
-					$("#passwd").after("<span class = 'live'>"+pwM+"</span>");
+					$("#pw").text(pwM);
 				}else if(!pwRule.test(passwd)) { 
-					$("#passwd").after("<span class = 'live'>"+pwRM+"</spaan>");				
-				}else if (passwd != cnfPw){
-				 	$("#cnfPasswd").after("<span class = 'live'>"+cpM+"</span>");
+					$("#pw").text(pwRM);				
 				}
 			}		 
 			
 			if (userid.length == 0 || !idRule.test(userid)){
 				event.preventDefault();
 				if (userid.length == 0){
-					$("#userid").after("<span class = 'live'>"+idM+"</span>");
+					$("#id").text(idM);
 				}else if(!idRule.test(userid)){ 
-					$("#userid").after("<span class = 'live'>"+idRM+"</span>");				
+					$("#id").text(idRM);				
 				} 
 			} 
-			
-			
-			$(".live").css("font-size", "9pt"); 
 		}); //end check null and multipled ID and regular expression ==> submit event
 		
-		$("#cnfPasswd").on("keyup", function() {
-			var passwd = $("#passwd").val();
-			var mesg = null
-			if (passwd != $(this).val()) {
-				mesg = "비밀번호가 일치하지 않습니다.";
-			}
-			$("#checkPW").text(mesg);
-		}); //end equal check password
+	
 		
 		$("#email3").on("click", function(){
 			var email = $(this).val();

@@ -20,21 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and ppwd = #{ppwd}
 	</delete>
 	
+	<select id = "confUpBoard" parameterType="hashmap" resultType = "int">
+		select count(*) from board
+		where pcode = #{pcode}
+		and ppwd = #{ppwd}
+	</select>	
 	
-
-	
-	
-	<!-- basic : 보드 수정 -->
- <!-- 	<update id="updateBoard" parameterType="hashmap" >
- 		update board
-		from board
-		set title = #{title}, content = #{content}, pdate = sysdate
-		where pcode = #{pcode} 
-		and ppwd = #{ppwd} 
-	</update>
-	 -->
-	
-	<update id="updateBoard" parameterType="BoardDTO" >
+	<update id="updateBoard" parameterType="map" >
  		update board
 		set title = #{title}, content = #{content}, pdate = sysdate
 		where pcode = #{pcode} 
