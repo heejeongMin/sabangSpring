@@ -88,7 +88,7 @@ int n = mService.naverUser(naverMap);
 			dto.setPhone(phone1+phone2+phone3);
 			mService.signMbr(dto);
 			flash.addFlashAttribute("mesg", "사방팔방 곳곳의 방에 오신 것을 환영합니다");
-			nextPage = "/";
+			nextPage = "redirect: /";
 		} else if (hasSigned == 1) { // 가입 이력이 있다면
 			// 탈퇴 + 24시간 출력, sql상에서 날짜포맷 변환을 위한 TO_CHAR 작업으로 mapper에서 parameterType을
 			// String으로 주었으므로 형변환 작업이 수반된다
@@ -104,7 +104,7 @@ int n = mService.naverUser(naverMap);
 			if (curDate > outDate) {
 				mService.signMbr(dto);
 				flash.addFlashAttribute("mesg", "다시 돌아와 주었군요! 재가입을 환영합니다.");
-				nextPage = "/";
+				nextPage = "redirect: /";
 			} else {
 				flash.addFlashAttribute("mesg", "탈퇴한 회원은 24시간 이내에 재가입 할 수 없습니다. 시간 경과후 다시 시도해 주시길 바랍니다.");
 				nextPage = "redirect:/loginUI";

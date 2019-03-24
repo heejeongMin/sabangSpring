@@ -19,7 +19,7 @@ $(document).ready(function() {
 	        		mesg = "아이디를 입력해주세요."
 	        	}
 	        	else{
-	        		mesg = "사용 가능한 아이디입니다."
+	        		mesg = ""
 	        	}
 	        	$("#id").text(mesg);	
 	        },
@@ -224,6 +224,12 @@ $(document).ready(function() {
 					$("#id").text(idRM);				
 				} 
 			} 
+			
+			if ( $("#id").text().length == 0  || $("#ssn").text().length == 0  || $("#phone").text().length == 0){
+				event.preventDefault();
+				alert("회원가입을 위해서는 중복 데이터를 수정해야합니다.");
+			}
+			
 		}); //end check null and multipled ID and regular expression ==> submit event
 		
 	
