@@ -16,7 +16,6 @@ a.unfocusedPage{
     text-decoration: none;
 }
 </style>
-<div id="wrap">
 <c:set var="hInfoRcn" value="${houseInfoRcnList}"/>
 <c:set var="hInfoWish" value="${houseInfoWishList}"/>
 <c:set var="hInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
@@ -94,7 +93,7 @@ a.unfocusedPage{
 	</c:when>
 	<c:when test="${!empty hInfoWish}">
 		<h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1>
-	   	 	<table id="BackTable">
+	   	 	<table id="backTable">
 				<tr>
 					<td>
 						<table id="outerTable">
@@ -167,4 +166,3 @@ a.unfocusedPage{
 		<h1>찜한 방이 없습니다.</h1>
 	</c:when>
 </c:choose>
-</div>

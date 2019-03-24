@@ -12,9 +12,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<jsp:include page="common/top.jsp" flush="true" /><br>
-	<h1>회원 탈퇴 화면입니다.</h1>
-	<jsp:include page="member/delMbrIdConfirm.jsp" flush="true" />
+	<div id="header">
+		<div id="inner_header">
+			<jsp:include page="common/top.jsp" flush="true" />
+		</div>
+	</div>
+	<div id="section_wrap">
+		<div id="article_delMbrIdConfirm">
+			<h1>회원 탈퇴 화면입니다.</h1>
+			<jsp:include page="member/delMbrIdConfirm.jsp" flush="true" />
+		</div>
+	</div>
 </body>
 </html>

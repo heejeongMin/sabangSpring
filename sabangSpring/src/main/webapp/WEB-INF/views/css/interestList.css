@@ -1,0 +1,35 @@
+/* interestList.css */
+
+/* Menu */
+#section_mypage_menu {
+	position:fixed; top:60px; width:100%; height:40px; background:#00008b; border-bottom:3px solid #cccccc; z-index:9999;
+}
+
+#inner_menu {
+	width:1200px; height:40px; margin:auto;
+}
+
+#myPageMenu { float:left; margin-left:30px; margin-top:10px; }
+#myPageMenu li { float:left; margin-left:20px; }
+#myPageMenu li a { font-size:15px; font-weight:bold; color:#fff; }
+
+
+/* Section */
+#section_wrap {
+	position:absolute; top:100px; width:100%;
+}
+
+/* Section - interestList */
+#article_interestList {
+	width:1200px; margin:auto; text-align:center;
+}
+
+
+#wholeTable{
+	margin-left:150px;
+}
+
+
+#backTable{
+	margin-left:150px;
+}
