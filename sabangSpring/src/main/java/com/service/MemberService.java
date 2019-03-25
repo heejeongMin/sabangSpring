@@ -32,6 +32,14 @@ public class MemberService {
 		return dao.idCheck(userid);
 	}
 	
+	public int ssnCheck(String ssn) {
+		return dao.ssnCheck(ssn);
+	}
+	
+	public int phoneCheck(String phone) {
+		return dao.phoneCheck(phone);
+	}
+	
 	public int agntIdCheck(String userid) {
 		return dao.agntIdCheck(userid);
 	}

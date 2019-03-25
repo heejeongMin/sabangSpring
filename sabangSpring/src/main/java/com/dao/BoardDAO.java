@@ -1,6 +1,7 @@
 package com.dao;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -23,8 +24,8 @@ public class BoardDAO {
 	}
 	
 	// 보드 삭제, pcode와 게시물 비밀번호를 받는다
-	public int deleteBoard(HashMap<String,String> list){
-		int x = session.delete("BoardMapper.deleteBoard", list);
+	public int deleteBoard(String pcode){
+		int x = session.delete("BoardMapper.deleteBoard", pcode);
 		return x;
 	}
 	
@@ -34,14 +35,14 @@ public class BoardDAO {
 //		return x;
 //	}
 	
-	public int updateBoard(BoardDTO board){
+	public int updateBoard(BoardDTO board){ //자동모델처리 테스트, BoardDTO였음
 		int x = session.update("BoardMapper.updateBoard", board);
 		return x;
 	}
-	//보드 수정과 삭제를 위한 게시물 비밀번호로 보드 데이터 가져오기
-/*	public List<BoardDTO> boardList(String hcode){
-		List<BoardDTO> list = session.selectList("BoardMapper.boardList", hcode);
-		return list;
-	}*/
+	
+	//board delete 와 같이, 작업을 수행하기 전 비밀번호를 받는 작업.
+	public int confUpBoard(HashMap<String,String> list) {
+		return session.selectOne("BoardMapper.confUpBoard", list);
+	}
 	
 }

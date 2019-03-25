@@ -21,27 +21,17 @@ BoardDAO dao;
 	 
 	 
 	// 보드 삭제
-	 public int deleteBoard(HashMap<String,String> list) {
-			return dao.deleteBoard(list);
+	 public int deleteBoard(String pcode) {
+			return dao.deleteBoard(pcode);
 		}
-	// 보드 수정
-/*	 public int updateBoard(HashMap<String,BoardDTO> map) {
-			SqlSession session = MySqlSessionFactory.getSession();
-			int updateBoard = 0;
-			try {
-				BoardDAO dao = new BoardDAO();
-				updateBoard = dao.updateBoard(map);
-				session.commit();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				session.close();
-			}
-			return updateBoard;
-		}*/
 	 
-	 
+	//보드 수정 
 	 public int updateBoard(BoardDTO board) {
 			return  dao.updateBoard(board);
-		}
+	}
+	 
+	// 보드 삭제와 같이 수정 전 비밀번호 확인 작업을 받기 위한 쿼리문
+	 public int confUpBoard(HashMap<String,String> list) {
+		 return dao.confUpBoard(list);
+	 }
 }

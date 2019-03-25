@@ -45,6 +45,10 @@
 <form action="login" method="get">
 	<input type="text" name="userid" id="userid" placeholder="아이디"><br>
 	<input type="password" name="passwd" id="passwd" placeholder="비밀번호"><br>
+ 	<div id = "captcha">
+		<img src="/image/{image}">
+ 	</div>
+	
 	<div id="buttonWrap">
 		<input type="submit" value="로그인">
 		<!-- 네이버아이디로로그인 버튼 노출 영역 -->

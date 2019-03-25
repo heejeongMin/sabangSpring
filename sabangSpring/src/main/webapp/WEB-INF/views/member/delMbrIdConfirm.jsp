@@ -23,6 +23,15 @@
 				event.preventDefault();
 			}
 		});
+		
+		$("input[type=reset]").on("click", function(){
+			var cfm = confirm("탈퇴를 취소하시겠습니까?.");
+			if (cfm == true) {
+			location.href = "/sabang/myPage";
+			alert("감사합니다, "+'${name}'+"님께 더 나은 서비스를 제공하는 사방이 되겠습니다.");
+			}
+		})
+	
 	});
 </script>  
 <p style =  "line-height: 140%"> 안전한 탈퇴를 위해, 비밀번호를 확인해주세요.<br>

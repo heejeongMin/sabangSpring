@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -138,5 +140,48 @@ int n = mService.naverUser(naverMap);
 		}
 		return nextPage;
 	}
+	
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	public @ResponseBody String idCheck (@RequestBody String id) {
+		String mesg = null;
+		int idCheck = mService.idCheck(id.substring(3));
+		System.out.println(id);
+		if (idCheck == 1) {
+			mesg = "N";
+		}else {
+			mesg = "Y";
+		} 
+		System.out.println(mesg);
+		return mesg;
+	}
+	
+	@RequestMapping(value = "/ssnCheck", method = RequestMethod.POST)
+	public @ResponseBody String ssnCheck(@RequestBody String ssn) {
+		String mesg = null;
+		int ssnCheck = mService.ssnCheck(ssn.substring(4));
+		System.out.println(ssn);
+		if (ssnCheck == 1) {
+			mesg = "N";
+		} else {
+			mesg = "Y";
+		}
+		System.out.println(mesg);
+		return mesg;
+	}
+	 
+	@RequestMapping(value = "/phoneCheck", method = RequestMethod.POST)
+	public @ResponseBody String phoneCheck(@RequestBody String phone) {
+		String mesg = null;
+		int phoneCheck = mService.phoneCheck(phone.substring(6));
+		System.out.println(phone);
+		if (phoneCheck == 1) {
+			mesg = "N";
+		} else {
+			mesg = "Y";
+		}
+		System.out.println(mesg);
+		return mesg;
+	}
+	 
 
 }
