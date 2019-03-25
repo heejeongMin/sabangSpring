@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.BoardDTO;
 import com.dto.HouseInfoDTO;
@@ -368,4 +369,14 @@ public class HouseController {
 	}//end weather
 	
 
+	// houseDetailInfo.jsp에서 에이전트의 이메일 클릭 시 메일 팝업 코드 
+	@RequestMapping("/houseDetailSendEmail")
+	public ModelAndView houseDetailBoard(@RequestParam("email") String email,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
+		mav.addObject("memberInfo",memberInfo);
+		mav.addObject("email",email);
+		mav.setViewName("house/houseDetailSendEmail");
+		return mav;
+	}
 }//end HouseController
