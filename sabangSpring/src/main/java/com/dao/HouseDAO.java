@@ -98,6 +98,16 @@ public class HouseDAO {
 		return session.selectList("HouseMapper.houseLikeByAgent", agntid);
 	}// houseLikeByAgent
 
+	// group by 등록일자 매물 수
+	public List<HashMap<String, Object>> houseByRegisterDate(String agntid) {
+		return session.selectList("HouseMapper.houseByRegisterDate", agntid);
+	}// houseLikeByAgent
+	
+	// group by 등록일자 , 거래 완료 매물 수
+		public List<HashMap<String, Object>> houseSoldByAgentCount(String agntid) {
+			return session.selectList("HouseMapper.houseSoldByAgentCount", agntid);
+		}// houseLikeByAgent
+
 	// 가장 최근에 등록된 매물코드가져오기
 	public String getLastCode(String htype) {
 		return session.selectOne("HouseMapper.getLastCode", htype);

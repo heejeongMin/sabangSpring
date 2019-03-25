@@ -1,10 +1,10 @@
-form#panel{
-    float: left;
-    width: 330px;
-    height: 80%;
+/* form#panel{ */
+/*     float: left; */
+/*     width: 330px; */
+/*     height: 80%; */
 
-}
-table#panel{    box-shadow: -2px 6px 1px 7px aliceblue; margin: 56px 0 20px 20px;}
+/* } */
+table#panel{ width:85%; box-shadow: -2px 6px 1px 7px aliceblue; margin: 56px 0 20px 20px;}
 table#panel th {color : darkblue; font-weight: bold; height: 30px;}
 table#panel tr:hover{cursor: pointer;}
 table#panel tr:nth-child(odd) {background-color: aliceblue;}

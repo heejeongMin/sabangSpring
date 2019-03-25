@@ -163,8 +163,24 @@
 	<select id="houseLikeByAgent" parameterType="string" resultType="hashmap">
 		select hcode, rtype, addr, deposit, mrent, registerdate, himage, cntwish 
 		from house_info join house_price using(hcode)   
-		where agntid = 'agent' and cntwish>0
+		where agntid = #{agntid} and cntwish>0
 		order by cntwish desc
+	</select>
+
+<!-- housePanel.jsp에서 AGENT별, GROUP BY 등록일자  -->
+	<select id="houseByRegisterDate" parameterType="string" resultType="hashmap">
+		select count(*) count, TO_CHAR(REGISTERDATE, 'MM') registerdate
+		from house_info 
+		where agntid = #{agntid}
+		GROUP BY TO_CHAR(REGISTERDATE, 'MM')
+	</select>
+
+<!-- housePanel.jsp에서  AGENT별, GROUP BY 등록일자, 거래 완료된 매물  -->
+	<select id="houseSoldByAgentCount" parameterType="string" resultType="hashmap">	
+		select count(*) count, TO_CHAR(closedDate, 'MM') closedDate
+		from house_info 
+		where agntid = #{agntid} and closed='Y'
+		GROUP BY TO_CHAR(closedDate, 'MM')
 	</select>
 
 <!-- houseList.jsp 검색해서 나오는 매물 w paging  -->

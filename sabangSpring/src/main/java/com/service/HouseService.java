@@ -51,6 +51,14 @@ public class HouseService {
 	public List<HashMap<String, Object>> houseLikeByAgent(String agntid) {// 에이전트가 등록한 매물 좋아요받은 순
 		return dao.houseLikeByAgent(agntid);
 	}// houseLikeByAgent
+	
+	public List<HashMap<String, Object>> houseByRegisterDate(String agntid) {// 에이전트가 등록한 매물 좋아요받은 순
+		return dao.houseByRegisterDate(agntid);
+	}// houseByRegisterDate
+	
+	public List<HashMap<String, Object>> houseSoldByAgentCount(String agntid) {// 에이전트가 등록한 매물 좋아요받은 순
+		return dao.houseSoldByAgentCount(agntid);
+	}// houseSoldByAgentCount
 
 	public String getLastCode(String htype) {// 마지막으로 등록된 코드 가져오기
 		return dao.getLastCode(htype);

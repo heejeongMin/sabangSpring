@@ -13,7 +13,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><!-- for modal -->
 <script src="js/housePanel.js"></script>
 <style>
-	div#drawChartRecords div[dir="ltr"]{width:600px; height:500px;}
+	div#drawChartRecords div[dir="ltr"] {top:110px;}
+	div#drawChartRecords div[dir="ltr"] svg {width:700px;}
 </style>
 </head>
 <body>
@@ -32,7 +33,7 @@
 							<th></th>
 							<th>코드</th>
 							<th>주소</th>
-							<th>보증금/전세가</th>
+							<th>보증금</th>
 							<th>월세</th>
 						</tr>
 						<c:forEach var="house" items="${houseByAgent}">
@@ -58,7 +59,7 @@
 						<tr>
 							<th>코드</th>
 							<th>주소</th>
-							<th>보증금/전세가</th>
+							<th>보증금</th>
 							<th>월세</th>
 							<th>완료일</th>
 						</tr>
@@ -85,7 +86,7 @@
 						<tr>
 							<th>코드</th>
 							<th>주소</th>
-							<th>보증금/전세가</th>
+							<th>보증금</th>
 							<th>월세</th>
 							<th>좋아요</th>
 						</tr>
@@ -153,6 +154,32 @@ var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseL
 	rows["${status.index}"] = ["${houseLike.HCODE}", Number.parseInt("${houseLike.CNTWISH}")];
 "</c:forEach>"
 
+var openItems = new Array();
+"<c:forEach var='i' begin='1' end='12'>"
+	var month = ("${i}".length < 2)? "0${i}":"${i}";
+	openItems["${i-1}"] = [Number.parseInt("${i}")],
+	"<c:forEach var='house' items='${houseByRegisterDate}' varStatus='stauts'>"
+		if(month == "${house.REGISTERDATE}"){
+			openItems["${i-1}"].push(Number.parseInt("${house.COUNT}"));
+		}
+	"</c:forEach>"
+	"<c:forEach var='soldHouse' items='${houseSoldByAgentCount}' varStatus='stauts'>"
+		if(month == "${soldHouse.CLOSEDDATE}" && openItems["${i-1}"].length != 3){
+			openItems["${i-1}"].push(Number.parseInt("${soldHouse.COUNT}"));
+		}
+	"</c:forEach>"
+"</c:forEach>"
+
+for(i in openItems){
+	if(openItems[i].length == 1){
+		openItems[i].push(null, null);
+	} else if (openItems[i].length < 3){
+		openItems[i].push(null);
+	}
+}
+console.log(openItems);
+console.log("${houseSoldByAgentCount}");
+
   // Load the Visualization API and the corechart package.
   google.charts.load('current', {'packages':['corechart', 'line']});
 
@@ -164,35 +191,29 @@ var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseL
   // instantiates the pie chart, passes in the data and
   // draws it.
   function drawChartRecords(){//실적 눌르면 나오는애
-	  var data = new google.visualization.DataTable();
-      data.addColumn('number', '월');
-      data.addColumn('number', '중개중인매물');
-      data.addColumn('number', '중개완료매물');
+	        var data = new google.visualization.DataTable();
+	        data.addColumn('number', 'month');
+	        data.addColumn('number', '중개중인매물');
+	        data.addColumn('number', '중개완료매물');
+	        data.addRows(openItems.slice());
 
-      data.addRows([
-        [1,  37.8, 80.8 ],
-        [2,  30.9, 69.5 ],
-        [3,  25.4,   57 ],
-        [4,  11.7, 18.8 ],
-        [5,  11.9, 17.6 ],
-        [6,   8.8, 13.6],
-        [7,   7.6, 12.3],
-        [8,  12.3, 29.2],
-        [9,  16.9, 42.9],
-        [10, 12.8, 30.9],
-        [11,  5.3,  7.9],
-        [12,  6.6,  8.4],
-      ]);
+	        var options = {
+	          hAxis: {
+	            title: '월',
+	            ticks: [1,2,3,4,5,6,7,8,9,10,11,12]
+	          },
+	          vAxis: {
+	            title: '매물수',
+	          },
+	          colors: ['#AB0D06', '#007329'],
+	          width:600,
+	          height:200,
+	        };
 
-        var options = {
-          title: '월별 중개 중인 매물 vs 중개 완료 매물',
-       	 	width: 750,
-       	 	height: 350,
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('drawChartRecords'));
-        chart.draw(data, google.charts.Line.convertOptions(options));
+	        var chart = new google.visualization.LineChart(document.getElementById('drawChartRecords'));
+	        chart.draw(data, google.charts.Line.convertOptions(options));
   }
+  
   
   function drawChartPopularHouse() {// 인기매물 파이 차트
     // Create the data table.
