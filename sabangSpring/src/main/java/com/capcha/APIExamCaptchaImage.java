@@ -1,18 +1,24 @@
 package com.capcha;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class APIExamCaptchaImage {
 // 네이버 캡차 API 예제 - 캡차 이미지 수신
-
     public static void main(String[] args) {
         String clientId = "QN3lv2J2hB8uD9Nm2s90";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "kow_E2M4f3";//애플리케이션 클라이언트 시크릿값";
         try {
-            String key = "CAPTCHA_KEY"; // https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
+            String key = "Pf9LmNckU1JiN5Ot"; // https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
             String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key;
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -27,7 +33,7 @@ public class APIExamCaptchaImage {
                 byte[] bytes = new byte[1024];
                 // 랜덤한 이름으로 파일 생성
                 String tempname = Long.valueOf(new Date().getTime()).toString();
-                File f = new File("tempname" + ".jpg");
+                File f = new File("C:\\upload\\captcha", tempname + ".jpg"); 
                 f.createNewFile();
                 OutputStream outputStream = new FileOutputStream(f);
                 while ((read =is.read(bytes)) != -1) {

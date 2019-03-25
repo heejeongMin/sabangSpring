@@ -91,6 +91,19 @@ $(document).ready(function() {
 			$("#cfpw").text(mesg);
 		}); //end equal check password
 	
+	$("#passwd").on("keyup", function() {
+		var passwd = $("#cnfPasswd").val();
+		var mesg = null
+		if ($("#cnfPasswd").val().length != 0){
+		if (passwd != $(this).val() ) {
+			mesg = "비밀번호가 일치하지 않습니다.";
+		}
+		}
+		$("#cfpw").text(mesg);
+	}); //end equal check password
+
+	
+	
 
 	/*
 	 * 
@@ -147,7 +160,7 @@ $(document).ready(function() {
 			var mesg = null;
 			/* Regular Expression */
 			var idRule = /^[^ㄱ-힣!@#$^&*()<>+?/{}.-]{4,10}$/gi;
-			var passRule = /^[a-z0-9_]{4,20}$/;
+			var passRule = /^[a-z0-9]{4,20}$/;
 			var nameRule = /^[가-힣]{2,4}$/;
 			var ssn1Rule = /^[0-9]{6}$/;
 			var ssn2Rule = /^[0-9]{7}$/;
@@ -211,7 +224,7 @@ $(document).ready(function() {
 				event.preventDefault();
 				if(passwd.length == 0) {
 					$("#pw").text(pwM);
-				}else if(!pwRule.test(passwd)) { 
+				}else if(!passRule.test(passwd)) { 
 					$("#pw").text(pwRM);				
 				}
 			}		 

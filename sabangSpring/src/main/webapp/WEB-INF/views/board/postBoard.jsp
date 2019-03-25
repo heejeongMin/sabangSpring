@@ -41,11 +41,10 @@ font-size: 17px; font-weight: bold
 }
 
 </style>
-
 <form action = "updateBoard">
+<input type="hidden" value="${param.pcode}" name="pcode"/>
 <input type = "text" name = "title" id = "title" placeholder = "글 제목"> 
-<hr> 
+<hr>
 <textarea name ="content" id ="content" cols="40" rows="8" placeholder="최대 2000자"></textarea><br>
-<input type = "password" name = "confirmPw" placeholder = "게시물 비밀번호">
 <input type ="submit" value = "수정">
 </form>

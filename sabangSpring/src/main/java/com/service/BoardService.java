@@ -21,8 +21,8 @@ BoardDAO dao;
 	 
 	 
 	// 보드 삭제
-	 public int deleteBoard(HashMap<String,String> list) {
-			return dao.deleteBoard(list);
+	 public int deleteBoard(String pcode) {
+			return dao.deleteBoard(pcode);
 		}
 	 
 	//보드 수정 

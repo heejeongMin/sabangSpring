@@ -27,12 +27,12 @@
 			<th>작성일</th>
 			<th>글 제목</th>
 		</tr>
-		<c:forEach var="mybord" items="${map}" varStatus="status">
-			<tr class="row">
+		<c:forEach var="boardList" items="${boardList}" varStatus="status">
+			<tr class="myrow">
 				<td>${status.count}</td>
-				<td data-pcode="${mybord.PCODE}">${mybord.HNAME}</td>
-				<td data-pcode="${mybord.PCODE}">${mybord.PDATE}</td>
-				<td data-pcode="${mybord.PCODE}">${mybord.TITLE}</td>
+				<td data-pcode="${boardList.PCODE}">${boardList.HNAME}</td>
+				<td data-pcode="${boardList.PCODE}">${boardList.PDATE}</td>
+				<td data-pcode="${boardList.PCODE}">${boardList.TITLE}</td>
 			</tr>
 		</c:forEach>
 	</table>

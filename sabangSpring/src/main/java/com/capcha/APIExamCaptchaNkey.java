@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.HashMap;
 
 public class APIExamCaptchaNkey {
 
@@ -28,10 +28,12 @@ public class APIExamCaptchaNkey {
             String inputLine;
             StringBuffer response = new StringBuffer();
             while ((inputLine = br.readLine()) != null) {
-                response.append("1"+inputLine);
+                response.append(inputLine);
             }
             br.close();
-            System.out.println("2"+response.toString());
+            System.out.println(response.toString().substring(8, 24));
+            String Captkey = response.toString().substring(8, 24);
+            
         } catch (Exception e) {
             System.out.println(e);
         }

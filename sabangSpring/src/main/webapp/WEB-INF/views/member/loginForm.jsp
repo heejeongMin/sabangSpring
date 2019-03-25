@@ -47,7 +47,9 @@
 	아이디:<input type="text" name="userid" id="userid"><br>
 	비밀번호:<input type="password" name="passwd" id="passwd"><br>
 	<input type="submit" value="로그인"> <input type="reset" value="취소">
- 
+ 	<div id = "captcha">
+ 		<img src="/image/{image}">
+ 	</div>
 	<!-- 네이버아이디로로그인 버튼 노출 영역 -->
 	<div id="naverIdLogin"></div>
 </form>

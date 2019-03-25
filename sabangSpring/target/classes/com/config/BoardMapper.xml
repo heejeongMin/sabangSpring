@@ -13,11 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- basic : 보드 삭제 -->
-	<delete id="deleteBoard" parameterType="hashmap">
+	<delete id="deleteBoard" parameterType="string">
 		delete 
 		from board
 		where pcode = #{pcode}
-		and ppwd = #{ppwd}
 	</delete>
 	
 	<select id = "confUpBoard" parameterType="hashmap" resultType = "int">
@@ -26,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and ppwd = #{ppwd}
 	</select>	
 	
-	<update id="updateBoard" parameterType="map" >
+	<update id="updateBoard" parameterType="BoardDTO" >
  		update board
 		set title = #{title}, content = #{content}, pdate = sysdate
 		where pcode = #{pcode} 

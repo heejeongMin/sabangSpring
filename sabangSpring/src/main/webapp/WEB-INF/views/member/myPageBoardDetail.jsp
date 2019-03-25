@@ -48,29 +48,27 @@ th {
 
 
 
-<c:forEach var="board" items="${board}" varStatus="status">
-	<c:if test="${board.pcode eq param.pcode }">
+<c:forEach var="boardList" items="${boardList}" varStatus="status">
+	<c:if test="${boardList.PCODE eq param.pcode }">
 		<table>
-			<h3 data-pcode="${board.pcode}" data-ppwd ="${board.ppwd}">${board.title}</h3>
+			<h3 data-pcode="${boardList.PCODE}" data-ppwd ="${boardList.PPWD}">${boardList.TITLE}</h3>
 			<hr>
 			<tr>
 				<th>작성자</th>
-				<td>${board.userid}</td>
+				<td>${boardList.USERID}</td>
 			</tr>
 			<tr>
 				<th>게시시간</th>
-				<td>${board.pdate}</td>
+				<td>${boardList.PDATE}</td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>${board.content}</td>
+				<td>${boardList.CONTENT}</td>
 			</tr>
 		</table>
 		<br>
-		<c:if test="${board.userid eq memberInfo.userid }">
 			<input type="button" id="edit" class="alter" value="수정">
 			<input type="button" id="delete" class="alter" value="삭제">
-		</c:if>
 	</c:if>
 </c:forEach>
 
