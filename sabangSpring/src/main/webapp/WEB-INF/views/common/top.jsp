@@ -65,7 +65,6 @@ $(document).ready(function(){
 
 					<a href="logout" id ="logout">로그아웃</a>
 					<li><a href="myPage">mypage</a></li>
-					<li><a href ="#" id ="delMbrIdConfirm">회원탈퇴 </a> </li>
 				</ul>
 				
              </c:when>
@@ -73,7 +72,6 @@ $(document).ready(function(){
              <c:when test="${agentInfo ne null}">
               <c:set var="name" value="${agentInfo.agntname}" scope="request" />
 				<c:out value="${name}" />님을 위한 사방팔방 곳곳의 방
-				<a href="delMbrIdConfirm">회원탈퇴</a> 
 				
 				<ul id="filterListRgn">
 					<li class="filterRgn">지역별 매물
@@ -90,7 +88,6 @@ $(document).ready(function(){
 					
 					<a href="logout">로그아웃</a>
 					<li><a href="myPage">mypage</a></li>
-					<li><a href = "#" id ="delMbr">회원탈퇴 </a> </li>
 				</ul>
              </c:when> 
               
@@ -101,19 +98,6 @@ $(document).ready(function(){
        </c:choose>
        	</span>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#delMbrIdConfirm").on("click", function() {
-			var cfm = confirm("정말 탈퇴하시겠습니까? 회원 탈퇴시 하루동안 재가입 할 수 없습니다.");
-			if (cfm == true) {
-				location.href = "delMbrIdConfirm";
-				alert("탈퇴하기를 누르셨습니다. "+'${name}'+"님의 모든 정보는 모두 삭제됩니다");
-			} else {
-				alert("감사합니다, "+'${name}'+"님께 더 나은 서비스를 제공하는 사방이 되겠습니다.");
-			}
-		});
-	});
-</script>
 
        	
        	

@@ -142,7 +142,7 @@ public class HouseController {
 
 	
 	@RequestMapping("/houseDetailInfo")
-	public void houseDetailInfo(@RequestParam (value = "hcode", required = false, defaultValue = "O001") String hcode, 
+	public void houseDetailInfo(@RequestParam (value = "hcode", required = false) String hcode, 
 								@ModelAttribute("list") ArrayList<String> list, HttpSession session, Model m) {
 		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
 		HouseInfoDTO info = hService.houseRetrieve(hcode);
@@ -156,7 +156,7 @@ public class HouseController {
 		m.addAttribute("option", option);
 		m.addAttribute("info", info);
 		m.addAttribute("agentInfo", agentInfo);
-		m.addAttribute("board", board);
+		session.setAttribute("board", board);
 		
 		if (option.getBltin() == 'Y') {
 			list.add("bltin");

@@ -10,20 +10,21 @@
 </c:if>
 <c:remove var="mesg" />
 
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#delete").on("click", function(e){
-			var ppwd = prompt("삭제하시겠습니까?","게시물 비밀번호를 입력해주세요");
+		$("#delete").on("click", function(e) {
+			var ppwd = prompt("삭제하시겠습니까?", "게시물 비밀번호를 입력해주세요");
 			var pcode = $("h3").attr("data-pcode")
-			location.href = "deleteBoard?pcode="+pcode+"&ppwd="+ppwd; 
+			location.href = "deleteBoard?pcode=" + pcode + "&ppwd=" + ppwd;
 		})
-		
-	 	$("#edit").on("click", function(e){
-	 		var ppwd = prompt("수정하시겠습니까?","게시물 비밀번호를 입력해주세요");
+
+		$("#edit").on("click", function(e) {
+			var ppwd = prompt("수정하시겠습니까?", "게시물 비밀번호를 입력해주세요");
 			var pcode = $("h3").attr("data-pcode")
-			location.href = "postBoard?pcode="+pcode+"&ppwd="+ppwd;  
+			location.href = "postBoard?pcode=" + pcode + "&ppwd=" + ppwd;
 		})
 	})
 </script>
@@ -36,37 +37,41 @@ th {
 </style>
 
 
-	<table>
-		<c:forEach var="board" items="${board}" varStatus="status">
-			<c:if test="${board.pcode eq param.pcode }">
-				<h3 data-pcode="${board.pcode}"> ${board.title}</h3>
-				<hr>
-				<tr>
-					<th>작성자</th>
-					<td>${board.userid}</td>
-				</tr>
-				<tr>
-					<th>게시시간</th>
-					<td>${board.pdate}</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>${board.content}</td>
-				</tr>
+<c:forEach var="board" items="${board}" varStatus="status">
+	<c:if test="${board.pcode eq param.pcode }">
+		<table>
+			<h3 data-pcode="${board.pcode}">${board.title}</h3>
+			<hr>
+			<tr>
+				<th>작성자</th>
+				<td>${board.userid}</td>
+			</tr>
+			<tr>
+				<th>게시시간</th>
+				<td>${board.pdate}</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>${board.content}</td>
+			</tr>
+		</table>
+		<br>
+		<c:if test="${board.userid eq memberInfo.userid }">
+			<input type="button" id="edit" class="alter" value="수정">
+			<input type="button" id="delete" class="alter" value="삭제">
+		</c:if>
+	</c:if>
+</c:forEach>
 
-			</c:if>
-		</c:forEach>
-	</table>
-	<br>
-	<c:if test = "${board.userid eq memberInfo.userid}">
-	 <input type="button" id="edit" class = "alter" value="수정"> 
-	 <input type="button" id="delete" class = "alter"value="삭제">
-	</c:if>	
+
+
+
 <c:set var="func" value="${func}" scope="session" />
 <c:if test="${!(empty func)}">
 	<script>
 		window.close();
 	</script>
 </c:if>
-<c:remove var="func" />		
-		
+<c:remove var="func" />
+
+
