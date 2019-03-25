@@ -9,4 +9,45 @@
 #article_loginForm {
 	width:1200px; margin:auto; text-align:center;
 }
+input{
+	
+}
+
+input[name="userid"]{
+	width: 30%;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 6px;
+    margin-top: 5%;
+	 text-indent: 20px;
+}
+input[name="passwd"]{
+	width: 30%;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 6px;
+    margin-top: 5%;
+	margin-top:1%;
+	text-indent: 20px;
+}
+div#buttonWrap{
+	height: 80px;
+    width: 600px;
+    margin-left: 300px;
+}
+
+input[type="submit"]{
+	width: 30%;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    background: darkblue;
+     width: 300px;
+}
+
+div#naverWrap {
+	display:inline-block;
+}
 

@@ -43,10 +43,13 @@
 	});
 </script>
 <form action="login" method="get">
-	아이디:<input type="text" name="userid" id="userid"><br>
-	비밀번호:<input type="password" name="passwd" id="passwd"><br>
-	<input type="submit" value="로그인"> <input type="reset" value="취소">
- 
-	<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-	<div id="naverIdLogin"></div>
+	<input type="text" name="userid" id="userid" placeholder="아이디"><br>
+	<input type="password" name="passwd" id="passwd" placeholder="비밀번호"><br>
+	<div id="buttonWrap">
+		<input type="submit" value="로그인">
+		<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+		<div id="naverWrap">
+			<div id="naverIdLogin"></div>
+		</div>
+	</div>
 </form>
