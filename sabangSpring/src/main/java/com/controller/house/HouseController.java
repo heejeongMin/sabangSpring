@@ -142,8 +142,8 @@ public class HouseController {
 
 	
 	@RequestMapping("/houseDetailInfo")
-	public void houseDetailInfo(@RequestParam (value = "hcode", required = false) String hcode, 
-								@ModelAttribute("list") ArrayList<String> list, HttpSession session) {
+	public void houseDetailInfo(@RequestParam (value = "hcode", required = false, defaultValue = "O001") String hcode, 
+								@ModelAttribute("list") ArrayList<String> list, HttpSession session, Model m) {
 		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
 		HouseInfoDTO info = hService.houseRetrieve(hcode);
 		HousePriceDTO price = hService.housePrice(hcode);
@@ -152,11 +152,11 @@ public class HouseController {
 		String agntid = info.getAgntid();
 		MemberDTO agentInfo = mService.mypageMember(agntid);
 		
-		session.setAttribute("price", price);
-		session.setAttribute("option", option);
-		session.setAttribute("info", info);
-		session.setAttribute("agentInfo", agentInfo);
-		session.setAttribute("board", board);
+		m.addAttribute("price", price);
+		m.addAttribute("option", option);
+		m.addAttribute("info", info);
+		m.addAttribute("agentInfo", agentInfo);
+		m.addAttribute("board", board);
 		
 		if (option.getBltin() == 'Y') {
 			list.add("bltin");
@@ -176,8 +176,8 @@ public class HouseController {
 		if (option.getMdate() == 'Y') {
 			list.add("mdate");
 		}
-		session.setAttribute("etc", option.getEtc());
-		session.setAttribute("list", list);	
+		m.addAttribute("etc", option.getEtc());
+		m.addAttribute("list", list);	
 	}
 	
 	@RequestMapping("/houseLike")
