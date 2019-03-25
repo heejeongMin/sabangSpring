@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,14 +32,17 @@ public class MemberController {
 	HouseService hService;
 	
 	@RequestMapping("/login")
-	public String login(@RequestParam Map<String, String>map, HttpSession session) { // Map<"jsp tag name", html 사용자 값>
+	public String login(@RequestParam Map<String, String>map, HttpSession session,
+			RedirectAttributes flash) { // Map<"jsp tag name", html 사용자 값>
 		MemberDTO dto = mService.login(map);
 		String nextPage=null;
 		if(dto!=null) {
 			session.setAttribute("memberInfo", dto);
 			nextPage = "redirect:/";
+			flash.addFlashAttribute("mesg", dto.getUserid()+"님이"+" 정상적으로 로그인 되었습니다.");
 		}else {
 			nextPage = "redirect:/loginUI";
+			flash.addFlashAttribute("mesg", "아이디 또는 비밀번호를 잘못입력하셨습니다.");
 		}
 		return nextPage;
 	}
