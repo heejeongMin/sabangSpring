@@ -2,10 +2,10 @@
 <%@page import="com.dto.MemberDTO"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="css/menu.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="css/sabang.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -43,14 +43,13 @@ $(document).ready(function(){
 	
 	
 });//end ready
-	
 </script>
-<span style="color: white"> <img src="images/logo/sabanglogo_w.png" width="23px" height = "100%" id="logoImg" style="cursor: pointer;"> Sabang
+<a href="/sabang" id="logo"></a>
 	<c:choose>
              <c:when test="${memberInfo ne null}">
              <c:set var="name" value="${memberInfo.username}" scope="request" />
-				<c:out value="${name}" />님을 위한 사방팔방 곳곳의 방
-				<ul id="filterListRgn">
+				<span id="welUser"><c:out value="${name}" />님을 위한 사방팔방 곳곳의 방</span>
+				<ul id="loginOnMenu">
 					<li class="filterRgn">지역별 매물
 						<ul class="sublist subListHide" id="rgn">
 							<li class="subFilter">
@@ -63,7 +62,7 @@ $(document).ready(function(){
 						</ul>
 					</li>
 
-					<a href="logout" id ="logout">로그아웃</a>
+					<li><a href="logout" id ="logout">로그아웃</a></li>
 					<li><a href="myPage">mypage</a></li>
 					<li><a href ="#" id ="delMbrIdConfirm">회원탈퇴 </a> </li>
 				</ul>
@@ -72,10 +71,9 @@ $(document).ready(function(){
 
              <c:when test="${agentInfo ne null}">
               <c:set var="name" value="${agentInfo.agntname}" scope="request" />
-				<c:out value="${name}" />님을 위한 사방팔방 곳곳의 방
-				<a href="delMbrIdConfirm">회원탈퇴</a> 
+				<span id="welUser"><c:out value="${name}" />님을 위한 사방팔방 곳곳의 방</span>
 				
-				<ul id="filterListRgn">
+				<ul id="loginOnMenu">
 					<li class="filterRgn">지역별 매물
 						<ul class="sublist subListHide" id="rgn">
 							<li class="subFilter">
@@ -88,15 +86,17 @@ $(document).ready(function(){
 						</ul>
 					</li>
 					
-					<a href="logout">로그아웃</a>
+					<li><a href="logout">로그아웃</a></li>
 					<li><a href="myPage">mypage</a></li>
-					<li><a href = "#" id ="delMbr">회원탈퇴 </a> </li>
+					<li><a href = "#" id ="delMbrIdConfirm">회원탈퇴 </a> </li>
 				</ul>
              </c:when> 
               
               <c:otherwise>
-              	<a href="loginUI" id="login">로그인</a> 
-              	<a href="signMbrUI">회원가입</a>
+              	<ul id="loginOffMenu">
+              		<li><a href="loginUI" id="login">로그인</a></li>
+              		<li><a href="signMbrUI">회원가입</a></li>
+              	</ul>
               </c:otherwise>
        </c:choose>
        	</span>

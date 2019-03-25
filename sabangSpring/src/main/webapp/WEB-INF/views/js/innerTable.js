@@ -19,7 +19,10 @@ $(document).ready(function(){
 				filters : pagingData
 			},
 			success:function(data, status, xhr){
-				$("div#mainWrap").html($(data).nextAll("div#mainWrap"));
+				console.log($(data).find("div#mainWrap"));
+				//$("div#section_wrap>div#mainWrap").html($(data).nextAll("div#section_wrap>div#mainWrap"));
+				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
+				//$("div#mainWrap").remove().html($(data).find("div#mainWrap"));
 			},
 			error: function(xhr, status, error){console.log(xhr.status, status)}
 		});//end ajax

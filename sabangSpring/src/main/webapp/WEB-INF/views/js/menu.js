@@ -71,7 +71,8 @@ $(document).ready(function() {
 			url : 'houseFilter',
 			data : { filters : filters.toString() },
 			success : function(data, status, xhr) {
-				$("div#mainWrap").html($(data).nextAll("div#mainWrap"));
+				console.log($(data).find("div#mainWrap"));
+				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
 		});// end ajax
@@ -84,7 +85,7 @@ $(document).ready(function() {
 			type : 'get',
 			url : 'houseOverview',
 			success : function(data, status, xhr) {
-				$("div#mainWrap").html($(data).nextAll("div#mainWrap"));
+				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
 		});// end ajax
