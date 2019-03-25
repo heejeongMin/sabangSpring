@@ -1,8 +1,11 @@
 package com.controller.mypage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -113,8 +116,22 @@ public class MypageController {
 		List<String> hCodeList = new ArrayList<>();
 		// 최근 본 방
 		if(iCategory.equals("rcnlist")) {
+			HashMap<Long, String> history = (HashMap)session.getAttribute("history");
 			List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
-			if(rcnList.size() != 0) {
+			
+			if(history!=null) {
+				Long[] keys = new Long[history.size()];
+				String[] values = new String[history.size()];
+				int index=0;
+				for(Map.Entry<Long, String> mapEntry : history.entrySet()) {
+					keys[index] = mapEntry.getKey();
+					values[index] = mapEntry.getValue();
+					index++;
+				}
+				List<String> list = Arrays.asList(values);
+				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(list);
+				model.addAttribute("houseInfoRcnList", houseInfoList);
+			}else if(rcnList.size() != 0) {
 				for(HouseRcnlistDTO rcnDto : rcnList) {
 					hCodeList.add(rcnDto.getHcode());
 				}

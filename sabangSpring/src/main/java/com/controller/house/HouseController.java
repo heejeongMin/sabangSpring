@@ -188,7 +188,7 @@ public class HouseController {
 			history = new HashMap<>();
 		}
 					
-		// 사용자가 가지고 있는 최근 상품 정보 가져오기
+		// 사용자가 가지고 있는 최근 본 방 정보 가져오기
 		List<Long> userRcnList = new ArrayList<>();
 		String userid = memberInfo.getUserid();
 		List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
@@ -208,11 +208,11 @@ public class HouseController {
 			Long[] keys = new Long[history.size()];
 			String[] values = new String[history.size()];
 			int index=0;
-				for(Map.Entry<Long, String> mapEntry : history.entrySet()) {
-					keys[index] = mapEntry.getKey();
-					values[index] = mapEntry.getValue();
-					index++;
-				}
+			for(Map.Entry<Long, String> mapEntry : history.entrySet()) {
+				keys[index] = mapEntry.getKey();
+				values[index] = mapEntry.getValue();
+				index++;
+			}
 			// 동일한 hcode이면 저장하지않고 가장 늦게 본 것으로 변경하기
 			for(int i=0; i<keys.length; i++) {
 				if(history.get(keys[i]).equals(hcode) && System.currentTimeMillis() > keys[i]) {
