@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dto.HouseRcnlistDTO;
@@ -139,5 +140,14 @@ public class MypageController {
 			}
 		}
 		return "interestList";
+	}
+	
+	
+	@RequestMapping("/myPageBoardDetail")
+	public ModelAndView houseDetailBoard(@RequestParam(value = "pcode", required = false) String pcode) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pcode",pcode);
+		mav.setViewName("member/myPageBoardDetail");
+		return mav;
 	}
 }
