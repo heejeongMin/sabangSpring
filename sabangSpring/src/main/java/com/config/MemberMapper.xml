@@ -175,7 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	
    		<!-- 마이페이지 내 문의사항 -->
    		<select id = "myPageBoard" parameterType = "string" resultType = "hashmap">
-			select h.hname,b.title, TO_CHAR(b.pdate, 'YYYY.MM.DD HH:MI') pdate, hcode, b.pcode
+			select h.hname,b.title, TO_CHAR(b.pdate, 'YYYY.MM.DD HH:MI') pdate, hcode, b.pcode, b.content, b.ppwd
 			from board b join house_info h
 			using(hcode)
 			where userid =  #{userid}

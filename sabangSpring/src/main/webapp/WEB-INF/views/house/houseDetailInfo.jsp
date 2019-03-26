@@ -148,13 +148,35 @@
 											<c:if test="${item eq 'elev'}">
 												<br>엘레베이터
 										</c:if>
-
+										<c:if test="${item eq 'park'}">
+												<br>주차장
+										</c:if>
 										</div>
 										<c:set var="num" value="${num + 1}" />
 									</c:when>
 									<c:when test="${num%3 ==0 }">
 										<div></div>
-										<div style="display: inline-block; width: 40px;">${item}</div>
+										<div style="display: inline-block; width: 40px;"></div> 
+										<img src="images/pictograms/${item}.png" height="40"
+												width="40">
+												<c:if test="${item eq 'bltin'}">
+												<br>빌트인 주방
+										</c:if>
+											<c:if test="${item eq 'loan'}">
+												<br>전세자금대출가능
+										</c:if>
+											<c:if test="${item eq 'mdate'}">
+												<br>즉시 입주
+										</c:if>
+											<c:if test="${item eq 'pet'}">
+												<br>애완동물
+										</c:if>
+											<c:if test="${item eq 'elev'}">
+												<br>엘레베이터
+										</c:if>
+										<c:if test="${item eq 'park'}">
+												<br>주차장
+										</c:if>
 										<c:set var="condition" value="false" />
 										<c:set var="num" value="${num + 1}" />
 									</c:when>
@@ -192,6 +214,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				
 			</div>
 		</div>
 	</div>
