@@ -24,3 +24,6 @@
 	width:1200px; margin:auto; 
 }
 
+#board {
+	width:800px; margin:auto; margin-top:20px; text-align:center;
+}

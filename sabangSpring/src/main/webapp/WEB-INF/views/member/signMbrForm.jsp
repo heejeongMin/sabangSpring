@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/signEvents.js"></script><br>    
 
-<h4>회원 가입 </h4>
+<h4 style="text-align:center">회원 가입 </h4>
 
 
 <form action = "signMbr" id = "signForm" method = "get">

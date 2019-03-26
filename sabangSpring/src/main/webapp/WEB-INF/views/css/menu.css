@@ -26,7 +26,7 @@ ul#filterListRgn{
     margin-right: 100px;	
 	
 	}
-li.filterRgn{ padding-right: 20px; color: white; font-weight: bold; cursor: pointer; }
+li.filterRgn{ color: white; font-weight: bold; cursor: pointer; }
 ul#rgn{width:80px;}
 li{ display : inline-block}
  
