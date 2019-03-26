@@ -7,10 +7,10 @@
 
 /* Section - login */
 #article_signMbrForm {
-	width:1200px; margin:auto; text-align:center;
+	width:1200px; margin:auto;
 }
 
 /* signForm */
 #signForm{
-	width:800px; margin:auto; margin-top:30px; text-align:center;
+	width:600px; margin:auto; margin-top:30px;
 }
