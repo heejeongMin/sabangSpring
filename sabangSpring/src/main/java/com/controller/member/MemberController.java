@@ -1,14 +1,18 @@
 package com.controller.member;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dto.HouseRcnlistDTO;
 import com.dto.MemberDTO;
+import com.service.HouseService;
 import com.service.MemberService;
 @Controller
 public class MemberController {
@@ -24,21 +30,44 @@ public class MemberController {
 	@Autowired
 	MemberService mService;
 	
+	@Autowired
+	HouseService hService;
+	
 	@RequestMapping("/login")
-	public String login(@RequestParam Map<String, String>map, HttpSession session) { // Map<"jsp tag name", html 사용자 값>
+	public String login(@RequestParam Map<String, String>map, HttpSession session,
+			RedirectAttributes flash) { // Map<"jsp tag name", html 사용자 값>
 		MemberDTO dto = mService.login(map);
 		String nextPage=null;
 		if(dto!=null) {
 			session.setAttribute("memberInfo", dto);
 			nextPage = "redirect:/";
+			flash.addFlashAttribute("mesg", dto.getUserid()+"님이"+" 정상적으로 로그인 되었습니다.");
 		}else {
 			nextPage = "redirect:/loginUI";
+			flash.addFlashAttribute("mesg", "아이디 또는 비밀번호를 잘못입력하셨습니다.");
 		}
 		return nextPage;
 	}
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
+		MemberDTO dto = (MemberDTO) session.getAttribute("memberInfo");
+		HashMap<Long, String> history = (HashMap<Long, String>)session.getAttribute("history");
+		if(history!=null) {
+			Set<Long> keys = history.keySet();		// time
+			List<HouseRcnlistDTO> rList = new ArrayList<>();
+			for(long key: keys) {
+				HouseRcnlistDTO rDto = new HouseRcnlistDTO();
+				rDto.setNum(key);
+				rDto.setHcode(history.get(key));
+				rDto.setUserid(dto.getUserid());
+				rList.add(rDto);
+			}
+			
+			int n = hService.rcnListAllDone(rList);
+		}
+		
+		
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -71,8 +100,7 @@ int n = mService.naverUser(naverMap);
 	session.setAttribute("memberInfo", memberInfo);
 		return memberInfo;
 	}
-	
-	
+
 	@RequestMapping("/signMbr")
 	public String signMbr(RedirectAttributes flash, MemberDTO dto, String cnfPasswd, String ssn1, String ssn2,
 			String addr,String phone1, String phone2, String phone3, String email1, String email2,
@@ -88,7 +116,7 @@ int n = mService.naverUser(naverMap);
 			dto.setPhone(phone1+phone2+phone3);
 			mService.signMbr(dto);
 			flash.addFlashAttribute("mesg", "사방팔방 곳곳의 방에 오신 것을 환영합니다");
-			nextPage = "redirect: /";
+			nextPage = "redirect:/";
 		} else if (hasSigned == 1) { // 가입 이력이 있다면
 			// 탈퇴 + 24시간 출력, sql상에서 날짜포맷 변환을 위한 TO_CHAR 작업으로 mapper에서 parameterType을
 			// String으로 주었으므로 형변환 작업이 수반된다
@@ -104,7 +132,7 @@ int n = mService.naverUser(naverMap);
 			if (curDate > outDate) {
 				mService.signMbr(dto);
 				flash.addFlashAttribute("mesg", "다시 돌아와 주었군요! 재가입을 환영합니다.");
-				nextPage = "redirect: /";
+				nextPage = "redirect:/";
 			} else {
 				flash.addFlashAttribute("mesg", "탈퇴한 회원은 24시간 이내에 재가입 할 수 없습니다. 시간 경과후 다시 시도해 주시길 바랍니다.");
 				nextPage = "redirect:/loginUI";

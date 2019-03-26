@@ -9,10 +9,18 @@
 <meta http-equiv="expires" content="-1">
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
 <meta http-equiv="pragma" content="no-cache">
-<link rel="stylesheet" href="css/sabangTest.css">
+<link rel="stylesheet" href="css/signMbrForm.css">
 </head>
 <body>
-	<jsp:include page="common/top.jsp" flush="true" /><br>
-	<jsp:include page="member/signMbrForm.jsp" flush="true" />
+<div id="header">
+	<div id="inner_header">
+		<jsp:include page="common/top.jsp" flush="true" />
+	</div>
+</div>
+<div id="section_wrap">
+	<div id="article_signMbrForm">
+		<jsp:include page="member/signMbrForm.jsp" flush="true" />
+	</div>
+</div>
 </body>
 </html>

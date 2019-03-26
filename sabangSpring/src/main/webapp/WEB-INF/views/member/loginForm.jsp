@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" href="css/sabangTest.css">
 <c:set var="mesg" value="${mesg}"/>
 <c:if test="${!(empty mesg)}">
 	<script>
@@ -44,12 +43,17 @@
 	});
 </script>
 <form action="login" method="get">
-	아이디:<input type="text" name="userid" id="userid"><br>
-	비밀번호:<input type="password" name="passwd" id="passwd"><br>
-	<input type="submit" value="로그인"> <input type="reset" value="취소">
+	<input type="text" name="userid" id="userid" placeholder="아이디"><br>
+	<input type="password" name="passwd" id="passwd" placeholder="비밀번호"><br>
  	<div id = "captcha">
- 		<img src="/image/{image}">
+		<img src="/image/{image}">
  	</div>
-	<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-	<div id="naverIdLogin"></div>
+	
+	<div id="buttonWrap">
+		<input type="submit" value="로그인">
+		<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+		<div id="naverWrap">
+			<div id="naverIdLogin"></div>
+		</div>
+	</div>
 </form>

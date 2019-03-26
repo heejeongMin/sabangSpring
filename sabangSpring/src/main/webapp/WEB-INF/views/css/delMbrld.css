@@ -1,0 +1,12 @@
+/* delMbrld.css */
+
+
+/* Section */
+#section_wrap {
+	position:absolute; top:60px; width:100%;
+}
+
+/* Section - main */
+#article_delMbrld {
+	width:1200px; margin:auto; text-align:center;
+}

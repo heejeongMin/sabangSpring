@@ -5,6 +5,13 @@
 	margin : 0;
 }
 
+#section_wrap{
+	position:absolute; 
+	top:60px; 
+	width:100%;
+}
+
+
 /*  상세 페이지 전체 wrap */
 .wrapper {
 	padding: 1rem;

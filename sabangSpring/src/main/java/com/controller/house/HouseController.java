@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,11 +25,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.BoardDTO;
 import com.dto.HouseInfoDTO;
 import com.dto.HouseOptionDTO;
 import com.dto.HousePriceDTO;
+import com.dto.HouseRcnlistDTO;
 import com.dto.HouseWishlistDTO;
 import com.dto.MemberDTO;
 import com.localWeather.Coord;
@@ -176,8 +180,64 @@ public class HouseController {
 		if (option.getMdate() == 'Y') {
 			list.add("mdate");
 		}
-		m.addAttribute("etc", option.getEtc());
-		m.addAttribute("list", list);	
+		
+		
+		// 최근 본 방 저장하는 코드
+		// session 확인 및 생성
+		HashMap<Long, String> history = (HashMap)session.getAttribute("history");
+		if(history==null) {
+			history = new HashMap<>();
+		}
+					
+		// 사용자가 가지고 있는 최근 본 방 정보 가져오기
+		List<Long> userRcnList = new ArrayList<>();
+		String userid = memberInfo.getUserid();
+		List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
+		if(rcnList.size() != 0) {
+			for(HouseRcnlistDTO rcn : rcnList) {
+				history.put(rcn.getNum(), rcn.getHcode());
+				userRcnList.add(rcn.getNum());
+			}
+			int n = hService.deleteRcnlist(userRcnList);
+		}
+						
+						
+		if(history.size()==0) {//없으면 map 새로 생성하고, 값 새로 저장
+			history.put(System.currentTimeMillis(), hcode);
+			session.setAttribute("history", history);
+		}else if(history.size() > 0 && history.size() < 7 ){//map은 있는데 아직 6개 다 안찬경우
+			Long[] keys = new Long[history.size()];
+			String[] values = new String[history.size()];
+			int index=0;
+			for(Map.Entry<Long, String> mapEntry : history.entrySet()) {
+				keys[index] = mapEntry.getKey();
+				values[index] = mapEntry.getValue();
+				index++;
+			}
+			// 동일한 hcode이면 저장하지않고 가장 늦게 본 것으로 변경하기
+			for(int i=0; i<keys.length; i++) {
+				if(history.get(keys[i]).equals(hcode) && System.currentTimeMillis() > keys[i]) {
+					history.remove(keys[i]);
+				}
+			}
+			history.put(System.currentTimeMillis(), hcode);
+			session.setAttribute("history", history);
+						
+			Set<Long> keySet = history.keySet();
+			if(keySet.size()>6) {
+				long oldest = Long.MAX_VALUE;
+				for(long key: keySet) { 
+					oldest = (oldest < key)? oldest : key;
+				}
+				history.remove(oldest);
+				history.put(System.currentTimeMillis(), hcode);
+				session.setAttribute("history", history);
+			}
+		}
+		
+		
+		session.setAttribute("etc", option.getEtc());
+		session.setAttribute("list", list);	
 	}
 	
 	@RequestMapping("/houseLike")
@@ -309,4 +369,14 @@ public class HouseController {
 	}//end weather
 	
 
+	// houseDetailInfo.jsp에서 에이전트의 이메일 클릭 시 메일 팝업 코드 
+	@RequestMapping("/houseDetailSendEmail")
+	public ModelAndView houseDetailBoard(@RequestParam("email") String email,HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
+		mav.addObject("memberInfo",memberInfo);
+		mav.addObject("email",email);
+		mav.setViewName("house/houseDetailSendEmail");
+		return mav;
+	}
 }//end HouseController

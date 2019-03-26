@@ -1,0 +1,15 @@
+/* main.css */
+#wrap {
+	background: url(/sabang/images/mainback/bg_afternoon.jpg) no-repeat center center; background-size:cover;
+}
+
+
+/* Section */
+#section_wrap {
+	position:absolute; top:60px; width:100%;
+}
+
+/* Section - main */
+#article_main {
+	width:1200px; margin:auto; text-align:center;
+}

@@ -5,12 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/sabangTest.css">
+<link rel="stylesheet" href="css/houseDetailInfo.css">
 </head>
 <body>
-<jsp:include page="common/top.jsp" flush="true"/>
-<jsp:include page="common/search.jsp" flush="true"/>
-<hr>
-<jsp:include page="house/houseDetailInfo.jsp" flush="true"/>
+	<div id="header">
+		<div id="inner_header">
+			<jsp:include page="common/top.jsp" flush="true"/>
+		</div>
+	</div>
+	<div id="section_wrap">
+		<jsp:include page="house/houseDetailInfo.jsp" flush="true"/>
+	</div>
 </body>
 </html>

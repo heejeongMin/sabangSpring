@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
-<link rel="stylesheet" href="css/houseList.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
 <script src="js/innerTable.js"></script>
   <!-- Initialize Swiper -->
@@ -16,7 +15,10 @@
 				<table id="innerTable">
 					<tr>
 						<td class="img">
-						<img class="goDetail" data-hcode="${newHouse.HCODE}" src="#" alt="${newHouse.HCODE}" width="300" height="250"/></td>
+							<div class="imgFrame" style="width:235px;">
+								<img class="goDetail" data-hcode="${newHouse.HCODE}" src="images/house/${newHouse.HIMAGE}.jgp" alt="${newHouse.HCODE}" style="width:100%"/>
+							</div>
+						</td>
 					</tr>
 					<tr> 
 						<td class="greyText">
@@ -64,7 +66,10 @@
 				<table id="innerTable">
 					<tr>
 						<td class="img">
-						<img class="goDetail" data-hcode="${hotHouse.HCODE}" src="#" alt="${hotHouse.HCODE}" width="300" height="250"/></td>
+							<div class="imgFrame" style="width:235px;">
+								<img class="goDetail" data-hcode="${hotHouse.HCODE}" src="images/house/${hotHouse.HIMAGE}.jpg" alt="${hotHouse.HCODE}" style="width:100%;"/>
+							</div>
+						</td>
 					</tr>
 					<tr> 
 						<td class="greyText">

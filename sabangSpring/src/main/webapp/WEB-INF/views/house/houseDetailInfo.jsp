@@ -62,7 +62,9 @@
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td>${agentInfo.email}</td>
+						<td>
+							<a href="houseDetailSendEmail?email=${agentInfo.email}" onclick="window.open(this.href, '_blank', 'left = 500px, top= 150px, width=500, height=300,scrollbars=no,toolbar=no,menubar=no,location=no,resizable=no'); return false;">${agentInfo.email}</a>
+						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
