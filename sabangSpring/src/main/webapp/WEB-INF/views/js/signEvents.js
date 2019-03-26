@@ -238,10 +238,10 @@ $(document).ready(function() {
 				} 
 			} 
 			
-			if ( $("#id").text().length == 0  || $("#ssn").text().length == 0  || $("#phone").text().length == 0){
-				event.preventDefault();
-				alert("회원가입을 위해서는 중복 데이터를 수정해야합니다.");
-			}
+//			if ( $("#id").text().length == 0  || $("#ssn").text().length == 0  || $("#phone").text().length == 0){
+//				event.preventDefault();
+//				alert("회원가입을 위해서는 중복 데이터를 수정해야합니다.");
+//			}
 			
 		}); //end check null and multipled ID and regular expression ==> submit event
 		
