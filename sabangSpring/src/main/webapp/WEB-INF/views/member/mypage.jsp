@@ -202,10 +202,10 @@
 	})
 </script>
 
-<form action="memberUpdate" method="post" >
+<form id="myPageForm" action="memberUpdate" method="post" >
 		<input type="hidden" value="${memberInfo.userid}" name="memberid"/>
 	
- <table border="1">
+ <table border="1" id="myPageTable">
 		<tr>
 			<th>이름</th>
 			<td>${memberInfo.username}</td>

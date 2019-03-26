@@ -1,4 +1,4 @@
-/* mypage.css */
+/* mypageBoard.css */
 
 /* Menu */
 #section_mypage_menu {
@@ -19,19 +19,8 @@
 	position:absolute; top:100px; width:100%;
 }
 
-/* Section - mypage */
-#article_mypage {
+/* Section - mypageBoard */
+#article_mypageBoard {
 	width:1200px; margin:auto; 
 }
 
-
-/* myPageForm */
-#myPageForm{
-	width:800px; margin:auto; margin-top:30px; text-align:center;
-}
-
-
-/* myPageTable */
-#myPageTable{
-	width:600px; margin:auto; 
-}
