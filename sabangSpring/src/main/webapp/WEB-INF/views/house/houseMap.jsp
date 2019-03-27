@@ -8,8 +8,6 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af8573930680705c377bb41b984d5c1a"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af8573930680705c377bb41b984d5c1a&libraries=LIBRARY"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af8573930680705c377bb41b984d5c1a&libraries=clusterer"></script>
 <link rel="stylesheet" href="css/mainmap.css">
 </head>
 <body>
@@ -176,15 +174,37 @@
 		    new daum.maps.LatLng(37.56876210571136, 126.93269062032132)
 		];
 
-		// 주차장 마커가 표시될 좌표 배열입니다
+		// 도서관 마커가 표시될 좌표 배열입니다
 		var carparkPositions = [
-		    new daum.maps.LatLng(37.55585045214628, 126.94218621244649),
-		    new daum.maps.LatLng(37.55859026760159, 126.93668816730333),
-		    new daum.maps.LatLng(37.55688729590438, 126.93325812644618),
-		    new daum.maps.LatLng(37.563876754527094, 126.95061463835172),
-		    new daum.maps.LatLng(37.56255993608386, 126.94745540735512),
-		    new daum.maps.LatLng(37.56470049815986, 126.9394990975759),
-		    new daum.maps.LatLng(37.56437248231042, 126.93273984469688)
+			{
+				content:'<div>도서관1</div>',
+				latlng:new daum.maps.LatLng(37.55585045214628, 126.94218621244649)
+			},
+			{
+				content: '<div>도서관2</div>',
+				latlng:new daum.maps.LatLng(37.55859026760159, 126.93668816730333)
+			},
+			{
+				content: '<div>도서관3</div>',
+				latlng:new daum.maps.LatLng(37.55688729590438, 126.93325812644618)
+			},
+			{
+				content: '<div>도서관4</div>',
+				latlng:new daum.maps.LatLng(37.563876754527094, 126.95061463835172)
+			},
+			{
+				content: '<div>도서관5</div>',
+				latlng: new daum.maps.LatLng(37.56255993608386, 126.94745540735512)
+			},
+			{
+				content: '<div>도서관6</div>',
+				latlng: new daum.maps.LatLng(37.56470049815986, 126.9394990975759)
+			},
+			{
+				content: '<div>도서관7</div>',
+				latlng: new daum.maps.LatLng(37.56437248231042, 126.93273984469688)
+			}
+		    
 		];
 		
 		
@@ -278,12 +298,13 @@
 		var markerImageSrc = 'images/marker/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 	    coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
 	    storeMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
-	    carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
-
+	    carparkMarkers = []; // 도서관 마커 객체를 가지고 있을 배열입니다
+	    
+	    carparkInfoWindow = []; // 도서관 인포윈도우 객체를 가지고 있을 배열입니다
 	    
 		createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
 		createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
-		createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
+		createCarparkMarkers(); // 도서관 마커를 생성하고 도서관 마커 배열에 추가합니다
 	
 	
 	
@@ -356,7 +377,7 @@
 		    }        
 		}
 	
-		// 주차장 마커를 생성하고 주차장 마커 배열에 추가하는 함수입니다
+		// 도서관 마커를 생성하고 도서관 마커 배열에 추가하는 함수입니다
 		function createCarparkMarkers() {
 		    for (var i = 0; i < carparkPositions.length; i++) {
 		        
@@ -368,15 +389,47 @@
 		     
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-		            marker = createMarker(carparkPositions[i], markerImage);  
-	
-		        // 생성된 마커를 주차장 마커 배열에 추가합니다
-		        carparkMarkers.push(marker);        
-		    }                
+		            marker = createMarker(carparkPositions[i].latlng, markerImage);  
+				
+		     	// 생성된 마커를 도서관 마커 배열에 추가합니다
+		        carparkMarkers.push(marker); 
+		        
+		        
+		     	
+		     	// 마커에 표시할 인포윈도우를 생성합니다 
+		        var infowindow = new daum.maps.InfoWindow({
+		            content: carparkPositions[i].content // 인포윈도우에 표시할 내용
+		        });
+		        
+		        carparkInfoWindow.push(infowindow);
+		     	
+		     	
+		    	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+		        // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+		        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+		        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+		        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+		    }
 		}
-	
-		// 주차장 마커들의 지도 표시 여부를 설정하는 함수입니다
-		function setCarparkMarkers(map) {        
+		
+		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        }
+		
+		
+		
+		// 도서관 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setCarparkMarkers(map) {
 		    for (var i = 0; i < carparkMarkers.length; i++) {  
 		        carparkMarkers[i].setMap(map);
 		    }        
@@ -399,7 +452,7 @@
 		        // 커피숍 카테고리를 선택된 스타일로 변경하고
 		        coffeeMenu.className = 'menu_selected';
 		        
-		        // 편의점과 주차장 카테고리는 선택되지 않은 스타일로 바꿉니다
+		        // 편의점과 도서관 카테고리는 선택되지 않은 스타일로 바꿉니다
 		        storeMenu.className = '';
 		        carparkMenu.className = '';
 		        totalListMenu.className = '';
@@ -433,9 +486,9 @@
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
 		        
-		    } else if (type === 'carpark') { // 주차장 카테고리가 클릭됐을 때
+		    } else if (type === 'carpark') { // 도서관 카테고리가 클릭됐을 때
 		     
-		        // 주차장 카테고리를 선택된 스타일로 변경하고
+		        // 도서관 카테고리를 선택된 스타일로 변경하고
 		        coffeeMenu.className = '';
 		        storeMenu.className = '';
 		        carparkMenu.className = 'menu_selected';
@@ -443,7 +496,7 @@
 		        newListMenu.className = '';
 		        hotListMenu.className = '';
 		        
-		        // 주차장 마커들만 지도에 표시하도록 설정합니다
+		        // 도서관 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
 		        setCarparkMarkers(map);
