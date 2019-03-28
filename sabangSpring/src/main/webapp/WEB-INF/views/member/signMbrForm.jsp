@@ -3,6 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/signEvents.js"></script><br>    
 
+
 <h4>회원 가입 </h4>
 
 
@@ -53,12 +54,19 @@
 	<!-- <span id="direct_email" style="margin-top:3px;display:none">
         <input type="text" name="email3" id="email3"  class="MS_input_txt" value="" size="15" maxlength="25"  onchange="this.form.emailcheck.value=''" />
     </span>   -->
-<h1>Captcha</h1>
-	<input type="button" value="이미지 새로고침" id="captImg">
+	<br><br>
 	
+	<c:set var = "key" item = "${key} scope = "session"/>
+	<div id = "capt" class = "live"></div>
+	<div id = "captcha_space">
+	<div id ="captcha_img_container">
+	<span class="captcha_img"><img name='captchaImage' id='chptchaimg' src='https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=${key}' width='30%' height='87' alt='자동입력 방지문자'></span>
+	</div>
+	<br><input type="button" value="이미지 새로고침" id="captImg"><br>
 	<input type="text" id="input" name="input">
-	<button id = "captSub">제출</button>
-
+	<input type = "button" id = "captSub" value = "제출">
+	</div>
+	
 <br>
 <input type="submit" value="회원가입">
 <input type="reset" value="취소"> 
@@ -119,4 +127,48 @@
             }
         }).open();
     }
-</script>
+    
+    
+    
+    /////CAPTCHA
+
+    	$("#captSub").on("click", function(){
+    		$.ajax({
+			type:'get',
+			url:'checkResult',
+			data:{
+				inputVal:$("#input").val(),
+				key: "${key}"
+			},
+			success:function(data, status, xhr){
+				if (data == 'false'){
+					$("#capt").text('문자열이 일치하지 않습니다.')
+				}else{
+					$("#captcha_space").hide();
+					$("#capt").text('인증되었습니다.')
+				}
+				console.log(data);
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	$("#captImg").on("click", function(){
+		console.log("${key}")
+		$.ajax({
+			url:'captcha',
+			success:function(mykey, status, xhr){
+				$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자"></span>')
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	
+	
+    </script>
+   

@@ -199,20 +199,37 @@ public class MemberController {
 	@RequestMapping("/signMbrUI")
 	public String getImage(HttpSession session, Model m) throws ParseException {
 		NaverCaptcha key = new NaverCaptcha();
-		System.out.println("1>" + key);
 		String mykey = key.getKey();
-		m.addAttribute("key", mykey);
-		key.getImage();
-		System.out.println("2>" + mykey);
+		System.out.println(mykey);
+		session.setAttribute("key", mykey);
+		key.getImage(mykey);
 		return "signMbrForm";
 	}
+	
+	@RequestMapping("/captcha")
+	public @ResponseBody String getCaptcha(HttpSession session, Model m) throws ParseException {
+		NaverCaptcha key = new NaverCaptcha();
+		String mykey = (String) session.getAttribute("key");
+		key.getImage(mykey);
+		return mykey;
+	}
+	
+//	@RequestMapping("/captchaTest")
+//	public  @ResponseBody void captchaTest(HttpSession session, Model m) throws ParseException {
+//		NaverCaptcha key = new NaverCaptcha();
+//		System.out.println("~~~~~1~~~~" + key);
+//		//String mykey = key.getKey();
+//		m.addAttribute("key", mykey);
+//		key.getImage();
+//		System.out.println("~~~~~2~~~~" + mykey);
+//	}
+	
 	
 	
 	@RequestMapping("/checkResult")
 	public @ResponseBody String checkResult(@RequestParam("inputVal") String input, @RequestParam("key") String key) {
 		NaverCaptcha ct = new NaverCaptcha();
 		String res = ct.checkNumber(key, input);
-		System.out.println(key);
 		return res;
 	}
 

@@ -1,34 +1,5 @@
 $(document).ready(function() {
 	
-	$("#captSub").on("click", function(){
-		$.ajax({
-			type:'get',
-			url:'checkResult',
-			data:{
-				inputVal:$("#input").val(),
-				key: "${key}"
-			},
-			success:function(data, status, xhr){
-				console.log(data);
-			},
-			error:function(xhr, status, error){
-				console.log(xhr.status, error);
-		}
-		});//ajax
-	});
-	
-	$("#captImg").on("click", function(){
-		$.ajax({
-			url:'captcha.jsp',
-			dataType: 'html',
-			success:function(data, status, xhr){
-				console.log(data);
-			},
-			error:function(xhr, status, error){
-				console.log(xhr.status, error);
-		}
-		});//ajax
-	});
 	
 	
 	$(".live").css("font-size", "9pt"); 
@@ -211,8 +182,17 @@ $(document).ready(function() {
 			var snRM2 = "주민등록번호 뒷자리는 7자리수만을 허용합니다.";
 			var pnRM = "핸드폰번호는 3자리수 이상 자리수 이하 숫자만을 허용합니다"
 			var emRM = "이메일은 4자 이상 15자 이하 한글을 제외한 문자만을 허용합니다.";
+			var cpM = "자동가입방지 문자를 이미지와 같이 정확히 입력해주세요."
 			
-			
+				
+				// $("#captcha_space").css("display") == "none")
+				//인증이 제대로 되었을때, 회원가입 버튼을 눌렀을 시 true  == ishide()
+				//인증이 제대로 되지 않았을때 회원가입을 누르면 false
+				if ( !($("#captcha_space").css("display") == "none") ){
+					event.preventDefault();
+					$("#capt").text(cpM);
+				};
+				
 			
 			if (email2.length == 0 || (!emailRule.test(email1) ||!emailRule.test(email2)) ){
 				event.preventDefault();
@@ -272,11 +252,12 @@ $(document).ready(function() {
 			if ( $("#id").text().trim().length != 0  || $("#ssn").text().trim().length != 0  || $("#phone").text().trim().length != 0){
 				event.preventDefault();
 				alert("회원가입을 위해서는 중복 데이터를 수정해야합니다.");
+				if ($("#pw").text().trim().length != 0 || $("#name").text().trim().length != 0 || $("#pw").text().trim().length != 0 ){
+					alert("회원가입을 위한 정보를 입력해주세요.");
+				}
 			}
-			
 		}); //end check null and multipled ID and regular expression ==> submit event
 		
-	
 		
 		$("#email3").on("click", function(){
 			var email = $(this).val();

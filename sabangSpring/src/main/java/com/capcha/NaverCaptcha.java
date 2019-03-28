@@ -53,12 +53,10 @@ public class NaverCaptcha {
 		return key;
 	}
 
-	public void getImage() {
+	public void getImage(String key) {
 		try {
-			String key = getKey();
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+key);
+			//String key = getKey();
 			// https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
-			System.out.println("key : " + key);
 			String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+key;
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -100,13 +98,13 @@ public class NaverCaptcha {
 		}
 	}
 
-public String checkNumber(String cKey,String userInput) {
+public String checkNumber(String captKey,String userInput) {
+	System.out.println("CLASS"+captKey);
 	JSONObject object = null;
 	String result = null;
     try {
         String code = "1"; // 키 발급시 0,  캡차 이미지 비교시 1로 세팅
-        String key = cKey; // 캡차 키 발급시 받은 키값
-        System.out.println("$$$$$$$$$$$$$$$$"+cKey);
+        String key = captKey; // 캡차 키 발급시 받은 키값
         String value = userInput; // 사용자가 입력한 캡차 이미지 글자값
         String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code +"&key="+ key + "&value="+ value;
 
