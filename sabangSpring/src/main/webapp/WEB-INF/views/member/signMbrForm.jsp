@@ -18,9 +18,9 @@
 <br> 
 <input type="text" name="username" id ="username" placeholder = "이름"><span class = "live" id = "name"></span><br> 
 <input type = "text" name = "ssn1" id = "ssn1" placeholder = "주민등록번호 앞자리"> - <input type = "password" id = "ssn2" name = "ssn2" placeholder = "주민등록번호 뒷자리"><span class = "live" id = "ssn"></span> <br> 
-<input type="text" name="post" id="sample4_postcode" placeholder="우편번호"><span class = "live" id ="post"></span>
+<input type="text" name="post" id="sample4_postcode" placeholder="우편번호"></span>
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소"><span class = "live" id ="addr"></span>
+<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소"></span>
 <input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;">
 <span id="guide"></span>
 <br>
@@ -53,11 +53,19 @@
 	<!-- <span id="direct_email" style="margin-top:3px;display:none">
         <input type="text" name="email3" id="email3"  class="MS_input_txt" value="" size="15" maxlength="25"  onchange="this.form.emailcheck.value=''" />
     </span>   -->
+<h1>Captcha</h1>
+	<input type="button" value="이미지 새로고침" id="captImg">
 	
+	<input type="text" id="input" name="input">
+	<button id = "captSub">제출</button>
+
 <br>
 <input type="submit" value="회원가입">
 <input type="reset" value="취소"> 
+
 </form>
+
+<br>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>

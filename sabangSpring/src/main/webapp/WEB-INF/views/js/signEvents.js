@@ -1,7 +1,39 @@
 $(document).ready(function() {
 	
+	$("#captSub").on("click", function(){
+		$.ajax({
+			type:'get',
+			url:'checkResult',
+			data:{
+				inputVal:$("#input").val(),
+				key: "${key}"
+			},
+			success:function(data, status, xhr){
+				console.log(data);
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	$("#captImg").on("click", function(){
+		$.ajax({
+			url:'captcha.jsp',
+			dataType: 'html',
+			success:function(data, status, xhr){
+				console.log(data);
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	
 	$(".live").css("font-size", "9pt"); 
-		
+	
+	
 	$("#userid").on("keyup", function(){
 		$.ajax({
 			type:"post",
@@ -141,7 +173,6 @@ $(document).ready(function() {
 	})
 	*/
 		
-		
 		$("#signForm").on("submit", function(event){
 			/* space check */
 			var userid = $("#userid").val();
@@ -238,7 +269,7 @@ $(document).ready(function() {
 				} 
 			} 
 			
-			if ( $("#id").text().length == 0  || $("#ssn").text().length == 0  || $("#phone").text().length == 0){
+			if ( $("#id").text().trim().length != 0  || $("#ssn").text().trim().length != 0  || $("#phone").text().trim().length != 0){
 				event.preventDefault();
 				alert("회원가입을 위해서는 중복 데이터를 수정해야합니다.");
 			}

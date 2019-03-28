@@ -20,6 +20,7 @@
 <div id="section_wrap">
 	<div id="article_signMbrForm">
 		<jsp:include page="member/signMbrForm.jsp" flush="true" />
+		<jsp:include page="captcha.jsp" flush="true" />
 	</div>
 </div>
 </body>

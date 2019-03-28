@@ -32,6 +32,10 @@
 			<mvc:exclude-mapping path="/idCheck"/>
 			<mvc:exclude-mapping path="/ssnCheck"/>
 			<mvc:exclude-mapping path="/phoneCheck"/>
+			<mvc:exclude-mapping path="/checkNumber"/>
+			<mvc:exclude-mapping path="/captchaTest"/>
+			<mvc:exclude-mapping path="/checkResult"/>
+			<mvc:exclude-mapping path="/test"/>
 			<mvc:exclude-mapping path="/"/>
 			<bean class="com.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
@@ -64,12 +68,8 @@
 	<mvc:view-controller path="/delMbrIdConfirm"
 		view-name="delMbrIdConfirm" />
 
-	<!-- 회원가입  화면 -->
-	<mvc:view-controller path="/signMbrUI"
-		view-name="signMbrForm" />
-		
-	<!-- 포스팅 화면 -->
-<!-- 	<mvc:view-controller path="/postBoard" view-name="board/postBoard" /> -->
+	
+	
 
 	<context:component-scan base-package="com.*" />
 	
