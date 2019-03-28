@@ -2,7 +2,7 @@
 * 주제 : 학생 타겟 부동산 중개 웹 프로젝트
 * 목적 : 특정 지역 대학생들을 위한 부동산 중개
 
-![](sabang_logo.jpg)
+![](sabang_logo.jpg | width=100)
 
 
 
