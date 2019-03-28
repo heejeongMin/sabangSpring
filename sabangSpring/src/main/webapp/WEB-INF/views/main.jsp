@@ -30,7 +30,7 @@
 	</div>
 	<div id="section_wrap">
 		<div id="article_main">
-			<a href="houseOverview">houseOverview</a>
+			<!-- <a href="houseOverview">houseOverview</a> -->
 		</div>
 	</div>
 </body>

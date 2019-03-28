@@ -15,6 +15,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script type="text/javascript">
  $(document).ready(function(){
+	 
 	 $("input[type=password]").on("keyup", function(){
 		var pwRule = /^[0-9]{5}$/gi;
 		$(this).val($(this).val().replace(pwRule,""));
@@ -43,7 +44,7 @@ font-size: 17px; font-weight: bold
 </style>
 <form action = "updateBoard">
 <input type="hidden" value="${param.pcode}" name="pcode"/>
-<input type = "text" name = "title" id = "title" placeholder = "글 제목"> 
+<input type = "text" name = "title" id = "title" placeholder = "글 제목" > 
 <hr>
 <textarea name ="content" id ="content" cols="40" rows="8" placeholder="최대 2000자"></textarea><br>
 <input type ="submit" value = "수정">

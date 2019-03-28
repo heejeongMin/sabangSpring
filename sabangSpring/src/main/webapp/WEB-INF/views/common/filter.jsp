@@ -31,7 +31,7 @@
 		</li>
 		<li class="filterOpt">가격대
 			<ul class="sublist">
-				<li class="subFilter">월세
+				<li class="subFilter" style="display:block;">월세
 					<select name="mrent" class="filter">
 						<option value="선택해주세요">선택해주세요</option>
 						<option value="mrent0~30">0만원~30만원</option>

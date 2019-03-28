@@ -54,7 +54,7 @@ $(document).ready(function(){
 						<ul class="sublist subListHide" id="rgn">
 							<li class="subFilter">
 								<div class="rangeWrapRgn" >
-									<input type="radio" name="region" class="filterRgn" value="신촌">신촌<br>
+									<input type="radio" name="region" class="filterRgn" value="신촌"><a href="houseOverview">신촌</a><br>
 									<input type="radio" name="region" class="filterRgn" value="홍대">홍대<br>
 									<input type="radio" name="region" class="filterRgn" value="안암">안암
 								</div>
