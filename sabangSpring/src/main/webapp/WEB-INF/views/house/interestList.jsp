@@ -20,12 +20,16 @@ a.unfocusedPage{
 <c:set var="hInfoWish" value="${houseInfoWishList}"/>
 <c:set var="hInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
 <c:set var="hInfoWishLength" value="${fn:length(houseInfoWishList)}"/>
-<h1>관심목록</h1>
-<a href="interestList?iCategory=rcnlist">최근 본 방</a>
-<a href="interestList?iCategory=wishlist">찜한 방</a>
+<div id="pageTitle"><h1>관심목록</h1></div>
+<div id="pageMenu">
+	<ul id="pageMenuUl">
+		<li><a href="interestList?iCategory=rcnlist">최근 본 방</a></li>
+		<li><a href="interestList?iCategory=wishlist">찜한 방</a></li>
+	</ul>
+</div>
 <c:choose>
 	<c:when test="${!empty hInfoRcn}">
-		<h1>최근 본 방<span id="noOfHouse">${hInfoRcnLength}</span>건</h1>
+		<div id="listTitle"><h2>최근 본 방<span id="noOfHouse">${hInfoRcnLength}</span>건</h2></div>
 			<table id="wholeTable">
 				<tr>
 					<td>
@@ -92,7 +96,7 @@ a.unfocusedPage{
 		</table>
 	</c:when>
 	<c:when test="${!empty hInfoWish}">
-		<h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1>
+		<div id="listTitle"><h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1></div>
 	   	 	<table id="backTable">
 				<tr>
 					<td>
@@ -160,9 +164,9 @@ a.unfocusedPage{
 		</table>
 	</c:when>
 	<c:when test="${listInfo=='rcn'}">
-		<h1>최근 본 방이 없습니다.</h1>
+		<div id="listTitle"><h2>최근 본 방이 없습니다.</h2></div>
 	</c:when>
 	<c:when test="${listInfo=='wish'}">
-		<h1>찜한 방이 없습니다.</h1>
+		<div id="listTitle"><h2>찜한 방이 없습니다.</h2></div>
 	</c:when>
 </c:choose>

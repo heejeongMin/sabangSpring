@@ -36,11 +36,15 @@ th {
 		</tr>
 		<tr>
 			<th>받는 사람</th>
-			<td><input type="text" value="${email}" size="50" readonly></td>
+			<td>${email}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td><input type="text" value="${memberInfo.username}" size="50" readonly></td>
+			<td>${memberInfo.username}</td>
+		</tr>
+		<tr>
+			<th>매물코드</th>
+			<td>${hcode}</td>
 		</tr>
 		<tr>
 			<th>내용</th>
