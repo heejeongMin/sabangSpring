@@ -81,6 +81,10 @@ public class MemberService {
 	}// end delMbrId
 
 	
+	public int addOutMbr(String userid) {
+		return dao.addOutMbr(userid);
+	}
+	
 	public MemberDTO checkMbrPw(String passwd) {
 		return dao.checkMbrPw(passwd);
 	}// end checkMbrPw

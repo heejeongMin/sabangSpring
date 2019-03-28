@@ -61,6 +61,10 @@ public class MemberDAO {
 		return session.selectOne("MemberMapper.overDay", userid);
 	}
 	
+	public int addOutMbr(String userid) {
+		return session.insert("MemberMapper.addOutMbr", userid);
+	}
+	
 	
 	/* 로그인 */
 	

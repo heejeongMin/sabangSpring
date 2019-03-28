@@ -18,9 +18,9 @@
 <br> 
 <input type="text" name="username" id ="username" placeholder = "이름"><span class = "live" id = "name"></span><br> 
 <input type = "text" name = "ssn1" id = "ssn1" placeholder = "주민등록번호 앞자리"> - <input type = "password" id = "ssn2" name = "ssn2" placeholder = "주민등록번호 뒷자리"><span class = "live" id = "ssn"></span> <br> 
-<input type="text" name="post" id="sample4_postcode" placeholder="우편번호"><span class = "live" id ="post"></span>
+<input type="text" name="post" id="sample4_postcode" placeholder="우편번호"></span>
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소"><span class = "live" id ="addr"></span>
+<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소"></span>
 <input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소" style="display: none;">
 <span id="guide"></span>
 <br>
@@ -53,11 +53,26 @@
 	<!-- <span id="direct_email" style="margin-top:3px;display:none">
         <input type="text" name="email3" id="email3"  class="MS_input_txt" value="" size="15" maxlength="25"  onchange="this.form.emailcheck.value=''" />
     </span>   -->
+	<br><br>
+	
+	<c:set var = "key" item = "${key} scope = "session"/>
+	<div id = "capt" class = "live"></div>
+	<div id = "captcha_space">
+	<div id ="captcha_img_container">
+	<span class="captcha_img"><img name='captchaImage' id='chptchaimg' src='https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=${key}' width='30%' height='87' alt='자동입력 방지문자'></span>
+	</div>
+	<br><input type="button" value="이미지 새로고침" id="captImg"><br>
+	<input type="text" id="input" name="input">
+	<input type = "button" id = "captSub" value = "제출">
+	</div>
 	
 <br>
 <input type="submit" value="회원가입">
 <input type="reset" value="취소"> 
+
 </form>
+
+<br>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -111,4 +126,48 @@
             }
         }).open();
     }
-</script>
+    
+    
+    
+    /////CAPTCHA
+
+    	$("#captSub").on("click", function(){
+    		$.ajax({
+			type:'get',
+			url:'checkResult',
+			data:{
+				inputVal:$("#input").val(),
+				key: "${key}"
+			},
+			success:function(data, status, xhr){
+				if (data == 'false'){
+					$("#capt").text('문자열이 일치하지 않습니다.')
+				}else{
+					$("#captcha_space").hide();
+					$("#capt").text('인증되었습니다.')
+				}
+				console.log(data);
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	$("#captImg").on("click", function(){
+		console.log("${key}")
+		$.ajax({
+			url:'captcha',
+			success:function(mykey, status, xhr){
+				$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자"></span>')
+			},
+			error:function(xhr, status, error){
+				console.log(xhr.status, error);
+		}
+		});//ajax
+	});
+	
+	
+	
+    </script>
+   
