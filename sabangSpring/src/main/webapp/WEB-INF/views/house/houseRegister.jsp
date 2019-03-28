@@ -42,7 +42,7 @@
 							<tr>
 								<td class="td_title">세타입</td>
 								<td class="td_default update" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
-									<input type="radio" name="rtype" value="월세"><span style="margin-left: -15px;">월세</span>
+									<input type="radio" name="rtype" value="월세"><span style="margin-left: -15px;">월세</span><br>
 									<input type="radio" name="rtype" value="전세" style="float: left; position: relative; left: 50px;"><span style="margin-left: 35px;">전세</span>
 								</td>
 							</tr>

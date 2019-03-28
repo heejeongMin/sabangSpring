@@ -25,7 +25,10 @@ a.unfocusedPage{
 			<c:forEach var="house" items="${list}">
 				<table id="innerTable">
 					<tr>
-						<td class="img"><img class="goDetail" data-hcode="${house.HCODE}" src="#" alt="${house.HCODE}" width="300" height="300"/></td>
+						<td class="img">
+						<div class="imgFrame" style="width:235px;">
+							<img class="goDetail" data-hcode="${house.HCODE}" src="images/house/${house.HIMAGE}.jpg" alt="${house.HCODE}" style="width:100%;"/></td>
+						</div>
 					</tr>
 					<tr> 
 						<td class="greyText">
