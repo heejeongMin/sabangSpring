@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af8573930680705c377bb41b984d5c1a"></script>
 <link rel="stylesheet" href="css/mainmap.css">
+<script src="js/mapMarker.js"></script>
 </head>
 <body>
 <div id="container">
@@ -26,8 +27,8 @@
 	                <span class="ico_comm ico_store"></span>
 	                	편의점
 	            </li>
-	            <li id="carparkMenu" onclick="changeMarker('carpark')">
-	                <span class="ico_comm ico_carpark"></span>
+	            <li id="libraryMenu" onclick="changeMarker('library')">
+	                <span class="ico_comm ico_library"></span>
 	                	도서관
 	            </li>
 	        </ul>
@@ -175,7 +176,7 @@
 		];
 
 		// 도서관 마커가 표시될 좌표 배열입니다
-		var carparkPositions = [
+		var libraryPositions = [
 			{
 				content:'<div>도서관1</div>',
 				latlng:new daum.maps.LatLng(37.55585045214628, 126.94218621244649)
@@ -298,13 +299,13 @@
 		var markerImageSrc = 'images/marker/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 	    coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
 	    storeMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
-	    carparkMarkers = []; // 도서관 마커 객체를 가지고 있을 배열입니다
+	    libraryMarkers = []; // 도서관 마커 객체를 가지고 있을 배열입니다
 	    
-	    carparkInfoWindow = []; // 도서관 인포윈도우 객체를 가지고 있을 배열입니다
+	    libraryInfoWindow = []; // 도서관 인포윈도우 객체를 가지고 있을 배열입니다
 	    
 		createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
 		createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
-		createCarparkMarkers(); // 도서관 마커를 생성하고 도서관 마커 배열에 추가합니다
+		createLibraryMarkers(); // 도서관 마커를 생성하고 도서관 마커 배열에 추가합니다
 	
 	
 	
@@ -378,8 +379,8 @@
 		}
 	
 		// 도서관 마커를 생성하고 도서관 마커 배열에 추가하는 함수입니다
-		function createCarparkMarkers() {
-		    for (var i = 0; i < carparkPositions.length; i++) {
+		function createLibraryMarkers() {
+		    for (var i = 0; i < libraryPositions.length; i++) {
 		        
 		        var imageSize = new daum.maps.Size(22, 26),
 		            imageOptions = {   
@@ -389,19 +390,19 @@
 		     
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-		            marker = createMarker(carparkPositions[i].latlng, markerImage);  
+		            marker = createMarker(libraryPositions[i].latlng, markerImage);  
 				
 		     	// 생성된 마커를 도서관 마커 배열에 추가합니다
-		        carparkMarkers.push(marker); 
+		        libraryMarkers.push(marker); 
 		        
 		        
 		     	
 		     	// 마커에 표시할 인포윈도우를 생성합니다 
 		        var infowindow = new daum.maps.InfoWindow({
-		            content: carparkPositions[i].content // 인포윈도우에 표시할 내용
+		            content: libraryPositions[i].content // 인포윈도우에 표시할 내용
 		        });
 		        
-		        carparkInfoWindow.push(infowindow);
+		        libraryInfoWindow.push(infowindow);
 		     	
 		     	
 		    	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
@@ -429,9 +430,9 @@
 		
 		
 		// 도서관 마커들의 지도 표시 여부를 설정하는 함수입니다
-		function setCarparkMarkers(map) {
-		    for (var i = 0; i < carparkMarkers.length; i++) {  
-		        carparkMarkers[i].setMap(map);
+		function setLibraryMarkers(map) {
+		    for (var i = 0; i < libraryMarkers.length; i++) {  
+		    	libraryMarkers[i].setMap(map);
 		    }        
 		}
 	
@@ -440,7 +441,7 @@
 		    
 		    var coffeeMenu = document.getElementById('coffeeMenu');
 		    var storeMenu = document.getElementById('storeMenu');
-		    var carparkMenu = document.getElementById('carparkMenu');
+		    var libraryMenu = document.getElementById('libraryMenu');
 		    var totalListMenu = document.getElementById('totalListMenu');
 		    var newListMenu = document.getElementById('newListMenu');
 		    var hotListMenu = document.getElementById('hotListMenu');
@@ -454,7 +455,7 @@
 		        
 		        // 편의점과 도서관 카테고리는 선택되지 않은 스타일로 바꿉니다
 		        storeMenu.className = '';
-		        carparkMenu.className = '';
+		        libraryMenu.className = '';
 		        totalListMenu.className = '';
 		        newListMenu.className = '';
 		        hotListMenu.className = '';
@@ -463,7 +464,7 @@
 		        // 커피숍 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(map);
 		        setStoreMarkers(null);
-		        setCarparkMarkers(null);
+		        setLibraryMarkers(null);
 		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
@@ -473,7 +474,7 @@
 		        // 편의점 카테고리를 선택된 스타일로 변경하고
 		        coffeeMenu.className = '';
 		        storeMenu.className = 'menu_selected';
-		        carparkMenu.className = '';
+		        libraryMenu.className = '';
 		        totalListMenu.className = '';
 		        newListMenu.className = '';
 		        hotListMenu.className = '';
@@ -481,17 +482,17 @@
 		        // 편의점 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(map);
-		        setCarparkMarkers(null);
+		        setLibraryMarkers(null);
 		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
 		        
-		    } else if (type === 'carpark') { // 도서관 카테고리가 클릭됐을 때
+		    } else if (type === 'library') { // 도서관 카테고리가 클릭됐을 때
 		     
 		        // 도서관 카테고리를 선택된 스타일로 변경하고
 		        coffeeMenu.className = '';
 		        storeMenu.className = '';
-		        carparkMenu.className = 'menu_selected';
+		        libraryMenu.className = 'menu_selected';
 		        totalListMenu.className = '';
 		        newListMenu.className = '';
 		        hotListMenu.className = '';
@@ -499,7 +500,7 @@
 		        // 도서관 마커들만 지도에 표시하도록 설정합니다
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
-		        setCarparkMarkers(map);
+		        setLibraryMarkers(map);
 		        setAllListMarkers(null);
 		        setNewListMarkers(null);
 				setHotListMarkers(null);
@@ -508,14 +509,14 @@
 		    }else if (type === 'new'){
 		    	coffeeMenu.className = '';
 		        storeMenu.className = '';
-		        carparkMenu.className = '';
+		        libraryMenu.className = '';
 		        totalListMenu.className = '';
 		        newListMenu.className = 'menu_selected';
 		        hotListMenu.className = '';
 		        
 		        setCoffeeMarkers(null);
 		        setStoreMarkers(null);
-		        setCarparkMarkers(null);
+		        setLibraryMarkers(null);
 		        setAllListMarkers(null);
 				setNewListMarkers(map);
 				setHotListMarkers(null);
@@ -523,14 +524,14 @@
 		    }else if(type === 'hot'){
 			    coffeeMenu.className = '';
 				storeMenu.className = '';
-				carparkMenu.className = '';
+				libraryMenu.className = '';
 				totalListMenu.className = '';
 				newListMenu.className = '';
 				hotListMenu.className = 'menu_selected';
 				        
 				setCoffeeMarkers(null);
 				setStoreMarkers(null);
-				setCarparkMarkers(null);
+				setLibraryMarkers(null);
 				setAllListMarkers(null);
 				setNewListMarkers(null);
 				setHotListMarkers(map);
@@ -538,14 +539,14 @@
 		    } else if (type === 'total'){
 		    	coffeeMenu.className = '';
 		        storeMenu.className = '';
-		        carparkMenu.className = '';
+		        libraryMenu.className = '';
 		        totalListMenu.className = 'menu_selected';
 		        newListMenu.className = '';
 		        hotListMenu.className = '';
 		        
 		        setCoffeeMarkers(null);
 				setStoreMarkers(null);
-				setCarparkMarkers(null);
+				setLibraryMarkers(null);
 				setAllListMarkers(map);
 				setNewListMarkers(null);
 				setHotListMarkers(null);
