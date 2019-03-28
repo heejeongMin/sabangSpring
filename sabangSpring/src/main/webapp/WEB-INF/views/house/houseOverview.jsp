@@ -16,6 +16,9 @@
 					<tr>
 						<td class="img">
 							<div class="imgFrame" style="width:235px;">
+							<script>
+								console.log("${newHouse}");
+							</script>
 								<img class="goDetail" data-hcode="${newHouse.HCODE}" src="images/house/${newHouse.HIMAGE}.jgp" alt="${newHouse.HCODE}" style="width:100%"/>
 							</div>
 						</td>
@@ -67,6 +70,9 @@
 					<tr>
 						<td class="img">
 							<div class="imgFrame" style="width:235px;">
+							<script>
+								console.log("${hotHouse.HIMAGE}");
+							</script>
 								<img class="goDetail" data-hcode="${hotHouse.HCODE}" src="images/house/${hotHouse.HIMAGE}.jpg" alt="${hotHouse.HCODE}" style="width:100%;"/>
 							</div>
 						</td>
