@@ -1,4 +1,10 @@
 # Java 웹 프로젝트 - 부동산 중개 웹 
+* 주제 : 학생 타겟 부동산 중개 웹 프로젝트
+* 목적 : 특정 지역 대학생들을 위한 부동산 중개
+
+![](sabang.jpg)
+
+
 
 ## 개발환경
 * OS : Window7
@@ -7,6 +13,7 @@
 * Language : HTML, CSS, Javascript, Java
 * Library/Framework : JQuery, Spring, Mybatis
 * DataBase : Oracle
+
 
 
 ## 기능별 시연 동영상
