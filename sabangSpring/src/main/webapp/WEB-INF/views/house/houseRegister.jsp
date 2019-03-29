@@ -34,7 +34,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물코드</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px' id="hcode">
+								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;' id="hcode">
 									<input type="text" name="hcode" value="" readonly>
 								</td>
 							</tr>
@@ -42,14 +42,14 @@
 							<tr>
 								<td class="td_title">세타입</td>
 								<td class="td_default update" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
-									<input type="radio" name="rtype" value="월세"><span style="margin-left: -15px;">월세</span><br>
-									<input type="radio" name="rtype" value="전세" style="float: left; position: relative; left: 50px;"><span style="margin-left: 35px;">전세</span>
+									<input type="radio" name="rtype" value="월세"><span style="margin-left: 5px;">월세</span>
+									<input type="radio" name="rtype" value="전세"><span style="margin-left: 5px;">전세</span>
 								</td>
 							</tr>
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물명</td>
-								<td class="td_default" id="" colspan="2" style='padding-left: 30px'>
+								<td class="td_default" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
 									<input type="text" name="hname" placeholder="50자 이내" size=40 required>
 								</td>
 							</tr>
@@ -92,7 +92,7 @@
 							</tr>
 							<tr> <td height="10"></td> </tr>
 							<tr> <td class="td_title">주소</td>
-								 <td class="td_red" colspan="2" style='padding-left: 30px' >
+								 <td class="td_red" colspan="2" style='padding-left: 30px; text-align:left;' >
 									<input type="text" name="post" id="sample4_postcode" placeholder="우편번호" required>
 									<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" style="margin: 0 10px;">
 									<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소" required>
@@ -103,7 +103,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">사진등록</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px'> 
+								<td class="td_default" colspan="2" style='padding-left: 30px;text-align:left;'> 
 									<input type="file" name="himage"/>
 								</td>
 							</tr>
