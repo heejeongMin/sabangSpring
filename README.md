@@ -21,4 +21,4 @@
 2. 회원가입/탈퇴 : [https://youtu.be/b08xmOZQed8]
 3. 마이페이지 : [https://youtu.be/36C4Imervy4]
 4. 매물 Overview/상세 : [https://youtu.be/fwmCOd61gZk]
-5. 관리자 페이지 : []
+5. 관리자 페이지 : [https://youtu.be/Re5HlTJrN0g]
