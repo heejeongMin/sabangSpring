@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -206,30 +208,38 @@ public class MemberController {
 		return "signMbrForm";
 	}
 	
+	//이미지 새로고침
 	@RequestMapping("/captcha")
 	public @ResponseBody String getCaptcha(HttpSession session, Model m) throws ParseException {
 		NaverCaptcha key = new NaverCaptcha();
-		String mykey = (String) session.getAttribute("key");
-		key.getImage(mykey);
+		String mykey;
+		if (session.getAttribute("isFailed") != null )  { //2 세션에 "isFailed"가 있다면 새로운 key를 발급받는다.
+	//		session.setAttribute("newKey","newKey");
+			mykey = key.getKey();
+		}else{
+			mykey = (String) session.getAttribute("key");
+		}
+		session.setAttribute("key", mykey);
+		System.out.println(mykey);
 		return mykey;
 	}
-	
-//	@RequestMapping("/captchaTest")
-//	public  @ResponseBody void captchaTest(HttpSession session, Model m) throws ParseException {
-//		NaverCaptcha key = new NaverCaptcha();
-//		System.out.println("~~~~~1~~~~" + key);
-//		//String mykey = key.getKey();
-//		m.addAttribute("key", mykey);
-//		key.getImage();
-//		System.out.println("~~~~~2~~~~" + mykey);
-//	}
-	
-	
+
 	
 	@RequestMapping("/checkResult")
-	public @ResponseBody String checkResult(@RequestParam("inputVal") String input, @RequestParam("key") String key) {
+	public @ResponseBody String checkResult(@RequestParam("inputVal") String input, 
+			@RequestParam("key") String key, @RequestParam(value = "isFailed", required = false) String isFailed, 
+			@RequestParam(value = "newKey", required = false) String newKey, 
+			HttpSession session, HttpServletRequest request) {
 		NaverCaptcha ct = new NaverCaptcha();
-		String res = ct.checkNumber(key, input);
+		String res = null;
+		if (isFailed.equals("fail")) { 
+			session.setAttribute("isFailed",isFailed); //1 실패 이력 체크, 실패했다면 "isFailed"라는 문자열을 세션에 남긴다.
+		}
+		if (session.getAttribute("newKey") != null ) {
+			key = newKey;
+		}
+		res = ct.checkNumber(key, input);
+		System.out.println("newkey: " + newKey);
 		return res;
 	}
 
