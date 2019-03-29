@@ -20,7 +20,7 @@ a.unfocusedPage{
 <c:set var="hInfoWish" value="${houseInfoWishList}"/>
 <c:set var="hInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
 <c:set var="hInfoWishLength" value="${fn:length(houseInfoWishList)}"/>
-<div id="pageTitle"><h1>관심목록</h1></div>
+<div id="pageTitle"><h2>관심목록</h2></div>
 <div id="pageMenu">
 	<ul id="pageMenuUl">
 		<li><a href="interestList?iCategory=rcnlist">최근 본 방</a></li>

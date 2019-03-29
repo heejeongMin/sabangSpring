@@ -6,34 +6,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#delete").on("click", function(e){
-			var ppwd = prompt("비밀번호 입력","게시물 비밀번호를 입력해주세요");
-			var pcode = $("h3").attr("data-pcode")
-			location.href = "deleteBoard?pcode="+pcode+"&ppwd="+ppwd; 
-		})
 	})
 </script>
 
-
-<style>
-th {
-	text-align: center;
-}
-</style>
-
-<form>
-	<table>
-		<tr height="1" bgcolor="#dddddd">
-			<td colspan="4"></td>
-		</tr>
-		<tr>
-			<td colspan="4">
-				<h3 align="center">메일보내기</h3>
-			</td>
-		</tr>
-		<tr height="1" bgcolor="#dddddd">
-			<td colspan="4"></td>
-		</tr>
+<div id="pageTitle"><h2>메일 보내기</h2></div>
+<form action="sendMail">
+	<table id="wholeTable">
+		<tr height="1" bgcolor="#dddddd"></tr>
 		<tr>
 			<th>받는 사람</th>
 			<td>${email}</td>
@@ -54,7 +33,7 @@ th {
 		</tr>
 		<tr>
 			<td>
-				<input type="button" id="mesgSend" value="보내기">
+				<input type="submit" id="mesgSend" value="보내기">
 	 		</td>
 			<td>
 				<input type="reset" value="다시쓰기">

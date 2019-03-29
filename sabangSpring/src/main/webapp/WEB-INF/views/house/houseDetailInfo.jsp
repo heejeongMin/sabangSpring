@@ -63,8 +63,7 @@
 					<tr>
 						<th>이메일</th>
 						<td>
-							<a href="houseDetailSendEmail?email=${agentInfo.email}&hcode=${info.hcode}"
-								onclick="window.open(this.href, '_blank', 'left = 500px, top= 150px, width=500, height=300, scrollbars=no, toolbar=no, menubar=no, location=no, resizable=no'); return false;">
+							<a href="houseDetailSendEmail?email=${agentInfo.email}&hcode=${info.hcode}">
 								${agentInfo.email}
 							</a>
 						</td>

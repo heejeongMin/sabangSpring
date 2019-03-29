@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -19,13 +20,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.BoardDTO;
 import com.dto.HouseInfoDTO;
@@ -371,12 +373,44 @@ public class HouseController {
 
 	// houseDetailInfo.jsp에서 에이전트의 이메일 클릭 시 메일 팝업 코드 
 	@RequestMapping("/houseDetailSendEmail")
-	public ModelAndView houseDetailBoard(@RequestParam("email") String email,HttpSession session) {
-		ModelAndView mav = new ModelAndView();
+	public String houseDetailBoard(@RequestParam("email") String email,
+			@RequestParam("hcode") String hcode, HttpSession session, Model model) {
 		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
-		mav.addObject("memberInfo",memberInfo);
-		mav.addObject("email",email);
-		mav.setViewName("house/houseDetailSendEmail");
-		return mav;
+		model.addAttribute("hcode", hcode);
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("email", email);
+		return "houseDetailSendEmail";
+	}
+	
+	
+	// 메일전송
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	@RequestMapping("/sendMail")
+	public String sendMail(HttpSession session) {
+		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
+		String setfrom = memberInfo.getEmail();
+		String tomail = ""; // 받는 사람 이메일
+		String title = "title"; // 제목
+		String content = "content"; // 내용
+		
+		try {
+			System.out.println("정상요청");
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message,
+					true, "UTF-8");
+
+			messageHelper.setFrom(""); // 보내는사람 생략하면 정상작동을 안함
+			messageHelper.setTo(""); // 받는사람 이메일
+			messageHelper.setSubject(""); // 메일제목은 생략이 가능하다
+			messageHelper.setText(""); // 메일 내용
+
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return "main";
 	}
 }//end HouseController
