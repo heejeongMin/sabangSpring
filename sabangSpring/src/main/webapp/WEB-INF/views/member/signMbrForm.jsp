@@ -50,11 +50,7 @@
 		<option value="hanmir.com">hanmir.com</option>
 		<option value="sayclub.com">sayclub.com</option>
 	</select> 
-	<!-- <span id="direct_email" style="margin-top:3px;display:none">
-        <input type="text" name="email3" id="email3"  class="MS_input_txt" value="" size="15" maxlength="25"  onchange="this.form.emailcheck.value=''" />
-    </span>   -->
 	<br><br>
-	
 	<c:set var = "key" item = "${key}" scope = "session"/>
 	<div id = "capt" class = "live" data-fail ="" ></div>
 	<div id = "captcha_space">
@@ -139,8 +135,7 @@
 			data:{ // checkResult 컨트롤러에 해당 데이터 전송
 				inputVal:$("#input").val(), 
 				key: "${key}",
-				newKey : $("#capt").attr('data-innerKey'),
-				isFailed : $("#capt").attr('data-fail'),
+				isFailed : $("#capt").attr('data-fail').trim()
 			},
 			success:function(data, status, xhr){
 				if (data == 'false'){ //0. 컨트롤러 다녀온 상황, 값이 일치하지 않음.
@@ -149,13 +144,24 @@
 					$.ajax({
 						url:'captcha', // 1. 컨트롤러 다녀옴, 키 새로 받아옴
 						success:function(mykey, status, xhr){
-							console.log("testeste", mykey);
-							//var src = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+mykey;
 							$(".captcha_img").remove();
-						//	$("img#captchaImage").attr("src", src);
-						$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
-						 $("#capt").attr('data-innerKey',mykey); // 2. key 저장
-						console.log($("#capt").attr('data-innerKey'));
+							$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
+							var newKey = mykey
+							$.ajax({
+								url : 'newKey',
+								data : {
+									newKey : mykey
+								},
+								success:function(newkey, status, xhr){
+									console.log("newKey????: ", newKey)
+								},
+								error : function (xhr,status,error){
+									console.log(error)
+								}
+							
+							})
+						
+					
 						}
 						,
 						error:function(xhr, status, error){
@@ -166,15 +172,12 @@
 					$("#captcha_space").hide();
 					$("#capt").text('인증되었습니다.')
 				}
+				console.log("data-innerKey, outer", $("#capt").attr('data-innerKey'))
 			},
 			error:function(xhr, status, error){
 				console.log(xhr.status, error);
 		}
 		});//ajax
-	
-		var innerKey = $("#capt").attr('data-innerKey');
-		console.log("innerKey: ", innerKey)
-    	
     	});
 	
      //이미지 새로고침
@@ -182,11 +185,9 @@
 		$.ajax({
 			url:'captcha',
 			success:function(mykey, status, xhr){
-				
+				console.log(mykey)
 				$(".captcha_img").remove();
 				$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')
-				 $("#capt").attr('data-innerKey',mykey);
-				console.log(mykey);
 			}
 			
 		});//ajax
