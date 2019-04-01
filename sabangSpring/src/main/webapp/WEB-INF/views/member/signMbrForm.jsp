@@ -127,6 +127,7 @@
     
     /////CAPTCHA
 		
+      //이미지 새로고침
     //제출
     	$("#captSub").on("click", function(){ //버튼 선택시
     		$.ajax({
@@ -138,6 +139,7 @@
 				isFailed : $("#capt").attr('data-fail').trim()
 			},
 			success:function(data, status, xhr){
+				console.log(">> data ",data)
 				if (data == 'false'){ //0. 컨트롤러 다녀온 상황, 값이 일치하지 않음.
 					$("#capt").text('문자열이 일치하지 않습니다, 다시 시도해주세요.')
 					$("#capt").attr('data-fail','fail')
@@ -146,7 +148,7 @@
 						success:function(mykey, status, xhr){
 							$(".captcha_img").remove();
 							$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
-							var newKey = mykey
+	 						var newKey = mykey
 							$.ajax({
 								url : 'newKey',
 								data : {
@@ -156,12 +158,9 @@
 									console.log("newKey????: ", newKey)
 								},
 								error : function (xhr,status,error){
-									console.log(error)
+									console.log(xhr.status, error);
 								}
-							
-							})
-						
-					
+							}) 
 						}
 						,
 						error:function(xhr, status, error){
@@ -179,20 +178,24 @@
 		}
 		});//ajax
     	});
+		
+		$("#captImg").on("click", function(){
+			$.ajax({
+				url:'captcha',
+				success:function(mykey, status, xhr){
+					console.log("mykey",mykey)
+					$(".captcha_img").remove();
+					$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')
+				},
+				error:function(xhr, status, error){
+					console.log(xhr.status, error);
+					}
+			});//ajax
+    	});
 	
-     //이미지 새로고침
-	$("#captImg").on("click", function(){
-		$.ajax({
-			url:'captcha',
-			success:function(mykey, status, xhr){
-				console.log(mykey)
-				$(".captcha_img").remove();
-				$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')
-			}
-			
-		});//ajax
-	});
-	 
+    
+    	console.log("${key}")
+    	console.log($("#capt").attr('data-fail'))
 	
 	
     </script>

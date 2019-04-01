@@ -203,33 +203,33 @@ public class MemberController {
 		NaverCaptcha key = new NaverCaptcha();
 		String mykey = key.getKey();
 		session.setAttribute("key", mykey);
+		System.out.println(session.getAttribute("key"));
 		key.getImage(mykey);
 		return "signMbrForm";
 	}
 	
 	//이미지 새로고침
 	@RequestMapping("/captcha")
-	public @ResponseBody String getCaptcha(HttpSession session, Model m) throws ParseException {
-		NaverCaptcha key = new NaverCaptcha();
+	public @ResponseBody String getCaptcha(HttpSession session) throws ParseException {
 		String mykey;
-		if (session.getAttribute("isFailed").equals("fail") )  { 
+	//if (session.getAttribute("isFailed") != null )  { 
 			//틀린 값을 입력한 경우, checkResult컨트롤러에서 저장한 일종의 표식 메세지인 "isFailed" 값을 이용하여 새로운 key를 발급받는다.
+			NaverCaptcha key = new NaverCaptcha();
 			mykey = key.getKey();
-			
-		}else{
-			// 틀린 값을 입력한 것이 아닌 단순 새로고침일 경우, signMbrUI 컨트롤러에서 저장한 key를 이용한다.
-			mykey = (String) session.getAttribute("key");
-		}
+			System.out.println("captcha controller -- new captcha key : " + mykey);
+	//	}else {
+//			signMbrUI 컨트롤러에서 저장한 key를 이용한다
+		//	mykey = (String) session.getAttribute("key");
+		//	System.out.println("captcha controller -- getsess" + mykey);
+	//	}
 		session.setAttribute("key", mykey);
-		System.out.println("captcha cont" + session.getAttribute("isFailed"));
 		return mykey;
 	}
 	
 	@RequestMapping("/newKey")
 	public @ResponseBody String getNewKey(HttpSession session, @RequestParam(value = "newKey", required = false) String newKey) {
 		session.setAttribute("newKey",newKey);
-		System.out.println("cont newKey! " + newKey);
-		System.out.println(2);
+		System.out.println("newKey controller -- ajax newkey " + newKey);
 		return newKey;
 	}
 
@@ -240,15 +240,14 @@ public class MemberController {
 			// isFailed : ajax에서 실패 이력을 체크하는 값. 실패했을 경우 isFailed에 fail이라는 문자열을 저장하도록 하였음.
 			@RequestParam(value = "isFailed", required = false) String isFailed, 
 			HttpSession session, HttpServletRequest request) {
-		NaverCaptcha captcha = new NaverCaptcha();
-		String result = null;
+				NaverCaptcha captcha = new NaverCaptcha();
 		if (isFailed.equals("fail")) { 
-			//1 실패 이력 체크, 실패했다면 "isFailed"를 키 값으로 fail 문자열을 세션에 남긴다.
+			//1	 실패 이력 체크, 실패했다면 "isFailed"를 키 값으로 fail 문자열을 세션에 남긴다.
 			session.setAttribute("isFailed",isFailed); 
 			key = (String)session.getAttribute("key");
+			System.out.println("checkResult controller -- sess key" +session.getAttribute("key"));
 		}
-		result = captcha.checkNumber(key, input);
-	//	System.out.println("newkey: " + newKey);
+		String result = captcha.checkNumber(key, input);
 		return result;
 	}
 

@@ -95,6 +95,7 @@ public class NaverCaptcha {
 	}
 
 public String checkNumber(String captKey,String userInput) {
+	System.out.println(captKey);
 	JSONObject object = null;
 	String result = null;
     try {
