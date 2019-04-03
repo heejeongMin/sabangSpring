@@ -121,10 +121,16 @@ public class MypageController {
 			List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
 			
 			if(rcnList.size() != 0) {
-				for(HouseRcnlistDTO rcnDto : rcnList) {
-					history.put(rcnDto.getNum(), rcnDto.getHcode());
+				if(history == null) {
+					history = new HashMap<>();
+					for(HouseRcnlistDTO rcnDto : rcnList) {
+						history.put(rcnDto.getNum(), rcnDto.getHcode());						
+					}   
+					System.out.println(history);
 				}
+				                                                       
 			}
+			
 			
 			if(history!=null) {
 				Long[] keys = new Long[history.size()];
