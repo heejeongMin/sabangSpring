@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="css/houseList.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("body").find(".goDetail").on("click", function(e){
+			location.href = "houseDetailInfo?hcode="+$(e.target).attr("data-hcode");
+		});
+	});
+</script>
 <style>
 a.focusedPage{
 	background: none;
@@ -50,7 +58,7 @@ a.unfocusedPage{
 									<tr>
 										<td class="img">
 										<div class="imgFrame" style="width:235px;">
-											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+											<img class="goDetail" data-hcode="${HouseInfo.HCODE}" src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
 										</div>
 									</tr>
 									<tr> 
@@ -121,7 +129,7 @@ a.unfocusedPage{
 									<tr>
 										<td class="img">
 										<div class="imgFrame" style="width:235px;">
-											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+											<img class="goDetail" data-hcode="${HouseInfo.HCODE}" src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
 										</div>
 									</tr>
 									<tr> 
