@@ -187,8 +187,7 @@
 	<select id="searchList" parameterType="string" resultType="hashmap">
 		select hcode, htype, rtype, hname, himage, area, flr, hetc, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
-		where addr like '%'||#{search}||'%' or hname like
-		'%'||#{search}||'%'
+		where addr like '%'||#{search}||'%' or hname like '%'||#{search}||'%'
 	</select>
 	
 <!-- houseList.jsp  검색해서 나오는 개수 for paging  -->
@@ -200,7 +199,7 @@
 	</select>
 
 <!-- 전체 매물 정보 가져오기 -->
-<select id="retrieveAllItems" resultType="hashmap">
+<select id="retrieveAllItems" resultType="hashmap">R
 	select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage,deposit, mrent, yrent, maintc
 	from house_info join house_price using(hcode)
 </select>
@@ -218,11 +217,10 @@
     </select>
     
 <!-- houseOverview.jsp에서 핫매물 cntwish 기준   w/o paging -->
-	<select id="retrieveHotItems" resultType="hashmap">
+	<select id="retrieveR" resultType="hashmap">
 		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
 		where cntwish >= (select AVG(cntwish) from house_info)
-		order by cntwish desc
 	</select>
 
 <!-- houseOverview.jsp&houseList.jsp 에서 필터 버튼으로 리스트 불러올때 w paging  -->
@@ -544,7 +542,7 @@
 	
 	<!-- Basic : House 자세히보기 -->
    	<select id="houseRetrieve" parameterType="string" resultType="HouseInfoDTO">
-   		select hcode, htype, rtype, hname, addr, coordX, coordY, area, whlflr, flr, room, batr,	cntwish, himage, hetc, registerDate, agntid
+   		select hcode, htype, rtype, hname, himage addr, coordX, coordY, area, whlflr, flr, room, batr,	cntwish, himage, hetc, registerDate, agntid
    		from house_info
    		where hcode = #{hcode}
    	</select>

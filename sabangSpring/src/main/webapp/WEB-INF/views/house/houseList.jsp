@@ -102,6 +102,4 @@ a.unfocusedPage{
 		</td>
 	</tr>
 </table>
-<%-- houseList?curPage=${i}&search=${search} --%>
-<!-- houseFilter?curPage=${i}&filters=${filters} -->
 

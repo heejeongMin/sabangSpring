@@ -28,7 +28,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물코드</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px' id="hcode">
+								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;' id="hcode">
 									<input type="text" name="hcode" value="${infoDTO.hcode}" readonly>
 								</td>
 							</tr>
@@ -37,8 +37,8 @@
 								<td class="td_title">세타입</td>
 								<td class="td_default update" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
 	 								<c:if test='${infoDTO.rtype.equals("월세")}'>
-										<input type="radio" name="rtype" value="월세" checked><span style="margin-left: -15px;">월세</span>
-										<input type="radio" name="rtype" value="전세" style="float: left; position: relative; left: 50px;"><span style="margin-left: 35px;">전세</span>
+										<input type="radio" name="rtype" value="월세" checked><span style="margin-left: 5px;">월세</span>
+										<input type="radio" name="rtype" value="전세"><span style="margin-left: 5px;">전세</span>
 									</c:if>
 									<c:if test='${infoDTO.rtype.equals("전세")}'>
 										<input type="radio" name="rtype" value="월세"><span style="margin-left: -15px;">월세</span>
@@ -49,7 +49,7 @@
 							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물명</td>
-								<td class="td_default" id="" colspan="2" style='padding-left: 30px'>
+								<td class="td_default" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
 									<input type="text" name="hname" placeholder="50자 이내" size=40 value="${infoDTO.hname}" >
 								</td>
 							</tr>
@@ -92,7 +92,7 @@
 							</tr>
 								<tr> <td height="5"></td> </tr>
 							<tr> <td class="td_title">주소</td>
-								 <td class="td_red" colspan="2" style='padding-left: 30px' >
+								 <td class="td_red" colspan="2" style='padding-left: 30px;text-align: left;' >
 									<input type="text" name="post" id="sample4_postcode" value="" placeholder="우편번호">
 									<input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="margin: 0 10px;">
 									<input type="text" name="addr" id="sample4_roadAddress" value="${infoDTO.addr}" placeholder="도로명주소">
@@ -103,8 +103,15 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">사진등록</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px'> 
-									<input type="file" name="himage"/>
+								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;'> 
+									<img id="test" src ="images/house/${infoDTO.himage}.jpg" width="100" height="100">
+									<input type="file" name="himage" value="'C:\fakepath'\${infoDTO.himage}.jpg"/>
+								<script>
+									$("img#test").on("click", function(){
+										console.dir($("input[type=file]"));
+									})
+								</script>
+								
 								</td>
 							</tr>
 						</table>

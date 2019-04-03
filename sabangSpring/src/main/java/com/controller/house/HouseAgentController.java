@@ -36,13 +36,13 @@ public class HouseAgentController {
 
 		// 로그인한 에이전트의 이름으로 등록된 매물 리스트를 housePanel.jsp에 보여주기
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));
-		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));
-		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));
-		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));
-		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));
+		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));//중개중인매물
+		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));//중개완료매물
+		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));//내 인기매물
+		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));//Google Chart 실적
+		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));//Google Chart 인기매물
 
-		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때
+		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때R
 		if (work != null) {
 			if (work.equals("register")) {// 매물 등록
 				model.addAttribute("work", "register");
@@ -124,7 +124,7 @@ public class HouseAgentController {
     	//POST면 매물등록, 아니면 PUT으로 매물 수정으로 감 
     	int n = (workType.equals("POST"))? service.houseRegister(registerMap):service.houseUpdate(registerMap);
     	if (n==1 && himage!=null) {//성공하면 FILE업로드 진행 및 성공 메세지 담기
-    		File f = new File("c:\\upload", fileName);
+    		File f = new File("C:\\Users\\hjmin\\git\\sabangSpring\\sabangSpring\\src\\main\\webapp\\WEB-INF\\views\\images\\house", fileName);
     		try {
     			himage.transferTo(f);
     		} catch (IllegalStateException | IOException e) {

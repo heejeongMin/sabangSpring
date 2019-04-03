@@ -2,5 +2,4 @@
 <form action="houseList" method="get" id="searchBar">
 	<input type="text" name="filters" id="search" placeholder="연희동, 신촌, 신축 ...">
 	<button id="searchBtn">검색</button>
-	<!-- test -->
 </form>

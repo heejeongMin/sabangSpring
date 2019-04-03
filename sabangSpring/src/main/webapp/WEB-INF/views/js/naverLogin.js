@@ -27,7 +27,6 @@ var naverLogin = new naver.LoginWithNaverId(
 			var email = naverLogin.user.getEmail();//email
 			var name = naverLogin.user.getName(); // name
 			var uniqId = naverLogin.user.getId(); //43415424 -> id 
-			console.log(email);
 			
 			var result = "";
 			if (uniqId != null){
@@ -37,13 +36,11 @@ var naverLogin = new naver.LoginWithNaverId(
 				$("a#logout").click(function(e){
 					e.preveDefault();
 					naverLogin.logout();
-					location.href = "LogoutServlet";
 				});
 			} 
 		}//end setLoginStatus
 		
 		function sabangSignUp (uniqId, name, email){
-			console.log(uniqId, name, email);
 			var result = ""; 
 			$.ajax({
 				type:'post',

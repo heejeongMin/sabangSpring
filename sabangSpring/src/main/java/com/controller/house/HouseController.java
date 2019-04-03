@@ -59,7 +59,6 @@ public class HouseController {
 
 	@RequestMapping("/houseList")// 검색어를 입력하고 검색버튼을 눌렀을 때
 	public String houseList(@RequestParam(value = "filters", required = false) String search, @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
-		System.out.println(search);
 		model.addAttribute("search", search);
 		model.addAttribute("pagingMap", hService.searchList(search, curPage));
 		model.addAttribute("allList", hService.retrieveAllItems());

@@ -149,11 +149,6 @@
 </body>
 </html>
 <script type="text/javascript">
-var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseLikeByAgent를 for문을 돌면서 만들어준다. 
-"<c:forEach var='houseLike' items='${houseLikeByAgent}' varStatus='status'>"
-	rows["${status.index}"] = ["${houseLike.HCODE}", Number.parseInt("${houseLike.CNTWISH}")];
-"</c:forEach>"
-
 var openItems = new Array();
 "<c:forEach var='i' begin='1' end='12'>"
 	var month = ("${i}".length < 2)? "0${i}":"${i}";
@@ -177,8 +172,12 @@ for(i in openItems){
 		openItems[i].push(null);
 	}
 }
-console.log(openItems);
-console.log("${houseSoldByAgentCount}");
+
+var rows = []; //data.addrows에 2차원배열로 값을 넣어야 해서 houseLikeByAgent를 for문을 돌면서 만들어준다. 
+"<c:forEach var='houseLike' items='${houseLikeByAgent}' varStatus='status'>"
+	rows["${status.index}"] = ["${houseLike.HCODE}", Number.parseInt("${houseLike.CNTWISH}")];
+"</c:forEach>"
+
 
   // Load the Visualization API and the corechart package.
   google.charts.load('current', {'packages':['corechart', 'line']});
