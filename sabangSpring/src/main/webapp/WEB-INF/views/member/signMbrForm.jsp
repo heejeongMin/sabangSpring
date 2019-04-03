@@ -50,13 +50,9 @@
 		<option value="hanmir.com">hanmir.com</option>
 		<option value="sayclub.com">sayclub.com</option>
 	</select> 
-	<!-- <span id="direct_email" style="margin-top:3px;display:none">
-        <input type="text" name="email3" id="email3"  class="MS_input_txt" value="" size="15" maxlength="25"  onchange="this.form.emailcheck.value=''" />
-    </span>   -->
 	<br><br>
-	
-	<c:set var = "key" item = "${key} scope = "session"/>
-	<div id = "capt" class = "live"></div>
+	<c:set var = "key" item = "${key}" scope = "session"/>
+	<div id = "capt" class = "live" data-fail ="" ></div>
 	<div id = "captcha_space">
 	<div id ="captcha_img_container">
 	<span class="captcha_img"><img name='captchaImage' id='chptchaimg' src='https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=${key}' width='30%' height='87' alt='자동입력 방지문자'></span>
@@ -130,43 +126,76 @@
     
     
     /////CAPTCHA
-
-    	$("#captSub").on("click", function(){
+		
+      //이미지 새로고침
+    //제출
+    	$("#captSub").on("click", function(){ //버튼 선택시
     		$.ajax({
 			type:'get',
 			url:'checkResult',
-			data:{
-				inputVal:$("#input").val(),
-				key: "${key}"
+			data:{ // checkResult 컨트롤러에 해당 데이터 전송
+				inputVal:$("#input").val(), 
+				key: "${key}",
+				isFailed : $("#capt").attr('data-fail').trim()
 			},
 			success:function(data, status, xhr){
-				if (data == 'false'){
-					$("#capt").text('문자열이 일치하지 않습니다.')
+				console.log(">> data ",data)
+				if (data == 'false'){ //0. 컨트롤러 다녀온 상황, 값이 일치하지 않음.
+					$("#capt").text('문자열이 일치하지 않습니다, 다시 시도해주세요.')
+					$("#capt").attr('data-fail','fail')
+					$.ajax({
+						url:'captcha', // 1. 컨트롤러 다녀옴, 키 새로 받아옴
+						success:function(mykey, status, xhr){
+							$(".captcha_img").remove();
+							$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
+	 						var newKey = mykey
+							$.ajax({
+								url : 'newKey',
+								data : {
+									newKey : mykey
+								},
+								success:function(newkey, status, xhr){
+									console.log("newKey????: ", newKey)
+								},
+								error : function (xhr,status,error){
+									console.log(xhr.status, error);
+								}
+							}) 
+						}
+						,
+						error:function(xhr, status, error){
+						console.log(xhr.status, error);
+						}
+					});//end inner ajax
 				}else{
 					$("#captcha_space").hide();
 					$("#capt").text('인증되었습니다.')
 				}
-				console.log(data);
+				console.log("data-innerKey, outer", $("#capt").attr('data-innerKey'))
 			},
 			error:function(xhr, status, error){
 				console.log(xhr.status, error);
 		}
 		});//ajax
-	});
+    	});
+		
+		$("#captImg").on("click", function(){
+			$.ajax({
+				url:'captcha',
+				success:function(mykey, status, xhr){
+					console.log("mykey",mykey)
+					$(".captcha_img").remove();
+					$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')
+				},
+				error:function(xhr, status, error){
+					console.log(xhr.status, error);
+					}
+			});//ajax
+    	});
 	
-	$("#captImg").on("click", function(){
-		console.log("${key}")
-		$.ajax({
-			url:'captcha',
-			success:function(mykey, status, xhr){
-				$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자"></span>')
-			},
-			error:function(xhr, status, error){
-				console.log(xhr.status, error);
-		}
-		});//ajax
-	});
-	
+    
+    	console.log("${key}")
+    	console.log($("#capt").attr('data-fail'))
 	
 	
     </script>

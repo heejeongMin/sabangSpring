@@ -18,7 +18,7 @@
 					</tr>
 						<tr> <td height="5"></td> </tr>
 					<tr>
-						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px'>
+						<table align="center" width="710" cellspacing="0" cellpadding="0" border="0" style='margin-left: 100px;text-align:left;'>
 							<tr> <td height="1" colspan="8" bgcolor="CECECE"></td> </tr>
 							<tr> <td height="5"></td> </tr>
 							<td class="td_title">매물타입</td>
@@ -41,8 +41,8 @@
 										<input type="radio" name="rtype" value="전세"><span style="margin-left: 5px;">전세</span>
 									</c:if>
 									<c:if test='${infoDTO.rtype.equals("전세")}'>
-										<input type="radio" name="rtype" value="월세"><span style="margin-left: -15px;">월세</span>
-										<input type="radio" name="rtype" value="전세" checked style="float: left; position: relative; left: 50px;"><span style="margin-left: 35px;">전세</span>
+										<input type="radio" name="rtype" value="월세"><span style="margin-left: 5px;">월세</span>
+										<input type="radio" name="rtype" value="전세" checked><span style="margin-left: 5px;">전세</span>
 									</c:if>
 								</td>
 							</tr>
@@ -103,15 +103,9 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">사진등록</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;'> 
-									<img id="test" src ="images/house/${infoDTO.himage}.jpg" width="100" height="100">
-									<input type="file" name="himage" value="'C:\fakepath'\${infoDTO.himage}.jpg"/>
-								<script>
-									$("img#test").on("click", function(){
-										console.dir($("input[type=file]"));
-									})
-								</script>
-								
+								<td class="td_default" colspan="2" style='padding-left: 30px; text-align:left;'> 
+									<img src="images/house/${infoDTO.himage}.jpg" alt="${infoDTO.himage}" width="100">
+									<input type="file" name="himage"/>
 								</td>
 							</tr>
 						</table>

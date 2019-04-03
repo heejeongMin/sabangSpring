@@ -42,7 +42,7 @@ public class HouseAgentController {
 		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));//Google Chart 실적
 		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));//Google Chart 인기매물
 
-		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때R
+		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때
 		if (work != null) {
 			if (work.equals("register")) {// 매물 등록
 				model.addAttribute("work", "register");

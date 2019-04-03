@@ -15,7 +15,7 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 public class NaverCaptcha {
-	String clientId = "QN3lv2J2hB8uD9Nm2s90";// 애플리케이션 클라이언트 아이디값";
+		String clientId = "QN3lv2J2hB8uD9Nm2s90";// 애플리케이션 클라이언트 아이디값";
 		String clientSecret = "kow_E2M4f3";// 애플리케이션 클라이언트 시크릿값";
 	
 		public String getKey() {
@@ -45,8 +45,6 @@ public class NaverCaptcha {
 			JSONObject obj = new JSONObject();
 			obj = (JSONObject) jsonParser.parse(response.toString());
 			key = (String) obj.get("key");
-			System.out.println(obj);
-			System.out.println(key);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +53,7 @@ public class NaverCaptcha {
 
 	public void getImage(String key) {
 		try {
-			//String key = getKey();
+			// key = getKey();
 			// https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
 			String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+key;
 			URL url = new URL(apiURL);
@@ -72,7 +70,6 @@ public class NaverCaptcha {
 				byte[] bytes = new byte[1024];
 				// 랜덤한 이름으로 파일 생성
 				String tempname = Long.valueOf(new Date().getTime()).toString();
-				System.out.println("파일명 : " + tempname);
 				File f = new File(tempname + ".jpg");
 				f.createNewFile();
 				OutputStream outputStream = new FileOutputStream(f);
@@ -91,7 +88,6 @@ public class NaverCaptcha {
 				}
 				br.close();
 
-				System.out.println(response.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,7 +95,7 @@ public class NaverCaptcha {
 	}
 
 public String checkNumber(String captKey,String userInput) {
-	System.out.println("CLASS"+captKey);
+	System.out.println(captKey);
 	JSONObject object = null;
 	String result = null;
     try {
@@ -130,7 +126,6 @@ public String checkNumber(String captKey,String userInput) {
         br.close();
         result = response.toString();
         object = (JSONObject)JSONValue.parse(result);
-        System.out.println(object);
     } catch (Exception e) {
         e.printStackTrace();
     }
