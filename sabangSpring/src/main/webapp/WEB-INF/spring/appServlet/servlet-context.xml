@@ -18,14 +18,16 @@
 	<mvc:default-servlet-handler />
 
 	<!-- interceptor를 mvc를 활용해서 등록 -->
-	<mvc:interceptors>
+	 	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*" />
 			<mvc:exclude-mapping path="/houseOverview"/>
 			<mvc:exclude-mapping path="/houseList"/>
 			<mvc:exclude-mapping path="/houseFilter"/>
 			<mvc:exclude-mapping path="/signMbrUI" />
+			<mvc:exclude-mapping path="/signMbrUI**" />
 			<mvc:exclude-mapping path="/signMbr" />
+			<mvc:exclude-mapping path="/signMbr**" />
 			<mvc:exclude-mapping path="/loginUI"/>
 			<mvc:exclude-mapping path="/login"/>
 			<mvc:exclude-mapping path="/naverSignin"/>
@@ -34,10 +36,13 @@
 			<mvc:exclude-mapping path="/idCheck"/>
 			<mvc:exclude-mapping path="/ssnCheck"/>
 			<mvc:exclude-mapping path="/phoneCheck"/>
+			<mvc:exclude-mapping path="/checkNumber"/>
+			<mvc:exclude-mapping path="/captcha"/>
+			<mvc:exclude-mapping path="/checkResult"/>
 			<mvc:exclude-mapping path="/"/>
 			<bean class="com.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors>  
 
 
 	<!-- InternalViewResolver를 mvc를 활용해서 등록 -->
@@ -66,12 +71,8 @@
 	<mvc:view-controller path="/delMbrIdConfirm"
 		view-name="delMbrIdConfirm" />
 
-	<!-- 회원가입  화면 -->
-	<mvc:view-controller path="/signMbrUI"
-		view-name="signMbrForm" />
-		
-	<!-- 포스팅 화면 -->
-<!-- 	<mvc:view-controller path="/postBoard" view-name="board/postBoard" /> -->
+	
+	
 
 	<context:component-scan base-package="com.*" />
 	
@@ -93,8 +94,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
 		<property name="host" value="smtp.gmail.com" /> 
 		<property name="port" value="587" /> 
-		<property name="username" value="아이디입력" /> 
-		<property name="password" value="비밀번호입력" /> 
+		<property name="username" value="구글 아이디를 입력하세요." /> 
+		<property name="password" value="비밀번호를 입력하세요." /> 
 		<property name="javaMailProperties"> 
 			<props> 
 				<prop key="mail.smtp.auth">true</prop> 

@@ -2,7 +2,7 @@
 
 /* Menu */
 #section_mypage_menu {
-	position:fixed; top:60px; width:100%; height:40px; background:#00008b; border-bottom:3px solid #cccccc; z-index:9999;
+	position:fixed; top:60px; width:100%; height:40px; background:#00008b; border-bottom:3px solid #cccccc; z-index:2;
 }
 
 #inner_menu {

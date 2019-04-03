@@ -48,7 +48,10 @@ a.unfocusedPage{
 								<td>
 									<table id="innerTable">
 									<tr>
-										<td class="img"><img src="#" alt="${HouseInfo.HCODE}" width="300" height="300"/></td>
+										<td class="img">
+										<div class="imgFrame" style="width:235px;">
+											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+										</div>
 									</tr>
 									<tr> 
 										<td class="greyText">
@@ -116,7 +119,10 @@ a.unfocusedPage{
 								<td>
 									<table id="innerTable">
 									<tr>
-										<td class="img"><img src="#" alt="${HouseInfo.HCODE}" width="300" height="300"/></td>
+										<td class="img">
+										<div class="imgFrame" style="width:235px;">
+											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+										</div>
 									</tr>
 									<tr> 
 										<td class="greyText">

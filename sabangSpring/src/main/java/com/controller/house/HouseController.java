@@ -256,6 +256,7 @@ public class HouseController {
 		int date = c.get(Calendar.DATE);
 		int hour = c.get(Calendar.HOUR_OF_DAY) ;
 		String m = (month<10)? "0" + month :String.valueOf(month);
+		String d = (date<10)? "0" + date : String.valueOf(date);
 		
 		if (hour < 11) { // 날씨 요청시간이 11 시 전일때, 
 			if (date == 1) {//만약에 월의 1일이고, 
@@ -279,7 +280,7 @@ public class HouseController {
 			}//end if~else 일이 1일인지 아닌지 확인		
 		}
 		
-		String base_date = String.valueOf(c.getWeekYear())+m+date;
+		String base_date = String.valueOf(c.getWeekYear())+m+d;
 		System.out.println(base_date);
 		//요청 동네의 좌표 만들기
 		String[] asLocation = new String[]{"서울특별시", "서초구", "반포1동"};  
@@ -391,7 +392,7 @@ public class HouseController {
 	public String sendMail(HttpSession session) {
 		MemberDTO memberInfo = (MemberDTO)session.getAttribute("memberInfo");
 		String setfrom = memberInfo.getEmail();
-		String tomail = ""; // 받는 사람 이메일
+		String tomail = "받는사람 메일"; // 받는 사람 이메일
 		String title = "title"; // 제목
 		String content = "content"; // 내용
 		
@@ -401,10 +402,10 @@ public class HouseController {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message,
 					true, "UTF-8");
 
-			messageHelper.setFrom(""); // 보내는사람 생략하면 정상작동을 안함
-			messageHelper.setTo(""); // 받는사람 이메일
-			messageHelper.setSubject(""); // 메일제목은 생략이 가능하다
-			messageHelper.setText(""); // 메일 내용
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content); // 메일 내용
 
 			mailSender.send(message);
 		} catch (Exception e) {

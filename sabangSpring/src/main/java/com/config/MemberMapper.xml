@@ -146,6 +146,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where passwd = #{passwd}
 	</select>
 	
+	<insert id="addOutMbr" parameterType="string">
+		insert into wdmbr(userid,droptime)
+		values(#{userid},sysdate)
+	</insert>
 
 
 

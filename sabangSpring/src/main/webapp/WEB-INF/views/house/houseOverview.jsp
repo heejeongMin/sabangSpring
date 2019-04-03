@@ -16,7 +16,7 @@
 					<tr>
 						<td class="img">
 							<div class="imgFrame" style="width:235px;">
-								<img class="goDetail" data-hcode="${newHouse.HCODE}" src="images/house/${newHouse.HIMAGE}.jgp" alt="${newHouse.HCODE}" style="width:100%"/>
+								<img class="goDetail" data-hcode="${newHouse.HCODE}" src="images/house/${newHouse.HIMAGE}.jpg" alt="${newHouse.HCODE}" style="width:100%"/>
 							</div>
 						</td>
 					</tr>

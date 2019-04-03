@@ -71,7 +71,6 @@ $(document).ready(function() {
 			url : 'houseFilter',
 			data : { filters : filters.toString() },
 			success : function(data, status, xhr) {
-				console.log($(data).find("div#mainWrap"));
 				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
@@ -85,7 +84,16 @@ $(document).ready(function() {
 			type : 'get',
 			url : 'houseOverview',
 			success : function(data, status, xhr) {
+				//1. 체크박스에 체크된 애들 체크 해제
+				$("input.filter").each(function(idx, ele) {
+					if (ele.checked) ele.checked = false;
+				});// end each
+				//2. dropdown에 있는 애는 선택해주세요로 초기화
+				$("select.filter").find("option[value='선택해주세요']").prop("selected", true);
+				//3. range 값 초기화
+				$("input[type=range]").prop("value", 10000);
 				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
+				
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
 		});// end ajax

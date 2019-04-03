@@ -113,7 +113,7 @@ public class HouseAgentController {
 		if(himage!=null) {
 			String[] fileNames = himage.getOriginalFilename().split("\\.");
 			fileName = fileNames[0] + "_" + System.currentTimeMillis() + "." + fileNames[1];
-			infoDTO.setHimage(fileName);
+			infoDTO.setHimage(fileNames[0] + "_" + System.currentTimeMillis());
 		}
 		
     	infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
@@ -124,7 +124,7 @@ public class HouseAgentController {
     	//POST면 매물등록, 아니면 PUT으로 매물 수정으로 감 
     	int n = (workType.equals("POST"))? service.houseRegister(registerMap):service.houseUpdate(registerMap);
     	if (n==1 && himage!=null) {//성공하면 FILE업로드 진행 및 성공 메세지 담기
-    		File f = new File("c:\\upload", fileName);
+    		File f = new File("C:\\sabangSpringGit\\sabangSpring\\src\\main\\webapp\\WEB-INF\\views\\images\\house", fileName);
     		try {
     			himage.transferTo(f);
     		} catch (IllegalStateException | IOException e) {
