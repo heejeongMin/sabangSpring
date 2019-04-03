@@ -120,6 +120,12 @@ public class MypageController {
 			HashMap<Long, String> history = (HashMap)session.getAttribute("history");
 			List<HouseRcnlistDTO> rcnList = hService.selectRcnlist(userid);
 			
+			if(rcnList.size() != 0) {
+				for(HouseRcnlistDTO rcnDto : rcnList) {
+					history.put(rcnDto.getNum(), rcnDto.getHcode());
+				}
+			}
+			
 			if(history!=null) {
 				Long[] keys = new Long[history.size()];
 				String[] values = new String[history.size()];
@@ -131,12 +137,6 @@ public class MypageController {
 				}
 				List<String> list = Arrays.asList(values);
 				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(list);
-				model.addAttribute("houseInfoRcnList", houseInfoList);
-			}else if(rcnList.size() != 0) {
-				for(HouseRcnlistDTO rcnDto : rcnList) {
-					hCodeList.add(rcnDto.getHcode());
-				}
-				List<HashMap<String, Object>> houseInfoList = hService.rcnHouseInfo(hCodeList);
 				model.addAttribute("houseInfoRcnList", houseInfoList);
 			}else {
 				model.addAttribute("listInfo", "rcn");
