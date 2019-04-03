@@ -126,9 +126,11 @@ public class MypageController {
 					for(HouseRcnlistDTO rcnDto : rcnList) {
 						history.put(rcnDto.getNum(), rcnDto.getHcode());						
 					}   
-					System.out.println(history);
+				}else {
+					for(HouseRcnlistDTO rcnDto : rcnList) {
+						history.put(rcnDto.getNum(), rcnDto.getHcode());						
+					}   
 				}
-				                                                       
 			}
 			
 			
