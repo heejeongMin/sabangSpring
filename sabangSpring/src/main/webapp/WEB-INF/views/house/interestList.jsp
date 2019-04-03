@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="css/houseList.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("body").find(".goDetail").on("click", function(e){
+			location.href = "houseDetailInfo?hcode="+$(e.target).attr("data-hcode");
+		});
+	});
+</script>
 <style>
 a.focusedPage{
 	background: none;
@@ -20,12 +28,16 @@ a.unfocusedPage{
 <c:set var="hInfoWish" value="${houseInfoWishList}"/>
 <c:set var="hInfoRcnLength" value="${fn:length(houseInfoRcnList)}"/>
 <c:set var="hInfoWishLength" value="${fn:length(houseInfoWishList)}"/>
-<h1>관심목록</h1>
-<a href="interestList?iCategory=rcnlist">최근 본 방</a>
-<a href="interestList?iCategory=wishlist">찜한 방</a>
+<div id="pageTitle"><h2>관심목록</h2></div>
+<div id="pageMenu">
+	<ul id="pageMenuUl">
+		<li><a href="interestList?iCategory=rcnlist">최근 본 방</a></li>
+		<li><a href="interestList?iCategory=wishlist">찜한 방</a></li>
+	</ul>
+</div>
 <c:choose>
 	<c:when test="${!empty hInfoRcn}">
-		<h1>최근 본 방<span id="noOfHouse">${hInfoRcnLength}</span>건</h1>
+		<div id="listTitle"><h2>최근 본 방<span id="noOfHouse">${hInfoRcnLength}</span>건</h2></div>
 			<table id="wholeTable">
 				<tr>
 					<td>
@@ -46,7 +58,7 @@ a.unfocusedPage{
 									<tr>
 										<td class="img">
 										<div class="imgFrame" style="width:235px;">
-											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+											<img class="goDetail" data-hcode="${HouseInfo.HCODE}" src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
 										</div>
 									</tr>
 									<tr> 
@@ -95,7 +107,7 @@ a.unfocusedPage{
 		</table>
 	</c:when>
 	<c:when test="${!empty hInfoWish}">
-		<h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1>
+		<div id="listTitle"><h1>찜한 방<span id="noOfHouse">${hInfoWishLength}</span>건</h1></div>
 	   	 	<table id="backTable">
 				<tr>
 					<td>
@@ -117,7 +129,7 @@ a.unfocusedPage{
 									<tr>
 										<td class="img">
 										<div class="imgFrame" style="width:235px;">
-											<img src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
+											<img class="goDetail" data-hcode="${HouseInfo.HCODE}" src="images/house/${HouseInfo.HIMAGE}.jpg" alt="${HouseInfo.HCODE}" style="width:100%"/></td>
 										</div>
 									</tr>
 									<tr> 
@@ -166,9 +178,9 @@ a.unfocusedPage{
 		</table>
 	</c:when>
 	<c:when test="${listInfo=='rcn'}">
-		<h1>최근 본 방이 없습니다.</h1>
+		<div id="listTitle"><h2>최근 본 방이 없습니다.</h2></div>
 	</c:when>
 	<c:when test="${listInfo=='wish'}">
-		<h1>찜한 방이 없습니다.</h1>
+		<div id="listTitle"><h2>찜한 방이 없습니다.</h2></div>
 	</c:when>
 </c:choose>

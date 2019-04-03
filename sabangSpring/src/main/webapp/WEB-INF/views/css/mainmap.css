@@ -1,6 +1,8 @@
 #container {overflow:hidden;height:100%;position:relative;}
 #mapWrapper {width:100%;height:100%;z-index:10;}
 
+
+/* 공공기관 마커 버튼 */
 .category, .category *{margin:0;padding:0;color:#000; z-index:2;}   
 .category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
 .category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;border-bottom:1px solid #915B2F;margin:0 -1px;} 
@@ -8,9 +10,10 @@
 .category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('../images/marker/category.png') no-repeat;} 
 .category .ico_coffee {background-position:-10px 0;}  
 .category .ico_store {background-position:-10px -36px;}   
-.category .ico_carpark {background-position:-10px -72px;}
+.category .ico_library {background-position:-10px -72px;}
 
 
+/* 하우스 전체목록 / 신매물 / 핫매물 마커 버튼 */
 .houseCategory, .houseCategory *{margin:0;padding:0;color:#000; z-index:2;}
 .houseCategory {position:absolute;overflow:hidden;top:10px;right:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
 .houseCategory .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;border-bottom:1px solid #915B2F;margin:0 -1px;} 
@@ -19,3 +22,14 @@
 .houseCategory .ico_total {background-position:-10px 0;}  
 .houseCategory .ico_new {background-position:-10px -36px;}   
 .houseCategory .ico_hot {background-position:-10px -72px;}
+
+
+/* 거리 계산하는 선 */
+.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
