@@ -34,7 +34,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물코드</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;' id="hcode">
+								<td class="td_default" colspan="2" style='padding-left: 30px; text-align: left;' id="hcode">
 									<input type="text" name="hcode" value="" readonly>
 								</td>
 							</tr>
@@ -92,7 +92,7 @@
 							</tr>
 							<tr> <td height="10"></td> </tr>
 							<tr> <td class="td_title">주소</td>
-								 <td class="td_red" colspan="2" style='padding-left: 30px; text-align:left;' >
+								 <td class="td_red" colspan="2" style='padding-left: 30px;text-align: left;' >
 									<input type="text" name="post" id="sample4_postcode" placeholder="우편번호" required>
 									<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" style="margin: 0 10px;">
 									<input type="text" name="addr" id="sample4_roadAddress" placeholder="도로명주소" required>
@@ -103,7 +103,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">사진등록</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px;text-align:left;'> 
+								<td class="td_default" colspan="2" style='padding-left: 30px; text-align: left;'> 
 									<input type="file" name="himage"/>
 								</td>
 							</tr>

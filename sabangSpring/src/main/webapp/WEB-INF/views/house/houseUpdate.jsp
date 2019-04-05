@@ -28,7 +28,7 @@
 								<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물코드</td>
-								<td class="td_default" colspan="2" style='padding-left: 30px;text-align:left;' id="hcode">
+								<td class="td_default" colspan="2" style='padding-left: 30px;text-align: left;' id="hcode">
 									<input type="text" name="hcode" value="${infoDTO.hcode}" readonly>
 								</td>
 							</tr>
@@ -49,7 +49,7 @@
 							<tr> <td height="5"></td> </tr>
 							<tr>
 								<td class="td_title">매물명</td>
-								<td class="td_default" id="" colspan="2" style='padding-left: 30px;text-align:left;'>
+								<td class="td_default" id="" colspan="2" style='padding-left: 30px;text-align: left;'>
 									<input type="text" name="hname" placeholder="50자 이내" size=40 value="${infoDTO.hname}" >
 								</td>
 							</tr>
@@ -92,7 +92,7 @@
 							</tr>
 								<tr> <td height="5"></td> </tr>
 							<tr> <td class="td_title">주소</td>
-								 <td class="td_red" colspan="2" style='padding-left: 30px;text-align:left;' >
+								 <td class="td_red" colspan="2" style='padding-left: 30px;text-align: left;' >
 									<input type="text" name="post" id="sample4_postcode" value="" placeholder="우편번호">
 									<input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="margin: 0 10px;">
 									<input type="text" name="addr" id="sample4_roadAddress" value="${infoDTO.addr}" placeholder="도로명주소">

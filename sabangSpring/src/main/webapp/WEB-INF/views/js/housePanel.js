@@ -31,11 +31,8 @@ $(document).ready(function() {
 					if (data == "1") {
 						$("tr").each(function(idx, ele) {
 							for (var i = 0; i < delList.length; i++) {
-								if ($(ele).attr("data-attr") == delList[i]) {
-									console.log(1);
-									$(ele).remove();
-								}
-							}
+								if ($(ele).attr("data-attr") == delList[i]) $(ele).remove();
+							}//end for
 						});
 						mesg = "성공적으로 삭제되었습니다. 다음 매물을 기다릴게요~";
 					} else {
@@ -43,12 +40,10 @@ $(document).ready(function() {
 					}
 					alert(mesg);
 				},
-				error : function(xhr, status, data) {
-					console.log(status);
-				}
-			});
-		}
-	});
+				error : function(xhr, status, data) { console.log(status); }
+			});//end ajax
+		}//end if~else
+	});//end delete
 
 	$("td.showHouse").on("click", function(e){
 		location.href = "houseUIController?work=update&hcode=" + $(e.target).parent().attr("data-attr");

@@ -174,7 +174,7 @@
 			<version>2.6</version>
 		</dependency>
 
-		<!-- Ajajx 비동기 처리 를 위한 Jakson 라이브러리들 -->
+		<!-- Ajax 비동기 처리 를 위한 Jakson 라이브러리들 -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

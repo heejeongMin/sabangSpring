@@ -23,8 +23,11 @@ public class HouseDAO {
 	SqlSessionTemplate session;
 
 	/*
-	 * 페이징 처리 1. curPage : 현재 페이지 2. perPage : 한번에 보여줄 페이지 개수 3. totalPage : 전체 목록
-	 * 개수 4. list : db에서 가져온 애들
+	 * 페이징 처리 
+	 * 1. curPage : 현재 페이지 
+	 * 2. perPage : 한번에 보여줄 페이지 개수 
+	 * 3. totalPage : 전체 목록개수 
+	 * 4. list : db에서 가져온 애들
 	 */
 
 	// 검색에 의한 결과 리스트 페이징 처리
@@ -36,7 +39,7 @@ public class HouseDAO {
 
 		int offset = (curPage - 1) * (int) pagingMap.get("perPage");
 		List<HashMap<String, Object>> list = session.selectList("HouseMapper.searchList", search,
-				new RowBounds(offset, (int) pagingMap.get("perPage")));
+																	new RowBounds(offset, (int) pagingMap.get("perPage")));
 		pagingMap.put("list", list);
 
 		return pagingMap;

@@ -90,12 +90,12 @@ public class HouseAgentController {
 		// 로그인한 에이전트의 이름으로 등록된 매물 리스트를 housePanel.jsp에 보여주기
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));//중개중인매물
-		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));//거래완료매물
-		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));//내인기매물
-		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));//GoogleChart 실적
-		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));//GoogleChart 인기매물
+		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));//중개완료매물
+		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));//내 인기매물
+		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));//Google Chart 실적
+		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));//Google Chart 인기매물
 
-		// housePanel.jsp에서 매물등록
+		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때
 		if (work != null) {
 			if (work.equals("register")) {// 매물 등록
 				model.addAttribute("work", "register");
@@ -166,7 +166,7 @@ public class HouseAgentController {
 		if(himage!=null) {
 			String[] fileNames = himage.getOriginalFilename().split("\\.");
 			fileName = fileNames[0] + "_" + System.currentTimeMillis() + "." + fileNames[1];
-			infoDTO.setHimage(fileNames[0] + "_" + System.currentTimeMillis());
+			infoDTO.setHimage(fileName);
 		}
 		
     	infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
