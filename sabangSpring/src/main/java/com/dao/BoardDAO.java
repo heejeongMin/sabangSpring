@@ -45,4 +45,10 @@ public class BoardDAO {
 		return session.selectOne("BoardMapper.confUpBoard", list);
 	}
 	
+	///////////////// Angualr 관리자 마이페이지 //////////////
+	//Angular - 에이전트가 올린 모든 매물에 대한 board 리스트
+	public List<HashMap<String, Object>> agentHouseBoard(String agntid){
+		return session.selectList("BoardMapper.agentHouseBoard", agntid);
+	}
+	
 }

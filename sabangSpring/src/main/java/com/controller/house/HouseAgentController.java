@@ -12,8 +12,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -22,27 +25,77 @@ import com.dto.HouseInfoDTO;
 import com.dto.HouseOptionDTO;
 import com.dto.HousePriceDTO;
 import com.dto.MemberDTO;
+import com.service.BoardService;
 import com.service.HouseService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 public class HouseAgentController {
 
 	@Autowired
 	HouseService service;
+	
+	@Autowired
+	BoardService boardService;
 
+	//////////////////////////////Angular Start///////////////////////////////
+	//Angular agent 중개중 목록보기
+	@RequestMapping(value="/angular/houseList", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> houseListForAngular() {
+		return service.houseByAgent("agent");
+	}
+	//Angular agent 거래 완료 매물
+	@RequestMapping(value="/angular/houseSoldList", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> soldHouseListForAngular() {
+		return service.houseSoldByAgent("agent");
+	}
+	//Angular agent 매물 중개중/중개완료 수정
+	@RequestMapping(value="/angular/saveHouseChange", method=RequestMethod.PUT)
+	public @ResponseBody int saveHouseChangeForAngular(@RequestBody List<List<String>> list ) {
+		return service.houseChange(list);
+	}
+	
+	//Angular agent 실적 데이터 등록매물 전체
+	@RequestMapping(value="/angular/recordChart", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> recordChart() {
+		return service.houseByRegisterDate("agent");
+	}
+	
+	//Angular agent 실적 데이터 sold 매물
+	@RequestMapping(value="/angular/recordChartSold", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> recordChartSold() {
+		return service.houseSoldByAgentCount("agent");
+	}
+	
+	//Angular agent pie 좋아요 매물
+	@RequestMapping(value="/angular/likeChartHouse", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> likeChartHouse() {
+		return service.houseLikeByAgent("agent");
+	}
+	
+	//Angular agent가 올린 매물 문의사항 모음
+	@RequestMapping(value="/angular/agentHouseBoard", method=RequestMethod.GET)
+	public @ResponseBody List<HashMap<String, Object>> agentHouseBoard() {
+		return boardService.agentHouseBoard("agent");
+	}
+	
+	/////////////////////////////Angular End///////////////////////////////////////////
+	
+	
+	
 	@RequestMapping("/houseUIController") // houseAgent.jsp에 include되는 jsp 화면 3개 결정
 	public String houseUIController(@RequestParam(value = "work", required = false) String work,
 			@RequestParam(value = "hcode", required = false) String hcode, HttpSession session, Model model) {
 
 		// 로그인한 에이전트의 이름으로 등록된 매물 리스트를 housePanel.jsp에 보여주기
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));
-		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));
-		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));
-		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));
-		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));
+		model.addAttribute("houseByAgent", service.houseByAgent(member.getUserid()));//중개중인매물
+		model.addAttribute("houseSoldByAgent", service.houseSoldByAgent(member.getUserid()));//거래완료매물
+		model.addAttribute("houseLikeByAgent", service.houseLikeByAgent(member.getUserid()));//내인기매물
+		model.addAttribute("houseByRegisterDate", service.houseByRegisterDate(member.getUserid()));//GoogleChart 실적
+		model.addAttribute("houseSoldByAgentCount", service.houseSoldByAgentCount(member.getUserid()));//GoogleChart 인기매물
 
-		// housePanel.jsp에서 매물등록/매물수정 버튼을 눌렀을 때
+		// housePanel.jsp에서 매물등록
 		if (work != null) {
 			if (work.equals("register")) {// 매물 등록
 				model.addAttribute("work", "register");

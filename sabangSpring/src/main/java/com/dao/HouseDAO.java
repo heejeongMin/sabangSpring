@@ -151,11 +151,7 @@ public class HouseDAO {
 
 	// 매물 삭제
 	public int houseDel(List<String> list) {
-		System.out.println(list);
-		int n = session.delete("HouseMapper.houseDel_info", list);
-//		n = session.delete("HouseMapper.houseDel_price", list);
-//		n = session.delete("HouseMapper.houseDel_option", list);
-		return n;
+		return session.delete("HouseMapper.houseDel_info", list);
 	}// end houseDel
 
 	// 매물 cntwish 값 업데이트
@@ -211,9 +207,18 @@ public class HouseDAO {
 		return session.selectOne("HouseMapper.getNoOfWishes", dto.getUserid());
 	}// getCntWish
 
+	//유저가 동일 매물 이미 찜했는지 않했는지 체크
 	private int duplicateHouseCheck(HouseWishlistDTO dto) {
 		return session.selectOne("HouseMapper.duplicateHouseCheck", dto);
 	};
+	
+	//매물 중개중/중개완료 여부 저장
+	public int houseChange(List<List<String>> list) {
+		int n =0 ;
+		if (!(list.get(0).isEmpty())) n = session.update("HouseMapper.houseOnSale", list.get(0));
+		if (!(list.get(1).isEmpty())) n = session.update("HouseMapper.houseSold", list.get(1));			
+		return n;
+	}
 
 	///////////////////////////////////////////////////////////
 	// Basic: House 자세히보기

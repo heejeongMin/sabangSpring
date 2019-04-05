@@ -254,6 +254,7 @@ public class HouseController {
 		int date = c.get(Calendar.DATE);
 		int hour = c.get(Calendar.HOUR_OF_DAY) ;
 		String m = (month<10)? "0" + month :String.valueOf(month);
+		String d = (date<10)? "0" + date :String.valueOf(date);
 		
 		if (hour < 11) { // 날씨 요청시간이 11 시 전일때, 
 			if (date == 1) {//만약에 월의 1일이고, 
@@ -277,7 +278,9 @@ public class HouseController {
 			}//end if~else 일이 1일인지 아닌지 확인		
 		}
 		
-		String base_date = String.valueOf(c.getWeekYear())+m+date;
+		System.out.println(date);
+		
+		String base_date = String.valueOf(c.getWeekYear())+m+d;
 		System.out.println(base_date);
 		//요청 동네의 좌표 만들기
 		String[] asLocation = new String[]{"서울특별시", "서초구", "반포1동"};  

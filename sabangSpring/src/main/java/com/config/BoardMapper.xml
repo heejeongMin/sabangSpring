@@ -30,4 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set title = #{title}, content = #{content}, pdate = sysdate
 		where pcode = #{pcode} 
 	</update>
+	
+	<!-- Angualr 에이전트가 올린 매물에 대한 문의사항 모두 가져오기 -->
+	<select id="agentHouseBoard" parameterType="string" resultType="hashmap">
+		select hcode, to_char(pdate, 'yy-mm-dd') postdate, userid, title, content 
+		from board join house_info using (hcode)
+		where agntid = #{agntid}
+	</select>
+	
+	
 </mapper>
