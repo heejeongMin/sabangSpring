@@ -91,6 +91,12 @@ public class HouseService {
 		return n;
 	}// end updateCntWish
 	
+	//매물 중개중/중개완료 여부 저장
+	public int houseChange( List<List<String>> list) {
+		return dao.houseChange(list);
+	}
+
+	
 
 	///////////////////////////////////////////////////////////
 	// Basic : House 자세히보기

@@ -138,6 +138,24 @@
 		<if test="etc == null"> '' </if>
 		)
 	</insert>
+	
+	<update id="houseSold" parameterType="list">
+		update house_info
+		set closed='Y', closeddate=sysdate 
+		where hcode in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>		
+	</update>
+	
+	<update id="houseOnSale" parameterType="list">
+		update house_info
+		set closed='N', closeddate=NULL 
+		where hcode in
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
 
 <!-- houseRegister.jsp에서 가장 최근 등록된 매물 코드 가져오기 (매물타입별) -->
 	<select id="getLastCode" parameterType="string" resultType="string">
@@ -148,7 +166,7 @@
 	<select id="houseByAgent" parameterType="string" resultType="hashmap">
 		select hcode, rtype, addr, deposit, mrent, registerdate, himage
 		from house_info join house_price using(hcode)
-		where agntid = #{agntid}
+		where agntid = #{agntid} and house_info.closed ='N'
 		order by registerdate
 	</select>
 	
@@ -182,7 +200,7 @@
 		where agntid = #{agntid} and closed='Y'
 		GROUP BY TO_CHAR(closedDate, 'MM')
 	</select>
-
+	
 <!-- houseList.jsp 검색해서 나오는 매물 w paging  -->
 	<select id="searchList" parameterType="string" resultType="hashmap">
 		select hcode, htype, rtype, hname, himage, area, flr, hetc, deposit, mrent, yrent, maintc
