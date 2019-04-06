@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<script src="js/innerTable.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/css/swiper.min.css">
 <link rel="stylesheet" href="css/houseList.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
+<script src="js/innerTable.js"></script>
 <style>
 a.focusedPage{
 	background: none;
@@ -102,4 +104,3 @@ a.unfocusedPage{
 		</td>
 	</tr>
 </table>
-

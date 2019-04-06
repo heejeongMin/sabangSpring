@@ -25,4 +25,14 @@ $(document).ready(function(){
 		});//end ajax
 	});//end $("body").find("a.unfocusedPage").on("click"
 	
+	
+	 var swiper = new Swiper('.swiper-container', {
+	      slidesPerView: 3,
+	      spaceBetween: 30,
+	      pagination: {
+	        el: '.swiper-pagination',
+	        clickable: true,
+	        dynamicBullets: true,
+	      },
+	    });
 });//end ready

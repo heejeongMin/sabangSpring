@@ -217,7 +217,7 @@
 	</select>
 
 <!-- 전체 매물 정보 가져오기 -->
-<select id="retrieveAllItems" resultType="hashmap">R
+<select id="retrieveAllItems" resultType="hashmap">
 	select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage,deposit, mrent, yrent, maintc
 	from house_info join house_price using(hcode)
 </select>
@@ -226,7 +226,7 @@
 	<select id="retrieveNewItems" parameterType="string" resultType="hashmap">
 		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
-		where registerdate > #{maxSeven}
+		where registerdate >= #{maxSeven}
 	</select>
 	
 <!-- 신매물 기준이 되는 최신 매물에서 7일전꺼 -->
@@ -235,7 +235,7 @@
     </select>
     
 <!-- houseOverview.jsp에서 핫매물 cntwish 기준   w/o paging -->
-	<select id="retrieveR" resultType="hashmap">
+	<select id="retrieveHotItems" resultType="hashmap">
 		select hcode, htype, rtype, hname, area, coordx, coordy, flr, hetc, himage, deposit, mrent, yrent, maintc
 		from house_info join house_price using(hcode)
 		where cntwish >= (select AVG(cntwish) from house_info)

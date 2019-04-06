@@ -1,10 +1,10 @@
 package com.dao;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -58,6 +58,15 @@ public class HouseDAO {
 	// 신매물 리스트
 	public List<HashMap<String, Object>> retrieveNewItems() {
 		String maxSeven = session.selectOne("HouseMapper.newItemCount");
+		if (maxSeven == null) {
+			Calendar today = Calendar.getInstance();
+			String year = String.valueOf(today.get(Calendar.YEAR));
+			String month = (today.get(Calendar.MONTH) < 10)? "0"+(today.get(Calendar.MONTH)+1) : String.valueOf(today.get(Calendar.MONTH)+1);
+			String date = (today.get(Calendar.DATE) <10)? "0"+today.get(Calendar.DATE) : String.valueOf(today.get(Calendar.DATE));
+			
+			maxSeven = year+month+date;
+		}
+		
 		return session.selectList("HouseMapper.retrieveNewItems", maxSeven);
 	}// end retrieveNewItems
 
