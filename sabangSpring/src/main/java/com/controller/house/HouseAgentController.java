@@ -79,6 +79,13 @@ public class HouseAgentController {
 		return boardService.agentHouseBoard("agent");
 	}
 	
+	@RequestMapping(value="/angular/DELETE/{delList}", method=RequestMethod.DELETE)
+	public @ResponseBody String deleteHouse(@PathVariable("delList") String[] delList) {
+		List<String> list = Arrays.asList(delList);
+		int n = service.houseDel(list);
+		return (n>0)? "1":"0";
+	}
+	
 	/////////////////////////////Angular End///////////////////////////////////////////
 	
 	
