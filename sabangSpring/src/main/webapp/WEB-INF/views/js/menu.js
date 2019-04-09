@@ -71,6 +71,8 @@ $(document).ready(function() {
 			url : 'houseFilter',
 			data : { filters : filters.toString() },
 			success : function(data, status, xhr) {
+				console.log($("div#section_wrap").find("div#mainWrap"));
+				//$("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
 				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
@@ -93,7 +95,6 @@ $(document).ready(function() {
 				//3. range 값 초기화
 				$("input[type=range]").prop("value", 10000);
 				$("div#section_wrap").find("div#mainWrap").remove().end().prepend($(data).find("div#mainWrap"));
-				console.log(data);
 			},
 			error : function(xhr, status, error) { console.log(xhr.status, status) }
 		});// end ajax

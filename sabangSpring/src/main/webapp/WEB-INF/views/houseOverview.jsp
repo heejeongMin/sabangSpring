@@ -22,10 +22,10 @@
 	<div id="section_wrap">
 		<div id="mainWrap">
 			<jsp:include page="house/houseOverview.jsp" flush="true"/>
-		</div>
-		<div id="houseMapWrap">
-			<jsp:include page="house/houseMap.jsp" flush="true"/>
-		</div>
+		</div>	
+	</div>
+	<div id="houseMapWrap">
+		<jsp:include page="house/houseMap.jsp" flush="true"/>
 	</div>
 </body>
 

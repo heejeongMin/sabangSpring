@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.dto.HcodeDTO;
 import com.dto.HouseInfoDTO;
 import com.dto.HouseOptionDTO;
 import com.dto.HousePriceDTO;
@@ -85,6 +86,103 @@ public class HouseAgentController {
 		int n = service.houseDel(list);
 		return (n>0)? "1":"0";
 	}
+	
+	@RequestMapping(value="/angular/houseManaging/GET/{htype}", method=RequestMethod.GET)
+	public @ResponseBody HcodeDTO getLastHouseCode(@PathVariable("htype") String htype) {
+		return new HcodeDTO(service.getLastCode(htype).substring(1));			
+	}
+	
+	@RequestMapping(value="/angular/fileupload", method=RequestMethod.POST)
+	public @ResponseBody void fileupload(@RequestParam(value="himage", required=false) CommonsMultipartFile himage) {
+		System.out.println("hello");
+		//File f = new File("C:\\sabangSpringGit\\sabangSpring\\src\\main\\webapp\\WEB-INF\\views\\images\\house", fileName);	
+	}
+	
+	@RequestMapping("/angular/houseRegister/{workType}")
+	@ResponseBody
+	public int angularHouseRegister(
+			@PathVariable("workType") String workType,
+//			@RequestParam(value="himage", required=false) CommonsMultipartFile himage, 
+			@RequestBody HashMap<String, Object> house) {
+		System.out.println(house);
+		HouseInfoDTO infoDTO = new HouseInfoDTO();
+		HousePriceDTO priceDTO = new HousePriceDTO();
+		HouseOptionDTO optionDTO = new HouseOptionDTO();
+		HashMap<String, Object> registerMap = new HashMap<>(); //DB로 가는 최종 MAP
+		Set<String> keys = house.keySet();
+		for(String key : keys) {//클라이언트에서 가져온 값을 돌면서 키를 체크, 형변환해서 각각 DTO에 넣는다. 			
+			if(!(house.get(key).equals(""))) {
+				switch (key) {
+		    	case "htype" : infoDTO.setHtype((String)house.get(key)); break;  		
+		    	case "hcode": 
+		    		System.out.println(house.get(key));
+		    		infoDTO.setHcode((String)house.get(key)); 
+		    				  priceDTO.setHcode((String)house.get(key));
+		    				  optionDTO.setHcode((String)house.get(key)); break;
+		    	case "rtype" : infoDTO.setRtype((String)house.get(key)); break;
+		    	case "hname" : infoDTO.setHname((String)house.get(key)); break;
+		    	case "hetc" : infoDTO.setHetc((String)house.get(key)); break;
+		    	case "area" : infoDTO.setArea((String)house.get(key)); break;
+		    	case "flr" : infoDTO.setFlr(Integer.parseInt((String)house.get(key))); break;
+		    	case "whflr" : infoDTO.setWhlflr(Integer.parseInt((String)house.get(key))); break;
+		    	case "room" : infoDTO.setRoom(Integer.parseInt((String)house.get(key))); break;
+		    	case "batr" : infoDTO.setBatr((String)house.get(key)); break;
+		    	case "addr" : infoDTO.setAddr((String)house.get(key)); break;
+		    	case "deposit" : priceDTO.setDeposit(Integer.parseInt((String)house.get(key))); break;
+		    	case "mrent" : priceDTO.setMrent(Integer.parseInt((String)house.get(key))); break;
+		    	case "yrent" : priceDTO.setYrent(Integer.parseInt((String)house.get(key))); break;
+		    	case "maintc" : priceDTO.setMaintc(Integer.parseInt((String)house.get(key))); break;
+		    	case "parkf" : priceDTO.setParkf(Double.parseDouble((String)house.get(key))); break;
+		    	case "etc" : optionDTO.setEtc((String)house.get(key)); break;
+		    	case "options" :   		
+		    		for(String option : (List<String>)house.get(key)) {
+		    			switch (option) {
+				    		case "BLTIN" : optionDTO.setBltin('Y'); break;
+				    		case "ELEV" : optionDTO.setElev('Y'); break;
+				    		case "PET" : optionDTO.setPet('Y'); break;
+				    		case "VRD" : optionDTO.setVrd('Y'); break;
+				    		case "LOAN" : optionDTO.setLoan('Y'); break;
+				    		case "PARK" : optionDTO.setPark('Y'); break;
+				    		case "MDATE" : optionDTO.setMdate('Y'); break;
+			    		}
+		    		}    		
+		    	}
+			}
+		}
+		
+		System.out.println(infoDTO);
+		System.out.println(optionDTO);
+		System.out.println(priceDTO);
+		
+//		String fileName = null;
+//		if(himage!=null) {
+//			String[] fileNames = himage.getOriginalFilename().split("\\.");
+//			fileName = fileNames[0] + "_" + System.currentTimeMillis() + "." + fileNames[1];
+//			infoDTO.setHimage(fileName);
+//		}
+//		
+    	//infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
+		infoDTO.setAgntid("agent");
+		infoDTO.setHimage("");
+    	registerMap.put("info", infoDTO);
+    	registerMap.put("price", priceDTO);
+    	registerMap.put("option", optionDTO);
+    	System.out.println(workType);
+    	
+//    	//POST면 매물등록, 아니면 PUT으로 매물 수정으로 감 
+    	int n = (workType.equals("POST"))? service.houseRegister(registerMap):service.houseUpdate(registerMap);
+//    	if (n==1 && himage!=null) {//성공하면 FILE업로드 진행 및 성공 메세지 담기
+//    		File f = new File("C:\\sabangSpringGit\\sabangSpring\\src\\main\\webapp\\WEB-INF\\views\\images\\house", fileName);
+//    		try {
+//    			himage.transferTo(f);
+//    		} catch (IllegalStateException | IOException e) {
+//    			e.printStackTrace();
+//    		}
+//    	} 
+//		
+		return n;
+	}
+	
 	
 	/////////////////////////////Angular End///////////////////////////////////////////
 	
