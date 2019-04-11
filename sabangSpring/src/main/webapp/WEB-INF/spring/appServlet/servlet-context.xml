@@ -39,6 +39,8 @@
 			<mvc:exclude-mapping path="/checkNumber"/>
 			<mvc:exclude-mapping path="/captcha"/>
 			<mvc:exclude-mapping path="/checkResult"/>
+			<mvc:exclude-mapping path="/anIdCheck"/>
+			<mvc:exclude-mapping path="/react**"/>
 			<mvc:exclude-mapping path="/"/>
 			<mvc:exclude-mapping path="/angular**"/>		
 			<bean class="com.interceptor.LoginCheckInterceptor"/>
