@@ -77,12 +77,10 @@
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
                 // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
                 var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
@@ -100,22 +98,18 @@
                 if(fullRoadAddr !== ''){
                     fullRoadAddr += extraRoadAddr;
                 }
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample4_postcode').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('sample4_roadAddress').value = fullRoadAddr;
                 document.getElementById('sample4_jibunAddress').value = data.jibunAddress;
-
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
                     //예상되는 도로명 주소에 조합형 주소를 추가한다.
                     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
                     document.getElementById('guide').innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-
                 } else if(data.autoJibunAddress) {
                     var expJibunAddr = data.autoJibunAddress;
                     document.getElementById('guide').innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-
                 } else {
                     document.getElementById('guide').innerHTML = '';
                 }
@@ -129,13 +123,17 @@
 		
       //이미지 새로고침
     //제출
+    
+    
+    	var key = "${key}"
+    
     	$("#captSub").on("click", function(){ //버튼 선택시
     		$.ajax({
 			type:'get',
 			url:'checkResult',
 			data:{ // checkResult 컨트롤러에 해당 데이터 전송
 				inputVal:$("#input").val(), 
-				key: "${key}",
+				key: key,
 				isFailed : $("#capt").attr('data-fail').trim()
 			},
 			success:function(data, status, xhr){
@@ -183,6 +181,7 @@
 			$.ajax({
 				url:'captcha',
 				success:function(mykey, status, xhr){
+					mykey = key;
 					console.log("mykey",mykey)
 					$(".captcha_img").remove();
 					$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')
@@ -192,11 +191,4 @@
 					}
 			});//ajax
     	});
-	
-    
-    	console.log("${key}")
-    	console.log($("#capt").attr('data-fail'))
-	
-	
     </script>
-   
