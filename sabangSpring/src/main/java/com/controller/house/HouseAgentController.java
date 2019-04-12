@@ -92,13 +92,14 @@ public class HouseAgentController {
 		return new HcodeDTO(service.getLastCode(htype).substring(1));			
 	}
 	
-	@RequestMapping(value="/angular/fileupload", method=RequestMethod.POST)
-	public @ResponseBody void fileupload(@RequestParam(value="himage", required=false) CommonsMultipartFile himage) {
+	@RequestMapping(value="/angular/fileupload")
+	public @ResponseBody void fileupload(@RequestParam CommonsMultipartFile formData) {
 		System.out.println("hello");
+		System.out.println(formData);
 		//File f = new File("C:\\sabangSpringGit\\sabangSpring\\src\\main\\webapp\\WEB-INF\\views\\images\\house", fileName);	
 	}
 	
-	@RequestMapping("/angular/houseRegister/{workType}")
+	@RequestMapping(value="/angular/houseRegister/{workType}", method=RequestMethod.POST)
 	@ResponseBody
 	public int angularHouseRegister(
 			@PathVariable("workType") String workType,
@@ -184,7 +185,7 @@ public class HouseAgentController {
 	}
 	
 	
-	/////////////////////////////Angular End///////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	

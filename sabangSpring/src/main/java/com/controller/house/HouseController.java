@@ -71,7 +71,8 @@ public class HouseController {
 	}//end houseList
 	
 	@RequestMapping("/houseFilter")// 필터 조건들을 선택했을 때 ajax
-	public String houseFilter(@RequestParam(value = "filters", required = false) String filters, @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
+	public String houseFilter(@RequestParam(value = "filters", required = false) String filters, 
+			                  @RequestParam(value = "curPage", required = false, defaultValue = "1") int curPage, Model model) {
 		System.out.println(filters);
 		HashMap<String, Object> pagingMap;//service-dao 갔다 온 결과를 담는 pagingMap
 		List<String> list = new ArrayList<>(); //db 가기전에 htype, rtype, maintc, mrent, yrent 리스트와 비교해서 사용할 list 

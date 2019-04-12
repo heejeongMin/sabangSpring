@@ -18,7 +18,6 @@ public class MemberDAO {
 	SqlSessionTemplate session;
 	
 	/* 가입 */
-	
 	public int signMbr( MemberDTO member) {
 		int n = session.insert("MemberMapper.signMbr", member);
 		return n;
@@ -65,9 +64,7 @@ public class MemberDAO {
 		return session.insert("MemberMapper.addOutMbr", userid);
 	}
 	
-	
 	/* 로그인 */
-	
 	public MemberDTO login(Map<String, String> map) {
 		MemberDTO member = session.selectOne("MemberMapper.login", map);
 		return member;
@@ -77,10 +74,8 @@ public class MemberDAO {
 		AgentDTO agent = session.selectOne("MemberMapper.agntlogin", map);
 		return agent;
 	}
-	
-	
+
 	/* 탈퇴 */
-	
 	public int delMbrId( String userid) {
 		int delMbr = session.delete("MemberMapper.delMbrId", userid);
 		return delMbr;
@@ -91,17 +86,11 @@ public class MemberDAO {
 		return delAgntId;
 	}
 
-
 	public MemberDTO checkMbrPw( String passwd) {
 		MemberDTO checkMbrPw = session.selectOne("MemberMapper.checkMbrPw", passwd);
 		return checkMbrPw;
 	}
 
-
-
-
-
-	
 	
 	//////////////////////////////////////////////////////////////////
 	// 마이페이지
@@ -124,31 +113,25 @@ public class MemberDAO {
 		AgentDTO aDto = session.selectOne("MemberMapper.myPageCheckAgent", map);
 		return aDto;
 	}
-	
-	
+		
 	public int memberUpdate( MemberDTO dto) {
 		int n = session.update("MemberMapper.memberUpdate",dto);
 		return n;
 	}
-
-	
 	
 	public List<HashMap<String, String>> myPageBoard(String userid) {
 		return session.selectList("MemberMapper.myPageBoard",userid);
 	}
 	
 	
-	
-	
 	/////////////////////Naver Login//////////////////////////
 	public int naverUser(Map<String, String> naverMap) {
-		String uniqId = naverMap.get("uniqId");
-		int n = session.selectOne("MemberMapper.naverUser", naverMap);
-		if (n==0) naverSignUp(naverMap);
+		int n = session.selectOne("MemberMapper.naverUser", naverMap.get("uniqId"));
+		if (n==0) naverSignUp(naverMap); // n이 0이면 처음 우리 사이트에 오는 회원이니까 회원정보를 저장한다. 
 		return n;
 	}//end naverIdCheck
 	
-	private int naverSignUp(Map<String, String> naverMap) {
+	private int naverSignUp(Map<String, String> naverMap) {//naverUser 메서드에서만 사용하니까 private처리
 		return session.insert("MemberMapper.naverSignUp", naverMap);
 	}//end naverSignUp
 	

@@ -19,7 +19,6 @@ public class MemberService {
 	MemberDAO dao;
 	
 	/* 가입  */
-
 	public int signMbr(MemberDTO member) {
 		return dao.signMbr(member);
 	}
@@ -56,13 +55,10 @@ public class MemberService {
 		return dao.overDay(userid);
 	}
 	
-	
 	/* 로그인 */
-
 	public MemberDTO login(Map<String, String> map) {
 		return dao.login(map);
 	}// end member login
-
 	
 	public AgentDTO agntlogin(HashMap<String, String> map) {
 		return dao.agntlogin(map);
@@ -70,17 +66,14 @@ public class MemberService {
 
 	
 /*회원 탈퇴*/
-	
 	public int delMbrId(String userid) {
 		return  dao.delMbrId(userid);
 	}// end delMbrId
-
 
 	public int delAgntId(String userid) {
 		return dao.delAgntId(userid);
 	}// end delMbrId
 
-	
 	public int addOutMbr(String userid) {
 		return dao.addOutMbr(userid);
 	}
@@ -94,22 +87,17 @@ public class MemberService {
 		return dao.mypageMember(userid);
 	}
 	
-	
-	
 	public AgentDTO mypageAgent(String userid) {
 		return dao.mypageAgent(userid);
 	}
-	
-	
+		
 	public MemberDTO myPageCheckMember(HashMap<String, String> map) {
 		return dao.myPageCheckMember(map);
 	}
 	
-	
 	public AgentDTO myPageCheckAgent(HashMap<String, String> map) {
 		return dao.myPageCheckAgent(map);
 	}
-	
 	
 	public int memberUpdate(MemberDTO dto) {
 		return dao.memberUpdate(dto);

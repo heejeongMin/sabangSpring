@@ -14,9 +14,9 @@ function myPosition (nx, ny, errorCode){
 			$("span#tmx").text(result.TMX);
 			var weatherMsg = "";
 			if (Number.parseInt(result.POP) < 70){
-				weatherMsg = (Number.parseInt(result.TMX) < 27)? "공인중개사님 만나기 좋은 날씨이네요! <i class='fas fa-grin-hearts'></i>": "오늘 좀 덥지만 방보는 걸 막을 수 없다! 공인중개사님과 연락하세요~ <i class='fas fa-meh-rolling-eyes'></i>";
+				weatherMsg = (Number.parseInt(result.TMX) < 27)? "공인중개사님 만나기 좋은 날씨이네요! <i class='fas fa-grin-hearts'></i>" : "오늘 좀 덥지만 방보는 걸 막을 수 없다! 공인중개사님과 연락하세요~ <i class='fas fa-meh-rolling-eyes'></i>";
 			} else {
-				weatherMsg = (result.TMX < 27)? "오늘은 비가 올 수도 있겠어요! 우산을 챙기고 강동원 닯은 공인중개사님을 만나볼까요? <i class='fas fa-smile-wink'></i>": "오늘 불쾌지수 오마이갓! 그래도 방 보는걸 막을 수 없다! 공인중개사님과 약속을 먼저 잡아 보는건 어떠세요? <i class='fas fa-grin-squint-tears'></i>";
+				weatherMsg = (result.TMX < 27)? "오늘은 비가 올 수도 있겠어요! 우산을 챙기고 강동원 닯은 공인중개사님을 만나볼까요? <i class='fas fa-smile-wink'></i>" : "오늘 불쾌지수 오마이갓! 그래도 방 보는걸 막을 수 없다! 공인중개사님과 약속을 먼저 잡아 보는건 어떠세요? <i class='fas fa-grin-squint-tears'></i>";
 			}
 			$("p#weatherForcast").html(weatherMsg);
 		},

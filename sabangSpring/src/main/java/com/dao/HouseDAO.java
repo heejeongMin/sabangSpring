@@ -38,8 +38,7 @@ public class HouseDAO {
 		pagingMap.put("totalPage", totalListBySearch(search));
 
 		int offset = (curPage - 1) * (int) pagingMap.get("perPage");
-		List<HashMap<String, Object>> list = session.selectList("HouseMapper.searchList", search,
-																	new RowBounds(offset, (int) pagingMap.get("perPage")));
+		List<HashMap<String, Object>> list = session.selectList("HouseMapper.searchList", search, new RowBounds(offset, (int) pagingMap.get("perPage")));
 		pagingMap.put("list", list);
 
 		return pagingMap;
@@ -65,8 +64,7 @@ public class HouseDAO {
 			String date = (today.get(Calendar.DATE) <10)? "0"+today.get(Calendar.DATE) : String.valueOf(today.get(Calendar.DATE));
 			
 			maxSeven = year+month+date;
-		}
-		
+		}	
 		return session.selectList("HouseMapper.retrieveNewItems", maxSeven);
 	}// end retrieveNewItems
 

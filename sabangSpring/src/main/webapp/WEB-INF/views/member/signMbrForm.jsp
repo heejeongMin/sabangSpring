@@ -126,6 +126,8 @@
     
     
     /////CAPTCHA
+    
+    var key = "${key}";
 		
       //이미지 새로고침
     //제출
@@ -135,7 +137,7 @@
 			url:'checkResult',
 			data:{ // checkResult 컨트롤러에 해당 데이터 전송
 				inputVal:$("#input").val(), 
-				key: "${key}",
+				key: key,
 				isFailed : $("#capt").attr('data-fail').trim()
 			},
 			success:function(data, status, xhr){
@@ -146,6 +148,7 @@
 					$.ajax({
 						url:'captcha', // 1. 컨트롤러 다녀옴, 키 새로 받아옴
 						success:function(mykey, status, xhr){
+							console.log("key", "${key}");
 							$(".captcha_img").remove();
 							$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
 	 						var newKey = mykey
@@ -183,6 +186,7 @@
 			$.ajax({
 				url:'captcha',
 				success:function(mykey, status, xhr){
+					key = mykey;
 					console.log("mykey",mykey)
 					$(".captcha_img").remove();
 					$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자!!!"></span>')

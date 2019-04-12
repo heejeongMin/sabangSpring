@@ -104,14 +104,11 @@ public class MemberController {
 	@RequestMapping("/naverSignin")
 	public @ResponseBody MemberDTO naverSignin(@RequestParam HashMap<String, String> naverMap, HttpSession session) {
 		MemberDTO memberInfo = new MemberDTO();
-		int n = mService.naverUser(naverMap);
+		int n = mService.naverUser(naverMap);//NAVER로 처음 로그인이면 회원정보를 저장해 놓지 않은 상태라 n=0 
 		memberInfo = mService.getNaverUser(naverMap.get("uniqId"));
 		session.setAttribute("memberInfo", memberInfo);
 		return memberInfo;
 	}
-
-	
-	
 	
 	@RequestMapping("/signMbr")
 	public String signMbr(RedirectAttributes flash, MemberDTO dto, String cnfPasswd, String ssn1, String ssn2,
