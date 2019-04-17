@@ -32,24 +32,6 @@
 	<select id="getCntWish" parameterType="string" resultType="int">
 		select cntwish from house_info where hcode = #{hcode}
 	</select>
-
-<!-- 매물 삭제 - house_info 테이블 -->
-	<delete id="houseDel_option" parameterType="list">
-		delete from house_option 
-		where hcode in
-		<foreach item="item" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</delete>
-	
-<!-- 매물 삭제 - house_info 테이블 -->
-	<delete id="houseDel_price" parameterType="list">
-		delete from house_price 
-		where hcode in
-		<foreach item="item" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</delete>
 	
 <!-- 매물 삭제 - house_info 테이블 -->
 	<delete id="houseDel_info" parameterType="list">

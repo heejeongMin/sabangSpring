@@ -43,6 +43,7 @@ p#initalMsg{font-size: 50px; font-weight: bold; color: darkblue; display: inline
 	<div id="section_wrap">
 		<jsp:include page="house/housePanel.jsp" flush="true"/>
 		<div id="houseControlWrap">
+		<a href="/sabang/angular">새로운 화면으로 보기</a>
 			<c:choose>
 				<c:when test="${empty work}"><p id="initalMsg">안녕하세요 ${memberInfo.username}님 :)</p></c:when>
 				<c:when test='${work.equals("register")}'><jsp:include page="house/houseRegister.jsp" flush="true"/></c:when>

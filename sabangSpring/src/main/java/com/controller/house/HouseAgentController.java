@@ -41,14 +41,16 @@ public class HouseAgentController {
 
 	//////////////////////////////Angular Start///////////////////////////////
 	//Angular agent 중개중 목록보기
-	@RequestMapping(value="/angular/houseList", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> houseListForAngular() {
-		return service.houseByAgent("agent");
+	@RequestMapping(value="/angular/houseList", method=RequestMethod.GET )
+	public @ResponseBody List<HashMap<String, Object>> houseListForAngular(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return service.houseByAgent(member.getUserid());
 	}
 	//Angular agent 거래 완료 매물
 	@RequestMapping(value="/angular/houseSoldList", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> soldHouseListForAngular() {
-		return service.houseSoldByAgent("agent");
+	public @ResponseBody List<HashMap<String, Object>> soldHouseListForAngular(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return service.houseSoldByAgent(member.getUserid());
 	}
 	//Angular agent 매물 중개중/중개완료 수정
 	@RequestMapping(value="/angular/saveHouseChange", method=RequestMethod.PUT)
@@ -58,26 +60,30 @@ public class HouseAgentController {
 	
 	//Angular agent 실적 데이터 등록매물 전체
 	@RequestMapping(value="/angular/recordChart", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> recordChart() {
-		return service.houseByRegisterDate("agent");
+	public @ResponseBody List<HashMap<String, Object>> recordChart(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return service.houseByRegisterDate(member.getUserid());
 	}
 	
 	//Angular agent 실적 데이터 sold 매물
 	@RequestMapping(value="/angular/recordChartSold", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> recordChartSold() {
-		return service.houseSoldByAgentCount("agent");
+	public @ResponseBody List<HashMap<String, Object>> recordChartSold(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return service.houseSoldByAgentCount(member.getUserid());
 	}
 	
 	//Angular agent pie 좋아요 매물
 	@RequestMapping(value="/angular/likeChartHouse", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> likeChartHouse() {
-		return service.houseLikeByAgent("agent");
+	public @ResponseBody List<HashMap<String, Object>> likeChartHouse(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return service.houseLikeByAgent(member.getUserid());
 	}
 	
 	//Angular agent가 올린 매물 문의사항 모음
 	@RequestMapping(value="/angular/agentHouseBoard", method=RequestMethod.GET)
-	public @ResponseBody List<HashMap<String, Object>> agentHouseBoard() {
-		return boardService.agentHouseBoard("agent");
+	public @ResponseBody List<HashMap<String, Object>> agentHouseBoard(HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		return boardService.agentHouseBoard(member.getUserid());
 	}
 	
 	@RequestMapping(value="/angular/DELETE/{delList}", method=RequestMethod.DELETE)
@@ -104,8 +110,9 @@ public class HouseAgentController {
 	public int angularHouseRegister(
 			@PathVariable("workType") String workType,
 //			@RequestParam(value="himage", required=false) CommonsMultipartFile himage, 
-			@RequestBody HashMap<String, Object> house) {
-		System.out.println(house);
+			@RequestBody HashMap<String, Object> house,
+			HttpSession session) {
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		HouseInfoDTO infoDTO = new HouseInfoDTO();
 		HousePriceDTO priceDTO = new HousePriceDTO();
 		HouseOptionDTO optionDTO = new HouseOptionDTO();
@@ -163,7 +170,7 @@ public class HouseAgentController {
 //		}
 //		
     	//infoDTO.setAgntid(member.getUserid());//session에 잇는 에이전트의 유저 아이디도 가져온다. 
-		infoDTO.setAgntid("agent");
+		infoDTO.setAgntid(member.getUserid());
 		infoDTO.setHimage("");
     	registerMap.put("info", infoDTO);
     	registerMap.put("price", priceDTO);
