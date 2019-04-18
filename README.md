@@ -1,31 +1,26 @@
 # sabangSpring
 sabang Final Project (Spring)
-1. STS 실행 시 요청 URL 
+### 1. STS 실행 시 요청 URL 
 
 	http://localhost:8090/sabang
 
-2. Angular Project를 Build된 버전이 아닌 Cross Browisng 된 채로 실행하고 싶은 경우
+### 2. Angular Project를 Build된 버전이 아닌 Cross Browisng 된 채로 실행하고 싶은 경우
 	*******************************************************
 	Angular버전 관리자 페이지 src 사용 방법
 	*******************************************************
 	1. 새 폴더를 만든다. 
-
 	2. Visual Studio Code에서 새로 만든 폴더를 열고 New Folder 아이콘을 클릭해 하위 폴더를 만든다.
- 
 	3. 만들어진 하위 폴더에서 마우스 오른쪽 클릭 -> Open In Terminal
-
-	4. Terminal 에서 다음 명령어를 실행해 angular node module을 다운 받는다.
-	
+	4. Terminal 에서 다음 명령어를 실행해 angular node module을 다운 받는다.	
+		
 		npm install -g @angular/cli
 
 	5. Terminal에서 다음 명령어를 실행하여 프로젝트를 만든다. 
-
+		
 		npm new sabang-angular 
 	
 	   *  Would you like to add Angular routing? (y/N) 
-	
 		 --> Y 선택	
-
 	   *  Which stylesheet format would you like to use? (Use arrow keys)
       ```  
         > CSS
@@ -34,7 +29,6 @@ sabang Final Project (Spring)
         Less   [ http://lesscss.org                                                 ]
         Stylus [ http://stylus-lang.com                                             ]  
       ```
-
 		--> CSS 선택
 
 	6. 프로젝트 생성이 완료되면 자동으로 만들어진 src 폴더는 삭제
@@ -52,13 +46,11 @@ sabang Final Project (Spring)
 		$npm install angular-file-uploader
     ```
     
-	10. 실행하기 전에 현재 STS에 있는 소스는 Angular 프로젝트를 빌드하여 Deploy된 버전으로 작동하고 있기 때문에 하기 작업이 선행되어야 함
+	10. 실행하기 전에 현재 STS에 있는 소스는 Angular 프로젝트를 빌드하여 Deploy된 버전으로 작동하고 있기 때문에 하기 작업이 선행되어야한다. 
+  	    - Session처리를 하지 않고 구현하였기 때문에 로그인한 중개인의 아이디를 가져오는 부분에서 NullPointerException이 나기 때문에, 
+     	        중개인중 회원으로 존재하는 "agent"를 하드코딩하여 실행 필요
 
-  	Angular Project를 Cross Browisng 된 채로 실행하고 싶은 경우
-  	 : Session처리를 하지 않고 구현하였기 때문에 로그인한 중개인의 아이디를 가져오는 부분에서 NullPointerException이 나기 때문에, 
-     	   중개인중 회원으로 존재하는 "agent"를 하드코딩하여 실행 필요
-
-		a) STS 에서 HouseAgentController.java에서 Session에서 로그인한 유저의 아이디를 가져오는 부분을 "agent"로 수정
+		```a) STS 에서 HouseAgentController.java에서 Session에서 로그인한 유저의 아이디를 가져오는 부분을 "agent"로 수정
 			1) 경로: sabangSpring -> src/main/java -> com.controller.house -> HouseAgentController.java
 			2) 47라인: return service.houseByAgent(member.getUserid()) 를 return service.houseByAgent("agent")로 수정
 			3) 53라인: return service.houseSoldByAgent(member.getUserid())를 return service.houseSoldByAgent("agent")로 수정
@@ -76,7 +68,7 @@ sabang Final Project (Spring)
 		c) STS에서 서버 실행 (http://localhost:8090/sabang)
 		b) Visual Studio Code에서 Angular 프로젝트 실행 (http://localhost:4200)
     
-    	: 테스트 후, 모두 원복해 놓아야 포트 8090으로 요청하여 실행되는 angular페이지가 로그인한 유저의 정보로 정상 작동한다.  
+    	: 테스트 후, 모두 원복해 놓아야 포트 8090으로 요청하여 실행되는 angular페이지가 로그인한 유저의 정보로 정상 작동한다.  ```
 
 
 11. STS 서버 실행 
