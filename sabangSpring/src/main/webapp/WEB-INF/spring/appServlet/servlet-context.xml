@@ -43,7 +43,7 @@
 			<mvc:exclude-mapping path="/react**"/>
 			<mvc:exclude-mapping path="/"/>
 			<!-- angualr로 cross browsing 처리 된 상태로 테스트하고 싶을때만 주석을 푼다.  -->
-			<!-- <mvc:exclude-mapping path="/angular**"/> -->		
+			<mvc:exclude-mapping path="/angular**"/>		
 			<bean class="com.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>  

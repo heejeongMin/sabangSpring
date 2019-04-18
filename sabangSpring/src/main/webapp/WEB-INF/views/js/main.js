@@ -561,52 +561,52 @@ var MyhouseService = /** @class */ (function () {
     }
     //중개중인 매물가져오기
     MyhouseService.prototype.getHouse = function () {
-        var url = "http://localhost:8090/sabang/angular/houseList";
+        var url = "http://192.168.0.117:8090/sabang/angular/houseList";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (house) { return house; }));
     };
     //중개완료매물가져오기
     MyhouseService.prototype.getSoldHouse = function () {
-        var url = "http://localhost:8090/sabang/angular/houseSoldList";
+        var url = "http://192.168.0.117:8090/sabang/angular/houseSoldList";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (house) { return house; }));
     };
     //중개인에의해 변동된 중개중/중개완료 매물 저장하기 
     MyhouseService.prototype.saveHouseChange = function (houseData) {
-        var url = "http://localhost:8090/sabang/angular/saveHouseChange";
+        var url = "http://192.168.0.117:8090/sabang/angular/saveHouseChange";
         return this.http.put(url, houseData);
     };
     //실적 chart 그리기위한 등록매물정보 가지고 오기
     MyhouseService.prototype.recordChart = function () {
-        var url = "http://localhost:8090/sabang/angular/recordChart";
+        var url = "http://192.168.0.117:8090/sabang/angular/recordChart";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //실적 chart 그리기위한 sold매물 정보
     MyhouseService.prototype.recordChartSold = function () {
-        var url = "http://localhost:8090/sabang/angular/recordChartSold";
+        var url = "http://192.168.0.117:8090/sabang/angular/recordChartSold";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //인기매물 chart 그리기위한 정보 가지고 오기
     MyhouseService.prototype.likeChartHouse = function () {
-        var url = "http://localhost:8090/sabang/angular/likeChartHouse";
+        var url = "http://192.168.0.117:8090/sabang/angular/likeChartHouse";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //에이전트별로 올린 매물에 대한 모든 board 리스트 가져오기 (dashboard 용)
     MyhouseService.prototype.agentHouseBoard = function () {
-        var url = "http://localhost:8090/sabang/angular/agentHouseBoard";
+        var url = "http://192.168.0.117:8090/sabang/angular/agentHouseBoard";
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //매물 삭제 서비스
     MyhouseService.prototype.deleteHouse = function (hcode) {
-        var url = "http://localhost:8090/sabang/angular/DELETE/" + hcode;
+        var url = "http://192.168.0.117:8090/sabang/angular/DELETE/" + hcode;
         return this.http.delete(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //마지막 매물 코드 가져오기
     MyhouseService.prototype.getLastCode = function (htype) {
-        var url = "http://localhost:8090/sabang/angular/houseManaging/GET/" + htype;
+        var url = "http://192.168.0.117:8090/sabang/angular/houseManaging/GET/" + htype;
         return this.http.get(url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     //매물등록 (w/o 파일)
     MyhouseService.prototype.houseRegister = function (house, workType) {
-        var url = "http://localhost:8090/sabang/angular/houseRegister/" + workType;
+        var url = "http://192.168.0.117:8090/sabang/angular/houseRegister/" + workType;
         return this.http.post(url, house).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) { return data; }));
     };
     MyhouseService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -1083,7 +1083,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\angular_study\SelfPracticing\practice\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! c:\angular_study\sabangAgentPage\practice\src\main.ts */"./src/main.ts");
 
 
 /***/ })

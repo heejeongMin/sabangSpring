@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\angular_study\SelfPracticing\practice\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! c:\angular_study\sabangAgentPage\practice\src\styles.css */"./src/styles.css");
 
 
 /***/ })

@@ -30,7 +30,7 @@ import com.dto.MemberDTO;
 import com.service.HouseService;
 import com.service.MemberService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://192.168.0.28:3000")
 @Controller
 public class MemberController {
 

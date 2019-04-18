@@ -29,7 +29,7 @@ import com.dto.MemberDTO;
 import com.service.BoardService;
 import com.service.HouseService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.0.117:8090")
 @Controller
 public class HouseAgentController {
 
