@@ -148,7 +148,6 @@
 					$.ajax({
 						url:'captcha', // 1. 컨트롤러 다녀옴, 키 새로 받아옴
 						success:function(mykey, status, xhr){
-							console.log("key", "${key}");
 							$(".captcha_img").remove();
 							$("#captcha_img_container").html('<span class="captcha_img"><img name="captchaImage" data-key="'+mykey+'"id="chptchaimg" src="https://openapi.naver.com/v1/captcha/ncaptcha.bin?key='+ mykey +'" width="30%" height="87" alt="자동입력 방지문자?????"></span>')
 	 						var newKey = mykey
@@ -196,11 +195,5 @@
 					}
 			});//ajax
     	});
-	
-    
-    	console.log("${key}")
-    	console.log($("#capt").attr('data-fail'))
-	
-	
     </script>
    

@@ -15,6 +15,7 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 public class NaverCaptcha {
+		// key에 대한 정보를 인스턴스 변수 / 전역 변수로 설정
 		String clientId = "QN3lv2J2hB8uD9Nm2s90";// 애플리케이션 클라이언트 아이디값";
 		String clientSecret = "kow_E2M4f3";// 애플리케이션 클라이언트 시크릿값";
 	
@@ -41,10 +42,12 @@ public class NaverCaptcha {
 				response.append(inputLine);
 			}
 			br.close();
+			// JSON 파싱
+			// JSON으로 출력되는 key의 값만 추출하기 위해 
 			JSONParser jsonParser = new JSONParser();
 			JSONObject obj = new JSONObject();
-			obj = (JSONObject) jsonParser.parse(response.toString());
-			key = (String) obj.get("key");
+			obj = (JSONObject) jsonParser.parse(response.toString());//문자열인 결과값을 JSON 오브젝트로 파싱
+			key = (String) obj.get("key");  // JSONObject 메서드인 get()을 활용하여 key의 값만을 추출
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,8 +56,6 @@ public class NaverCaptcha {
 
 	public void getImage(String key) {
 		try {
-			// key = getKey();
-			// https://openapi.naver.com/v1/captcha/nkey 호출로 받은 키값
 			String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+key;
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();

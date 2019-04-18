@@ -10,7 +10,14 @@ public class MemberDTO {
 	private String addr;
 	private String phone;
 	private String email;
+	private String email1;
+	private String email2;
 	private char agent;
+	private String ssn1;
+	private String ssn2;
+	private String phone1;
+	private String phone2;
+	private String phone3;
 	
 	public MemberDTO() {
 		super();
@@ -23,7 +30,34 @@ public class MemberDTO {
 		this.phone = phone;
 	}
 	
+	
+	
+	
 
+	
+	
+	
+	public MemberDTO(String userid, String passwd, String ssn, String username, String post, String addr, String phone,
+			String email, String email1, String email2, char agent, String ssn1, String ssn2, String phone1,
+			String phone2, String phone3) {
+		super();
+		this.userid = userid;
+		this.passwd = passwd;
+		this.ssn = ssn;
+		this.username = username;
+		this.post = post;
+		this.addr = addr;
+		this.phone = phone;
+		this.email = email;
+		this.email1 = email1;
+		this.email2 = email2;
+		this.agent = agent;
+		this.ssn1 = ssn1;
+		this.ssn2 = ssn2;
+		this.phone1 = phone1;
+		this.phone2 = phone2;
+		this.phone3 = phone3;
+	}
 	public MemberDTO(String userid, String passwd, String ssn, String username, String post, String addr, String phone,
 			String email, char agent) {
 		super();
@@ -126,9 +160,54 @@ public class MemberDTO {
 	@Override
 	public String toString() {
 		return "MemberDTO [userid=" + userid + ", passwd=" + passwd + ", ssn=" + ssn + ", username=" + username
-				+ ", post=" + post + ", addr=" + addr + ", phone=" + phone + ", email=" + email + ", agent=" + agent
-				+ "]";
+				+ ", post=" + post + ", addr=" + addr + ", phone=" + phone + ", email=" + email + ", email1=" + email1
+				+ ", email2=" + email2 + ", agent=" + agent + ", ssn1=" + ssn1 + ", ssn2=" + ssn2 + ", phone1=" + phone1
+				+ ", phone2=" + phone2 + ", phone3=" + phone3 + "]";
 	}
+	public String getEmail1() {
+		return email1;
+	}
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+	public String getSsn1() {
+		return ssn1;
+	}
+	public void setSsn1(String ssn1) {
+		this.ssn1 = ssn1;
+	}
+	public String getSsn2() {
+		return ssn2;
+	}
+	public void setSsn2(String ssn2) {
+		this.ssn2 = ssn2;
+	}
+	public String getPhone1() {
+		return phone1;
+	}
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
+	}
+	public String getPhone2() {
+		return phone2;
+	}
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+	public String getPhone3() {
+		return phone3;
+	}
+	public void setPhone3(String phone3) {
+		this.phone3 = phone3;
+	}
+	
+	
 
 	
 	

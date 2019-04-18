@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import com.dto.MemberDTO;
 import com.service.HouseService;
 import com.service.MemberService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @Controller
 public class MemberController {
 
@@ -38,6 +40,9 @@ public class MemberController {
 	@Autowired
 	HouseService hService;
 
+	
+	
+	
 	@RequestMapping("/login")
 	public String login(@RequestParam Map<String, String> map, HttpSession session, RedirectAttributes flash) { // Map<"jsp
 																												// tag
@@ -165,7 +170,9 @@ public class MemberController {
 		System.out.println(mesg);
 		return mesg;
 	}
-
+	
+	
+	
 	@RequestMapping(value = "/ssnCheck", method = RequestMethod.POST)
 	public @ResponseBody String ssnCheck(@RequestBody String ssn) {
 		String mesg = null;
@@ -194,6 +201,7 @@ public class MemberController {
 		return mesg;
 	}
 
+	///////////////////////////////캡챠////////////////////////////////////
 	
 	@RequestMapping("/signMbrUI")
 	public String getImage(HttpSession session, Model m) throws ParseException {
@@ -248,4 +256,173 @@ public class MemberController {
 		return result;
 	}
 
+	
+		
+		////////////////////////////////// React /////////////////////////////////
+		
+	
+		@RequestMapping(value = "/react/idCheck", method = RequestMethod.GET)
+		@CrossOrigin
+		public @ResponseBody String ReIdCheck(@RequestParam(value = "id", defaultValue = "sssss") String userid) {
+			String mesg = null;
+			int idCheck = mService.idCheck(userid);
+			if (idCheck == 1) {
+				mesg = "N";
+			} else {
+				mesg = "Y";
+			}
+			return mesg;
+		}
+		
+		
+		@RequestMapping(value = "/ssnCheck", method = RequestMethod.GET)
+		@CrossOrigin
+		public @ResponseBody String reSsnCheck(@RequestParam String ssn) {
+			String mesg = null;
+			int ssnCheck = mService.ssnCheck(ssn);
+			System.out.println(ssn);
+			if (ssnCheck == 1) {
+				mesg = "N";
+			} else {
+				mesg = "Y";
+			}
+			System.out.println(mesg);
+			return mesg;
+		}
+
+		@RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+		@CrossOrigin
+		public @ResponseBody String rePhoneCheck(@RequestParam String phone) {
+			String mesg = null;
+			int phoneCheck = mService.phoneCheck(phone);
+			if (phoneCheck == 1) {
+				mesg = "N";
+			} else {
+				mesg = "Y";
+			}
+
+			return mesg;
+		}
+		
+		
+		@RequestMapping("/react/delMbrId")
+		public @ResponseBody String reDelMbrId(@RequestParam("passwd") String inputpw, @RequestParam("userid") String inputid,HttpSession session) {
+			String userpw = "12345";
+			String result = null;
+			if (userpw.equals(inputpw)) {
+				String userid = "kamil";
+				mService.delMbrId(userid);
+				mService.addOutMbr(userid);
+				session.invalidate(); // 탈퇴와 함께 로그아웃된다
+				result = "YY"; // request와 session의 중간급 scope로서, 한번의 요청에만 살아있다. 해당 메세지는 일회용으로서,
+				// model 자체는 request scope
+			} else {
+				result = "NN";
+			}
+			return result;
+		}
+		
+		
+		
+//		@RequestMapping(value = "/react/signMbr", method = {RequestMethod.GET, RequestMethod.POST} )
+//		@CrossOrigin
+//		public @ResponseBody String reSignMbr( @ModelAttribute MemberDTO dto) {
+//				System.out.println(dto);
+//				// "사방팔방 곳곳의 방에 오신 것을 환영합니다";
+//			return "T";
+//		}
+		
+		@RequestMapping(value = "/react/signMbr", method = {RequestMethod.GET, RequestMethod.POST} )
+		@CrossOrigin
+		public @ResponseBody String reSignMbr(
+				@RequestBody MemberDTO dto) {
+			dto.setSsn(dto.getSsn1().trim()+'-'+dto.getSsn2().trim()); 
+			dto.setEmail(dto.getEmail1().trim()+'@'+dto.getEmail2().trim());
+			dto.setPhone(dto.getPhone1().trim()+dto.getPhone2().trim()+dto.getPhone3().trim());
+			int hasSigned = mService.signedCheck(dto.getUserid());
+			String result = null;
+			if (hasSigned == 0) {
+				dto.setSsn(dto.getSsn1().trim()+'-'+dto.getSsn2().trim()); 
+				dto.setEmail(dto.getEmail1().trim()+'@'+dto.getEmail2().trim());
+				dto.setPhone(dto.getPhone1().trim()+dto.getPhone2().trim()+dto.getPhone3().trim());
+				mService.signMbr(dto);
+				result = "W";
+			} else if (hasSigned == 1) { // 가입 이력이 있다면
+				// 탈퇴 + 24시간 출력, sql상에서 날짜포맷 변환을 위한 TO_CHAR 작업으로 mapper에서 parameterType을
+				// String으로 주었으므로 형변환 작업이 수반된다
+				int outDate = Integer.parseInt(mService.overDay(dto.getUserid()));
+				// 현재시간을 구하기 위한 Date 객체
+				Date date = new Date();
+				// 시간 포맷 지정하는 SimpleDateFormat 객체
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+				// 현재 시간을 simpledateformat으로 구한 시간 포맷으로 변환, integer형으로 형변환한다.
+				int curDate = Integer.parseInt(sdf.format(date));
+				if (curDate > outDate) {
+					mService.signMbr(dto);
+					result = "C";
+				} else {
+					result =  "O";
+				}
+			}
+			return result;
+		}
+			
+
+		@RequestMapping("/react/signMbrUI")
+		public String reGetImage(HttpSession session, Model m) throws ParseException {
+			NaverCaptcha key = new NaverCaptcha();
+			String mykey = key.getKey();
+			session.setAttribute("key", mykey);
+			System.out.println(session.getAttribute("key"));
+			key.getImage(mykey);
+			return "signMbrForm";
+		}
+		
+		
+		//이미지 새로고침
+		@RequestMapping("/react/captcha")
+		public @ResponseBody String reGetCaptcha(HttpSession session) throws ParseException {
+			String mykey;
+		//if (session.getAttribute("isFailed") != null )  { 
+				//틀린 값을 입력한 경우, checkResult컨트롤러에서 저장한 일종의 표식 메세지인 "isFailed" 값을 이용하여 새로운 key를 발급받는다.
+				NaverCaptcha key = new NaverCaptcha();
+				mykey = key.getKey();
+				System.out.println("captcha controller -- new captcha key : " + mykey);
+		//	}else {
+//				signMbrUI 컨트롤러에서 저장한 key를 이용한다
+			//	mykey = (String) session.getAttribute("key");
+			//	System.out.println("captcha controller -- getsess" + mykey);
+		//	}
+			session.setAttribute("key", mykey);
+			return mykey;
+		}
+		
+		@RequestMapping("/react/newKey")
+		public @ResponseBody String reGetNewKey(HttpSession session, @RequestParam(value = "newKey", required = false) String newKey) {
+			session.setAttribute("newKey",newKey);
+			System.out.println("newKey controller -- ajax newkey " + newKey);
+			return newKey;
+		}
+
+		//이미지 제출
+		@RequestMapping("/react/checkResult")
+		public @ResponseBody String reCheckResult(@RequestParam("inputVal") String input, 
+				@RequestParam("key") String key, 
+				// isFailed : ajax에서 실패 이력을 체크하는 값. 실패했을 경우 isFailed에 fail이라는 문자열을 저장하도록 하였음.
+				@RequestParam(value = "isFailed", required = false) String isFailed, 
+				HttpSession session, HttpServletRequest request) {
+					NaverCaptcha captcha = new NaverCaptcha();
+			if (isFailed.equals("fail")) { 
+				//1	 실패 이력 체크, 실패했다면 "isFailed"를 키 값으로 fail 문자열을 세션에 남긴다.
+				session.setAttribute("isFailed",isFailed); 
+				key = (String)session.getAttribute("key");
+				System.out.println("checkResult controller -- sess key" +session.getAttribute("key"));
+			}
+			String result = captcha.checkNumber(key, input);
+			return result;
+		}
+
+		
+		
+	
 }
