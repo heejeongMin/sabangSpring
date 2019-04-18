@@ -24,12 +24,3 @@
 4. 매물 Overview/상세 : [https://youtu.be/fwmCOd61gZk]
 5. 관리자 페이지 : [https://youtu.be/Re5HlTJrN0g]
     (+코드시연 : [https://youtu.be/jJpUgHfOPm8])
-
-## 코드 사용 방법
-1. STS 실행 시 요청 URL 
-
-	http://localhost:8090/sabang
-
- ### Angular Project를 Build된 버전이 아닌 Cross Browisng 된 채로 실행하고 싶은 경우
- share branch에 04_소스 > Angular버전 관리자 페이지 사용방법.txt 파일 확인
- 
