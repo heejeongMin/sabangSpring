@@ -40,7 +40,8 @@
 			<mvc:exclude-mapping path="/captcha"/>
 			<mvc:exclude-mapping path="/checkResult"/>
 			<mvc:exclude-mapping path="/"/>
-<!-- 			<mvc:exclude-mapping path="/angular**"/>		 -->
+			<!-- angualr로 cross browsing 처리 된 상태로 테스트하고 싶을때만 주석을 푼다.  -->
+			<!-- <mvc:exclude-mapping path="/angular**"/> -->		
 			<bean class="com.interceptor.LoginCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>  
@@ -66,7 +67,7 @@
 	<mvc:view-controller path="/naverJumpPage" view-name="naverJumpPage" />
 	<mvc:view-controller path="/angular" view-name="index" />
 	<mvc:view-controller path="/angular/*" view-name="index" />
-<!-- 	<mvc:view-controller path="/angular/*" view-name="index" /> -->
+	<mvc:view-controller path="/angular/*" view-name="index" />
 
 	
 	<!-- 로그인 화면 -->
