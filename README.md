@@ -24,6 +24,7 @@
 4. 매물 Overview/상세 : [https://youtu.be/fwmCOd61gZk]
 5. 관리자 페이지 : [https://youtu.be/Re5HlTJrN0g]
     (+코드시연 : [https://youtu.be/jJpUgHfOPm8])
+6. 리액트 버전 회원 가입 : [https://youtu.be/W9TnFYT-ur0]    
 
 ## 코드 사용법
 ### 1. STS 실행 시 요청 URL 
